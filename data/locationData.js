@@ -12,7 +12,7 @@ export const locationData = [
         city: "Enugu",
         noOfSales: 340,
         amount: 1767,
-        percentage: +12,
+        percentage: 0,
         id: 2
     },
     {

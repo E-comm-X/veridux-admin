@@ -23,7 +23,7 @@ export default function Home() {
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       <div>
         <div className="flex flex-col lg:flex-row gap-4">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
             <Summaries />
             <Charts />
           </div>
