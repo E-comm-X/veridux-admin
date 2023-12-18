@@ -1,8 +1,7 @@
 "use client"
-import ButtonUI from "./ButtonUI";
+import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid'
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -48,10 +47,10 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-
-function Table() {
+export default function DataGridDemo() {
   return (
     <Box sx={{ height: 400, width: '100%' }}>
+        
       <DataGrid
         rows={rows}
         columns={columns}
@@ -67,28 +66,5 @@ function Table() {
         disableRowSelectionOnClick
       />
     </Box>
-  );
-}
-export default function TablesStats() {
-  return (
-    <div className=" mt-8">
-      <div className="flex items-center mb-4">
-        <div className="flex lg:flex-row gap-4 items-center">
-          <div className="mr-4">
-            <p className="font-semibold text-xl">Vendor</p>
-            <hr className="rounded-md w-ful border-[#006FCF] border-2" />
-          </div>
-          <p className="font-semibold text-lg text-[#00000082] mr-4">Users</p>
-          <p className="font-semibold text-lg text-[#00000082]">Products</p>
-        </div>
-        <div className="ml-auto " >
-          <ButtonUI text="Export">
-            <FileDownloadIcon />
-          </ButtonUI>
-        </div>
-      </div>
-      <Table />
-
-    </div>
   );
 }

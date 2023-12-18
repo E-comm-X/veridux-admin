@@ -1,21 +1,23 @@
-"use client";
+"use client"
+import React from 'react'
+import UserTables from "@/components/UserTables";
+import { useState } from "react";
 import ButtonUI from "@/components/ButtonUI";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
-import UserTables from "@/components/UserTables";
-import { useState } from "react";
 import Modal from "@/components/CreateVendorModal";
+import Link from "next/link"
 
-export default function UserPage() {
+export default function UserDetails() {
   const [open, setOpen] = useState(false);
 
   return (
     <div>
-      <div className="flex items-center">
+       <div className="flex items-center">
         <div className="flex flex-col">
           <h2 className="text-2xl text-black font-bold">Users</h2>
           <p className="font-normal text-base text-[#0000006E]">
-            Update 5sec ago
+            Today
           </p>
         </div>
         <div className="ml-auto flex gap-4">
@@ -31,7 +33,28 @@ export default function UserPage() {
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-      <UserTables />
+      <div className="flex lg:flex-row gap-4 items-center">
+        <Link href="/users">
+        <div className="mr-4">
+            <p className="font-semibold text-xl">Users</p>
+            <hr className="rounded-md w-ful  border-2" />
+          </div>
+        </Link>
+         
+          <div className="mr-4">
+            <p className="font-semibold text-xl">User Information</p>
+            <hr className="rounded-md w-ful border-[#006FCF] border-2" />
+          </div>
+        </div>
+
+        <div className="parent bg-white rounded-lg">
+          <div className="children">children</div>
+          <div className="children">children</div>
+
+          <div className="children">children</div>
+
+        </div>
+
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className=" w-96">
           <form action="">
@@ -92,5 +115,5 @@ export default function UserPage() {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
