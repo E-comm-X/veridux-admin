@@ -7,8 +7,8 @@ import { MainBody } from "@/components/MainBody"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Baobal Admin",
-  description: "Baobal Admin",
+  title: "Veridux Admin",
+  description: "Veridux Admin",
 }
 
 export default function RootLayout({
