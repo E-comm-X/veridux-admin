@@ -20,6 +20,8 @@ export default function Charts() {
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
         <h2>Charts</h2>
       </div>
+
+      {/* Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className=" w-96">
           <form action="">
