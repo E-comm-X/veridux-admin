@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Page() {
+export default function MarketingOverwiew() {
   return (
-    <div>Page</div>
+    <main>Marketing Overview</main>
   )
 }

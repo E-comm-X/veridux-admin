@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Page() {
+export default function CreateEmailPage() {
   return (
-    <div>Page</div>
+    <div> CreateEmailPage</div>
   )
 }
