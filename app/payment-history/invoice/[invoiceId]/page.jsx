@@ -4,6 +4,10 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import Image from "next/image";
 import AddIcon from "@mui/icons-material/Add";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+
 export default function INvoiceDetails() {
   return (
     <main>
@@ -30,7 +34,7 @@ export default function INvoiceDetails() {
         <div className="md:w-1/2 w-full">
           <div className="flex justify-between">
             <h3 className="font-bold text-xl">
-              Show Order Summary <span>icon</span>
+              Show Order Summary <span><ArrowDropUpIcon style={{fill: "#97A3B6"}} /></span>
             </h3>
             <h3 className="font-bold text-xl">$23</h3>
           </div>
@@ -85,7 +89,7 @@ export default function INvoiceDetails() {
           <h3 className="font-semibold text-lg mt-6  ">Payment Details </h3>
           <div className="mt-8 flex justify-between">
             <h4 className="font-semibold text-base">Payment</h4>
-            <p>icon</p>
+           <KeyboardArrowDownIcon style={{fill: "#97A3B6"}} />
           </div>
           <hr className="h-px mt-4 mb-4 bg-gray-200 border-[1px] " />
 
