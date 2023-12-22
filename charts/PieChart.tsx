@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react"
-import { Pie } from "@ant-design/plots";
+import { Pie } from "@ant-design/plots"
 
 export const PieChart = () => {
   const data = [
@@ -42,7 +42,7 @@ export const PieChart = () => {
     label: {
       type: "outer",
     },
-    legend: { position: "bottom" },
+    // legend: { position: "bottom" },
     interactions: [
       {
         type: "element-active",
