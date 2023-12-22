@@ -1,9 +1,9 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Link from "next/link";
-import StorageIcon from '@mui/icons-material/Storage';
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Link from "next/link"
+import StorageIcon from "@mui/icons-material/Storage"
 
-export default function page() {
+export default function Page() {
   return (
     <main>
       <div className="flex items-center">
@@ -75,7 +75,7 @@ export default function page() {
         <div className="bottom flex flex-row justify-between items-center mt-8 ">
           <div className="textContainer flex gap-4 ">
             <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
-            <StorageIcon style={{fill: "#006FCF"}} />
+              <StorageIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
               <h2 className="font-bold text-base">User Data Protection</h2>
@@ -90,5 +90,5 @@ export default function page() {
         </div>
       </div>
     </main>
-  );
+  )
 }

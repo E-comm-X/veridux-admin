@@ -10,3 +10,7 @@
 
 body {
 }
+
+.ant-select-selector {
+  border-color: #006fcf !important;
+}

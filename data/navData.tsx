@@ -63,11 +63,11 @@ export const navItems = [
       },
       {
         name: "Create Mail",
-        url: "/notifications/create-mail",
+        url: "/marketing/campaigns/new/email",
       },
       {
         name: "Create Campaign",
-        url: "/notifications/Create-campaign",
+        url: "/marketing/Create-campaign",
       },
     ],
   },
