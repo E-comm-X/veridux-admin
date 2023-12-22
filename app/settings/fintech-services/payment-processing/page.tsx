@@ -41,7 +41,7 @@ export default function page() {
           Security & Compliance
         </Link>
         <Link
-          href="/setting/fintech-service"
+          href="/setting/fintech-services"
           className="font-semibold text-sm underline decoration-[#006FCF] "
         >
           Fintech Services
@@ -49,7 +49,7 @@ export default function page() {
         <Link href="/setting/support" className="font-semibold text-sm">
           Support
         </Link>
-        <Link href="/setting/user-group" className="font-semibold text-sm">
+        <Link href="/settings/user-group" className="font-semibold text-sm">
           User Groups
         </Link>
       </div>

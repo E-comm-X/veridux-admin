@@ -25,11 +25,11 @@ export default function page() {
      <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
      <div className="flex gap-4 flex-col md:flex-row bg-white items-center p-2 rounded ">
        <Link href='/setting' className="font-semibold text-sm  " >General</Link>
-       <Link href='/setting/administrator' className="font-semibold text-sm underline decoration-[#006FCF]">User Management</Link>
-       <Link href='/setting/security' className="font-semibold text-sm">Security & Compliance</Link>
-       <Link href='/setting/fintech-service' className="font-semibold text-sm">Fintech Services</Link>
-       <Link href='/setting/support' className="font-semibold text-sm">Support</Link>
-       <Link href='/setting/user-group' className="font-semibold text-sm">User Groups</Link>
+       <Link href='/settings/administrator' className="font-semibold text-sm underline decoration-[#006FCF]">User Management</Link>
+       <Link href='/settings/security' className="font-semibold text-sm">Security & Compliance</Link>
+       <Link href='/settings/fintech-service' className="font-semibold text-sm">Fintech Services</Link>
+       <Link href='/settings/support' className="font-semibold text-sm">Support</Link>
+       <Link href="/settings/user-group" className="font-semibold text-sm">User Groups</Link>
      </div>
      <hr className="h-px bg-gray-200 border-0 mt-8 mb-16 " />
 

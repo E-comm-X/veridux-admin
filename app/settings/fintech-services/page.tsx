@@ -59,7 +59,7 @@ export default function page() {
         <Link href="/setting/support" className="font-semibold text-sm">
           Support
         </Link>
-        <Link href="/setting/user-group" className="font-semibold text-sm">
+        <Link href="/settings/fintech-services/user-group" className="font-semibold text-sm">
           User Groups
         </Link>
       </div>

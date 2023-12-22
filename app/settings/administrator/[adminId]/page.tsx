@@ -39,13 +39,13 @@ export default function adminDetails() {
         <Link href="/setting/security" className="font-semibold text-sm">
           Security & Compliance
         </Link>
-        <Link href="/setting/fintech-service" className="font-semibold text-sm">
+        <Link href="/setting/fintech-services" className="font-semibold text-sm">
           Fintech Services
         </Link>
         <Link href="/setting/support" className="font-semibold text-sm">
           Support
         </Link>
-        <Link href="/setting/user-group" className="font-semibold text-sm">
+        <Link href="/settings/user-group" className="font-semibold text-sm">
           User Groups
         </Link>
       </div>
