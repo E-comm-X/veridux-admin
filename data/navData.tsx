@@ -65,17 +65,38 @@ export const navItems = [
         name: "Create Mail",
         url: "/marketing/campaigns/new/email",
       },
-      {
-        name: "Create Campaign",
-        url: "/marketing/Create-campaign",
-      },
+      // {
+      //   name: "Create Campaign",
+      //   url: "/marketing/Create-campaign",
+      // },
     ],
   },
   {
     name: "Settings",
-    url: "/settings",
+    url: "",
     icon: <Settings color="primary" />,
-    children: [],
+    children: [
+      {
+        name: "General",
+        url: "/settings",
+      },
+      {
+        name: "Security",
+        url: "/settings/security",
+      },
+      {
+        name: "Administrator",
+        url: "/settings/administrator",
+      },
+      {
+        name: "Fintech Services",
+        url: "/settings/fintech-services",
+      },
+      {
+        name: "Permissions Groups",
+        url: "/settings/permissions-groups",
+      },
+    ],
   },
   {
     name: "Account",

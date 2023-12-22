@@ -2,6 +2,7 @@ import React from "react"
 import { locationData } from "@/data/locationData"
 import Image from "next/image"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
+import { Avatar } from "antd"
 export default function SaleByLocationSideBar() {
   function bg(sign: number) {
     return sign > 0
@@ -24,7 +25,7 @@ export default function SaleByLocationSideBar() {
   }
 
   return (
-    <div className="text-black w-full  bg-white p-6  border-2 rounded-lg border-[#00000026]">
+    <div className="text-black w-full h-full  bg-white p-6  border-[1px] rounded-lg">
       <div className="flex bg-white mb-2">
         <div>
           <h3 className="font-medium text-lg ">Sales by Location</h3>
@@ -40,7 +41,13 @@ export default function SaleByLocationSideBar() {
         {locationData.map((item) => (
           <div key={item.id} className="flex gap-4 items-center">
             <div className="imageContainer">
-              <Image src={item.image} width={37} height={37} alt="" />
+              <Avatar
+                src={"item.image"}
+                alt=""
+                size={"large"}
+                className="rounded-[7px]"
+              />
+              {/* <Image src={item.image} width={37} height={37} alt="" /> */}
             </div>
             <div className="textContainer flex flex-col">
               <h4 className="font-medium text-sm">{item.city}</h4>

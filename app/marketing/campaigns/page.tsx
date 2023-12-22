@@ -1,10 +1,12 @@
-import { H2, H3, Text } from "@/components/Typography"
+import { H2, H3, H4, Text } from "@/components/Typography"
 import React from "react"
 import { Overviews } from "./components/Overviews"
 import { Button } from "@mui/material"
 import { HistoryEduOutlined } from "@mui/icons-material"
 import { SubscribersBreakdown } from "./components/SubscribersBreakdown"
 import { EmailSent } from "./components/EmailSent"
+import { CampaignsTable } from "./components/CampaignsTable"
+import { CampaignsTab } from "./components/CampaignsTab"
 
 const Page = () => {
   return (
@@ -37,6 +39,17 @@ const Page = () => {
         </div>
         <div className="">
           <SubscribersBreakdown />
+        </div>
+      </div>
+      <div>
+        <H4 className="mb-5 mt-10">Campaigns</H4>
+        <div className="bg-white p-[24px]">
+          <CampaignsTab />
+        </div>
+        <div className="md:w-[50%] md:mx-auto mt-5">
+          <Button variant="outlined" size="large" className="capitalize w-full">
+            View All Campaigns
+          </Button>
         </div>
       </div>
     </div>

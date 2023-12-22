@@ -7,7 +7,7 @@ import React from "react"
 
 export const EmailSent = () => {
   return (
-    <div className="bg-white border-[1px] md:p-[16px] p-[10px] rounded-[10px] h-full">
+    <div className="bg-white border-[1px] md:p-[16px] p-[10px] rounded-[10px] h-full md:flex md:flex-col md:justify-between">
       <div className="flex justify-between">
         <div>
           <Text className="text-grey-500 text-semibold">Email Sent</Text>
@@ -24,7 +24,7 @@ export const EmailSent = () => {
         </div>
       </div>
 
-      <div>
+      <div className="mt-[1.5rem] md:h-[355px]">
         <StackedColumns />
       </div>
     </div>
