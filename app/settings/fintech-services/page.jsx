@@ -65,71 +65,79 @@ export default function page() {
       </div>
       {/* Body */}
       <div className="parent bg-white border-[1px] rounded-base mt-6 px-4 py-6 ">
-        <div className="top flex flex-row justify-between items-center ">
-          
-          <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
-              <PaymentsIcon style={{ fill: "#006FCF" }} />
+        <Link href="/settings/fintech-services/payment-processing">
+          <div className="top flex flex-row justify-between items-center ">
+            <div className="textContainer flex gap-4 ">
+              <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+                <PaymentsIcon style={{ fill: "#006FCF" }} />
+              </div>
+              <div>
+                <h2 className="font-bold text-base">
+                  Payment Processing Options
+                </h2>
+                <p className="font-normal text-sm text-[#00000099] ">
+                  Strengthen your admin account's security with an extra layer
+                  of protection.
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-bold text-base">
-                Payment Processing Options
-              </h2>
-              <p className="font-normal text-sm text-[#00000099] ">
-                Strengthen your admin account's security with an extra layer of
-                protection.
-              </p>
-            </div>
+            <ArrowForwardIosIcon />
           </div>
-          <ArrowForwardIosIcon />
-        </div>
+        </Link>
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-        <div className="top flex flex-row justify-between items-center ">
-          <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
-              <WalletIcon style={{ fill: "#006FCF" }} />
+        <Link href="/settings/fintech-services/wallet-functionality">
+          <div className="top flex flex-row justify-between items-center ">
+            <div className="textContainer flex gap-4 ">
+              <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+                <WalletIcon style={{ fill: "#006FCF" }} />
+              </div>
+              <div>
+                <h2 className="font-bold text-base">Wallet Functionality</h2>
+                <p className="font-normal text-sm text-[#00000099] ">
+                  Define the features and limitations of user wallets
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-bold text-base">Wallet Functionality</h2>
-              <p className="font-normal text-sm text-[#00000099] ">
-                Define the features and limitations of user wallets
-              </p>
-            </div>
+            <ArrowForwardIosIcon />
           </div>
-          <ArrowForwardIosIcon />
-        </div>
+        </Link>
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-        <div className="top flex flex-row justify-between items-center ">
-          <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
-              <RequestQuoteIcon style={{ fill: "#006FCF" }} />
+        <Link href="/settings/fintech-services/currency-option">
+          <div className="top flex flex-row justify-between items-center ">
+            <div className="textContainer flex gap-4 ">
+              <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+                <RequestQuoteIcon style={{ fill: "#006FCF" }} />
+              </div>
+              <div>
+                <h2 className="font-bold text-base">Currency Options</h2>
+                <p className="font-normal text-sm text-[#00000099] ">
+                  Choose the currencies you'll support for transactions
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-bold text-base">Currency Options</h2>
-              <p className="font-normal text-sm text-[#00000099] ">
-                Choose the currencies you'll support for transactions
-              </p>
-            </div>
+            <ArrowForwardIosIcon />
           </div>
-          <ArrowForwardIosIcon />
-        </div>
+        </Link>
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-        <div className="top flex flex-row justify-between items-center ">
-          <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
-              <VerifiedUserIcon style={{ fill: "#006FCF" }} />
+        <Link href="/settings/fintech-services/compliance-regulation">
+          <div className="top flex flex-row justify-between items-center ">
+            <div className="textContainer flex gap-4 ">
+              <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+                <VerifiedUserIcon style={{ fill: "#006FCF" }} />
+              </div>
+              <div>
+                <h2 className="font-bold text-base">
+                  Compliance & Regulations{" "}
+                </h2>
+                <p className="font-normal text-sm text-[#00000099] ">
+                  Stay compliant with financial regulations by configuring
+                  necessary settings
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="font-bold text-base">Compliance & Regulations </h2>
-              <p className="font-normal text-sm text-[#00000099] ">
-                Stay compliant with financial regulations by configuring
-                necessary settings
-              </p>
-            </div>
+            <ArrowForwardIosIcon />
           </div>
-          <ArrowForwardIosIcon />
-        </div>
-
+        </Link>
         <div className="bottom flex flex-row justify-between items-center mt-8 ">
           <div className="textContainer flex gap-4 ">
             <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
