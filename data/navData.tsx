@@ -54,6 +54,10 @@ export const navItems = [
     icon: <Campaign color="primary" />,
     children: [
       {
+        name: "Overview",
+        url: "/marketing/overview",
+      },
+      {
         name: "Campaigns",
         url: "/marketing/campaigns",
       },
