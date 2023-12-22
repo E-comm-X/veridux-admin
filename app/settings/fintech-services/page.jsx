@@ -1,17 +1,19 @@
-"use client"
-import {useState} from "react";
+"use client";
+import { useState } from "react";
 import ButtonUI from "@/components/ButtonUI";
 import Link from "next/link";
 import StorageIcon from "@mui/icons-material/Storage";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import PaymentsIcon from '@mui/icons-material/Payments';
-import WalletIcon from '@mui/icons-material/Wallet';
-import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import PaymentsIcon from "@mui/icons-material/Payments";
+import WalletIcon from "@mui/icons-material/Wallet";
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import Modal from "@/components/CreateVendorModal";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 export default function page() {
   const [open, setOpen] = useState(false);
@@ -62,11 +64,11 @@ export default function page() {
         </Link>
       </div>
       {/* Body */}
-      <div className="parent bg-white border-[1px] rounded-lg mt-6 px-4 py-6 ">
+      <div className="parent bg-white border-[1px] rounded-base mt-6 px-4 py-6 ">
         <div className="top flex flex-row justify-between items-center ">
           <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
-              <PaymentsIcon style={{fill:"#006FCF"}}/>
+            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+              <PaymentsIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
               <h2 className="font-bold text-base">
@@ -83,8 +85,8 @@ export default function page() {
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
         <div className="top flex flex-row justify-between items-center ">
           <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
-           <WalletIcon style={{ fill: "#006FCF" }}/> 
+            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+              <WalletIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
               <h2 className="font-bold text-base">Wallet Functionality</h2>
@@ -98,15 +100,13 @@ export default function page() {
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
         <div className="top flex flex-row justify-between items-center ">
           <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
-              <RequestQuoteIcon style={{ fill: "#006FCF" }}/>
+            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+              <RequestQuoteIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
-              <h2 className="font-bold text-base">
-              Currency Options
-              </h2>
+              <h2 className="font-bold text-base">Currency Options</h2>
               <p className="font-normal text-sm text-[#00000099] ">
-              Choose the currencies you'll support for transactions
+                Choose the currencies you'll support for transactions
               </p>
             </div>
           </div>
@@ -115,14 +115,14 @@ export default function page() {
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
         <div className="top flex flex-row justify-between items-center ">
           <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
-             <VerifiedUserIcon style={{ fill: "#006FCF" }} />
+            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+              <VerifiedUserIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
-              <h2 className="font-bold text-base">
-              Compliance & Regulations              </h2>
+              <h2 className="font-bold text-base">Compliance & Regulations </h2>
               <p className="font-normal text-sm text-[#00000099] ">
-              Stay compliant with financial regulations by configuring necessary settings
+                Stay compliant with financial regulations by configuring
+                necessary settings
               </p>
             </div>
           </div>
@@ -131,13 +131,15 @@ export default function page() {
 
         <div className="bottom flex flex-row justify-between items-center mt-8 ">
           <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
+            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
               <GpsFixedIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
-              <h2 className="font-bold text-base">Real-Time Transaction Monitoring</h2>
+              <h2 className="font-bold text-base">
+                Real-Time Transaction Monitoring
+              </h2>
               <p className="font-normal text-sm text-[#00000099] ">
-              Choose the currencies you'll support for transactions
+                Choose the currencies you'll support for transactions
               </p>
             </div>
           </div>
@@ -148,47 +150,95 @@ export default function page() {
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
         <div className="top flex flex-row justify-between items-center ">
           <div className="textContainer flex gap-4 ">
-            <div className="iconContainer rounded-lg flex items-center bg-[#006FCF40] p-2 justify-center">
-             <ReceiptLongIcon style={{ fill: "#006FCF" }} />
+            <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
+              <ReceiptLongIcon style={{ fill: "#006FCF" }} />
             </div>
             <div>
-              <h2 className="font-bold text-base">
-              Transaction Fees
-              </h2>
+              <h2 className="font-bold text-base">Transaction Fees</h2>
               <p className="font-normal text-sm text-[#00000099] ">
-              Configure transaction fees for different types of transactions
+                Configure transaction fees for different types of transactions
               </p>
             </div>
           </div>
-          <div  onClick={() => setOpen(true)}>
-          <ArrowForwardIosIcon  />
+          <div onClick={() => setOpen(true)}>
+            <ArrowForwardIosIcon />
           </div>
-        
         </div>
       </div>
       {/* Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className=" w-96">
-          <form action="">
-            <h2 className="text-black text-4xl mt-2 text-center">Create Vendor</h2>
-            <div className="flex flex-col gap-2 mt-2">
-              <label htmlFor="vendor" className="font-semibold text-xl">Vendor</label>
-              <input id="vendor" type="text" placeholder="Full Name" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none"/>
-            </div> 
-            <div className="flex flex-col gap-2 mt-2">
-              <label htmlFor="phone"  className="font-semibold text-xl">Phone Number</label>
-              <input type="text" placeholder="Enter Phone Number" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none" />
+          <form action="" className="flex flex-col">
+            <h2 className="text-center font-bold text-2xl">
+              Transaction Fee Settings
+            </h2>
+            <p className="text-center font-normal text-base">
+              This page allows you to set the fees for your fintech services.
+              The fees you set will apply to all users of your services
+            </p>
+            <div className="flex flex-col gap-2 ">
+              <label
+                htmlFor=""
+                className="font-bold text-base text-[#006FCF] mt-2"
+              >
+                Currency
+              </label>
+              <select
+                name=""
+                id=""
+                className=" rounded text-sm font-semibold text-[#006FCFD9] border-[#d1d1d1] border-2 outline-none bg-[#006FCF21] p-2"
+              >
+                <option required value="">
+                  Select Country
+                </option>
+              </select>
             </div>
-            <div className="flex flex-col gap-2 mt-2">
-              <label htmlFor="industry"  className="font-semibold text-xl">Industry</label>
-              <input type="text" placeholder="Select Your Industry" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none"  />
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor=""
+                className="font-bold text-base text-[#006FCF] mt-2"
+              >
+                Enter Amount
+              </label>
+              <div className="flex relative">
+                <input
+                  type="text"
+                  className="w-full rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#006FCFD9] border-[#006FCFD9] border-2 outline-none bg-[#006FCF21] p-2"
+                  placeholder="Fee Amount"
+                />
+                <div className="flex absolute gap-6 bottom-0 right-0 top-[8px] right-[12px]  ">
+                  <div className="flex rounded-lg justify-center items-center bg-[#006FCF] w-[30px] h-[30px] ">
+                    <AddIcon style={{ fill: "#DEECF9" }} />
+                  </div>
+                  <div className="flex  rounded-lg justify-center items-center bg-[#006FCF] w-[30px] h-[30px] ">
+                    <RemoveIcon style={{ fill: "#DEECF9" }} />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 mt-2" >
-              <label htmlFor="services"  className="font-semibold text-xl">Vendor</label>
-              <input type="text" placeholder="Select Services" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none" />
+            <div className="flex flex-col gap-2 ">
+              <label
+                htmlFor=""
+                className="font-bold text-base text-[#006FCF] mt-2 "
+              >
+                Description
+              </label>
+              <textarea
+                col="10"
+                row="30"
+                className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#006FCFD9] border-[#006FCFD9] border-2 outline-none bg-[#006FCF21] p-2"
+                type="text"
+                placeholder="A brief description of the fee. This could be helpful for users who are not familiar with your services"
+              ></textarea>
             </div>
-            <button className=" my-4 w-full flex align-center justify-center text-center text-white bg-[#006FCF] font-semibold  rounded px-2 py-2">Add Vendor</button>
-            {/* <ButtonUI text="Add Vendor"></ButtonUI> */}
+            <div className="buttonConatiner text-center mx-auto  flex mt-4 ">
+              <button className=" flex align-center mr-6 justify-center text-center text-[#006FCF] bg-[#006FCF40] font-semibold  rounded px-4 py-2 ">
+                Cancel
+              </button>
+              <button className=" flex align-center justify-center text-center text-white bg-[#006FCF] font-semibold  rounded px-4 py-2 ">
+                Save
+              </button>
+            </div>
           </form>
         </div>
       </Modal>
