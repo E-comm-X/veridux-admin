@@ -2,6 +2,7 @@ import React from "react"
 import ButtonUI from "@/components/ButtonUI"
 import Link from "next/link"
 import StorageIcon from "@mui/icons-material/Storage"
+import { Switch } from "antd"
 
 export default function Page() {
   return (
@@ -11,7 +12,7 @@ export default function Page() {
           <h2 className="text-2xl text-black font-bold">Settings</h2>
           <p className="font-normal text-base text-[#0000006E]">
             Welcome to the Security & Compliance section, where safeguarding
-            your platform's integrity and user data is paramount.
+            your platform&apos;s integrity and user data is paramount.
           </p>
         </div>
         <div className="mt-2 ml-auto flex items-center gap-4">
@@ -61,14 +62,12 @@ export default function Page() {
                 Two-Factor Authentication (2FA)
               </h2>
               <p className="font-normal text-sm text-[#00000099] ">
-                Strengthen your admin account's security with an extra layer of
-                protection.
+                Strengthen your admin account&apos;s security with an extra
+                layer of protection.
               </p>
             </div>
           </div>
-          <div className="toggle relative w-[50px] h-[25px] bg-black rounded-full">
-            <div className="absolute w-[25px] h-[25px] bg-white rounded-full"></div>
-          </div>
+          <Switch className="bg-[#000]" />
         </div>
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
 
@@ -84,9 +83,7 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <div className="toggle relative w-[50px] h-[25px] bg-black rounded-full">
-            <div className="absolute w-[25px] h-[25px] bg-white rounded-full"></div>
-          </div>
+          <Switch className="bg-[#000]" />
         </div>
       </div>
     </main>
