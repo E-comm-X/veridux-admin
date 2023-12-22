@@ -65,10 +65,10 @@ export const navItems = [
         name: "Create Mail",
         url: "/marketing/campaigns/new/email",
       },
-      {
-        name: "Create Campaign",
-        url: "/marketing/Create-campaign",
-      },
+      // {
+      //   name: "Create Campaign",
+      //   url: "/marketing/Create-campaign",
+      // },
     ],
   },
   {
