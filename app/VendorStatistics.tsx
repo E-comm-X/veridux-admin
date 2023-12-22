@@ -3,13 +3,13 @@ import { useState } from "react"
 import { Modal } from "antd"
 import { Input } from "antd"
 import { Button } from "@mui/material"
-import { MultiLinePlot } from "./MultiLinePlot"
+import { MultiLinePlot } from "@/components/MultiLinePlot"
 
-export default function Charts() {
+export function VendorStatistics() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <div className="bg-white rounded-xl p-2">
+      <div className="bg-white rounded-xl p-2 border-[1px]">
         <div className="flex items-center m-6 text-black">
           <h2 className="text-2xl font-semibold ">Vendors Statistic</h2>
           <div className="ml-auto" onClick={() => setOpen(true)}>
@@ -19,7 +19,7 @@ export default function Charts() {
           </div>
         </div>
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-        <h2>Charts</h2>
+        <h2 className="mb-3 px-5">Statistics</h2>
         <div className="md:h-[265px]">
           <MultiLinePlot />
         </div>
