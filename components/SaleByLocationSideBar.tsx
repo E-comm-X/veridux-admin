@@ -3,24 +3,24 @@ import { locationData } from "@/data/locationData"
 import Image from "next/image"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 export default function SaleByLocationSideBar() {
-  function bg(sign) {
+  function bg(sign: number) {
     return sign > 0
       ? "bg-[#E7F4EE] rounded-full py-2 px-4"
       : sign < 0
       ? "bg-[#FEEDEC] rounded-full py-2 px-4 "
       : sign === 0
       ? "#F0F1F3 rounded-full py-2 px-4"
-      : value4
+      : ""
   }
 
-  function text(sign) {
+  function text(sign: number) {
     return sign > 0
       ? "text-[#0D894F] font-medium font-xs"
       : sign < 0
       ? "text-[#F04438] font-xs font-medium "
       : sign === 0
       ? "text-[#667085] font-xs font-medium"
-      : value4
+      : ""
   }
 
   return (

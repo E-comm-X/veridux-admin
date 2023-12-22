@@ -1,7 +1,15 @@
 "use client"
-import React from 'react'
+import React from "react"
 
-export default function CreateVendorModal({ open, onClose, children }) {
+export default function CreateVendorModal({
+  open,
+  onClose,
+  children,
+}: {
+  open?: boolean
+  onClose?: () => void
+  children?: React.ReactNode
+}) {
   return (
     <div
       onClick={onClose}
