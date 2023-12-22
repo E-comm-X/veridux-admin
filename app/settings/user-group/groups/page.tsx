@@ -1,16 +1,14 @@
 "use client"
-import React from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Link from "next/link";
-import { AddIcon } from "@mui/icons-material";
+import React from "react"
+import MoreVertIcon from "@mui/icons-material/MoreVert"
+import Link from "next/link"
 
 export default function page() {
   return (
     <div className="page">
       <h2 className="text-2xl text-black font-bold">User Group</h2>
-
     </div>
-  );
+  )
 }
 
 // <main className="p-2">
