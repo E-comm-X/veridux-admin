@@ -66,6 +66,7 @@ export default function page() {
       {/* Body */}
       <div className="parent bg-white border-[1px] rounded-base mt-6 px-4 py-6 ">
         <div className="top flex flex-row justify-between items-center ">
+          
           <div className="textContainer flex gap-4 ">
             <div className="iconContainer rounded-base flex items-center bg-[#006FCF40] p-2 justify-center">
               <PaymentsIcon style={{ fill: "#006FCF" }} />
