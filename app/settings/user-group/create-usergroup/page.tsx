@@ -1,5 +1,5 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
 
 export default function CreateUserGroup() {
   return (
@@ -35,7 +35,7 @@ export default function CreateUserGroup() {
               id=""
               className=" border-[#006FCF] rounded-lg border-[1px] p-4 outline-none text-[#00000078] font-normal"
             >
-              <option required >Choose a user group</option>
+              <option>Choose a user group</option>
             </select>
           </div>
         </div>
@@ -43,22 +43,23 @@ export default function CreateUserGroup() {
           <label htmlFor="" className="font-semibold text-lg">
             Select users to add to this group
           </label>
-          <select name="" id="" 
-              className="border-[#006FCF] rounded-lg border-[1px] p-4 outline-none text-[#00000078] font-normal"
-          
+          <select
+            name=""
+            id=""
+            className="border-[#006FCF] rounded-lg border-[1px] p-4 outline-none text-[#00000078] font-normal"
           >
-            <option required value="Type to search for users..."></option>
+            <option value="Type to search for users..."></option>
           </select>
         </div>
-        <div  className="flex flex-col mt-4 gap-2 mb-8">
+        <div className="flex flex-col mt-4 gap-2 mb-8">
           <label htmlFor="" className="font-semibold text-lg">
             User Group Description:
           </label>
           <textarea
             name=""
             id=""
-            cols="30"
-            rows="10"
+            cols={30}
+            rows={10}
             className="border-[#006FCF] rounded-lg border-[1px] p-4 outline-none placeholder:text-[#00000078] placeholder:font-normal"
             placeholder="Describe the purpose or role of this user group..."
           ></textarea>
@@ -66,5 +67,5 @@ export default function CreateUserGroup() {
         <ButtonUI>Create User Group</ButtonUI>
       </div>
     </main>
-  );
+  )
 }
