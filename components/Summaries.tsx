@@ -3,7 +3,25 @@ import Image from "next/image"
 
 import { sumDetails } from "@/data/sumData"
 
-const Summary = ({ icon, title, id, date, value, percentage, prev }) => {
+interface SummaryProps {
+  icon?: React.ReactNode
+  title?: string
+  id?: number
+  date?: string
+  value?: number
+  percentage?: number
+  prev?: string
+}
+
+const Summary = ({
+  icon,
+  title,
+  id,
+  date,
+  value,
+  percentage,
+  prev,
+}: SummaryProps) => {
   return (
     <div className="  rounded-lg gap-4 bg-white px-2 py-4 pr-4 flex  text-black border-2 border-[#00000026]">
       <div className="rounded-md bg-[#006FCF21] h-15 w-15 self-start flex align-center justify-center p-2">

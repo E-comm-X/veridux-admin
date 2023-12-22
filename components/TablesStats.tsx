@@ -1,0 +1,92 @@
+"use client"
+import ButtonUI from "./ButtonUI"
+import Box from "@mui/material/Box"
+import { DataGrid } from "@mui/x-data-grid"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+
+const columns = [
+  { field: "id", headerName: "ID", width: 90 },
+  {
+    field: "firstName",
+    headerName: "First name",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "lastName",
+    headerName: "Last name",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "age",
+    headerName: "Age",
+    type: "number",
+    width: 110,
+    editable: true,
+  },
+  {
+    field: "fullName",
+    headerName: "Full name",
+    description: "This column has a value getter and is not sortable.",
+    sortable: false,
+    width: 160,
+    valueGetter: (params: any) =>
+      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+  },
+]
+
+const rows = [
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
+  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
+  { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
+  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
+  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
+  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+]
+
+function Table() {
+  return (
+    <Box sx={{ height: 400, width: "100%" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+    </Box>
+  )
+}
+export default function TablesStats() {
+  return (
+    <div className=" mt-8">
+      <div className="flex items-center mb-4">
+        <div className="flex lg:flex-row gap-4 items-center">
+          <div className="mr-4">
+            <p className="font-semibold text-xl">Vendor</p>
+            <hr className="rounded-md w-ful border-[#006FCF] border-2" />
+          </div>
+          <p className="font-semibold text-lg text-[#00000082] mr-4">Users</p>
+          <p className="font-semibold text-lg text-[#00000082]">Products</p>
+        </div>
+        <div className="ml-auto ">
+          <ButtonUI text="Export">
+            <FileDownloadIcon />
+          </ButtonUI>
+        </div>
+      </div>
+      <Table />
+    </div>
+  )
+}
