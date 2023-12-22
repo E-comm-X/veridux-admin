@@ -1,5 +1,5 @@
+"use client"
 import Summaries from "@/components/Summaries"
-import TablesStats from "@/components/TablesStats"
 import SaleByLocationSideBar from "@/components/SaleByLocationSideBar"
 import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import { VendorStatistics } from "./VendorStatistics"
