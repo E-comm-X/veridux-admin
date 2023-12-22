@@ -1,10 +1,9 @@
-import Image from "next/image";
-import React from "react";
-import MessageIcon from "@mui/icons-material/Message";
-import CallIcon from "@mui/icons-material/Call";
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-
+import Image from "next/image"
+import React from "react"
+import MessageIcon from "@mui/icons-material/Message"
+import CallIcon from "@mui/icons-material/Call"
+import GpsFixedIcon from "@mui/icons-material/GpsFixed"
+import LocationOnIcon from "@mui/icons-material/LocationOn"
 
 export default function IncomingDeliveriesDelivires() {
   return (
@@ -33,7 +32,7 @@ export default function IncomingDeliveriesDelivires() {
                 KLM234589928
               </p>
               <div className="flex justify-between px-2 py-4 border-[#0000005E] border-2 rounded-lg mt-4">
-                <LocationOnIcon style={{fill: "#00000042"}} />
+                <LocationOnIcon style={{ fill: "#00000042" }} />
                 <p className="font-normal text-lg text-[#00000042] ">
                   Gon salu - street avenue one
                 </p>
@@ -69,6 +68,7 @@ export default function IncomingDeliveriesDelivires() {
                     width={40}
                     height={40}
                     className="rounded-lg "
+                    alt="image"
                   />
                   <h5 className="font-bold text-base">Robert Stockwind</h5>
                 </div>
@@ -91,7 +91,12 @@ export default function IncomingDeliveriesDelivires() {
               <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
               <div className="container flex justify-between">
                 <div className="ImageContainer">
-                  <Image src="/veridux-logo.svg" width={121} height={121} />
+                  <Image
+                    src="/veridux-logo.svg"
+                    width={121}
+                    height={121}
+                    alt=""
+                  />
                 </div>
                 <div className="textContainer flex flex-col gap-4">
                   <h5 className="font-semibold text-lg">Name of Product</h5>
@@ -119,7 +124,6 @@ export default function IncomingDeliveriesDelivires() {
               </div>
               <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
             </div>
-            
           </div>
         </div>
         <div className="flex flex-col md:flex-row">
@@ -128,14 +132,14 @@ export default function IncomingDeliveriesDelivires() {
             <div className="flex justify-between ">
               <h4 className="font-semibold text-lg">Item Details</h4>
               <div className="orderState flex gap-2 p-3 rounded-lg font-semibold bg-[#006FCF40] text-[#006FCF]">
-                <GpsFixedIcon style={{ fill: "#006FCF" }}/>
+                <GpsFixedIcon style={{ fill: "#006FCF" }} />
                 <p>Order State</p>
               </div>
             </div>
             <div className="map">map</div>
           </div>
-        </div> 
+        </div>
       </div>
     </main>
-  );
+  )
 }

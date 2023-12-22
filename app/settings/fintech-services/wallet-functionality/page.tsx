@@ -1,15 +1,15 @@
-"use client";
-import { useState } from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Link from "next/link";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import Modal from "@/components/CreateVendorModal";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+"use client"
+import { useState } from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Link from "next/link"
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
+import Modal from "@/components/CreateVendorModal"
+import AddIcon from "@mui/icons-material/Add"
+import RemoveIcon from "@mui/icons-material/Remove"
 
-export default function page() {
-  const [open, setOpen] = useState(false);
+export default function Page() {
+  const [open, setOpen] = useState(false)
   return (
     <main>
       <div className="flex items-center">
@@ -116,9 +116,7 @@ export default function page() {
                 id=""
                 className=" rounded text-sm font-semibold text-[#006FCFD9] border-[#d1d1d1] border-2 outline-none bg-[#006FCF21] p-2"
               >
-                <option required value="">
-                  Select Country
-                </option>
+                <option value="">Select Country</option>
               </select>
             </div>
             <div className="flex flex-col gap-2">
@@ -152,10 +150,9 @@ export default function page() {
                 Fee Description
               </label>
               <textarea
-                col="10"
-                row="30"
+                cols={10}
+                rows={30}
                 className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#006FCFD9] border-[#006FCFD9] border-2 outline-none bg-[#006FCF21] p-2"
-                type="text"
                 placeholder="A brief description of the fee. This could be helpful for users who are not familiar with your services"
               ></textarea>
             </div>
@@ -171,5 +168,5 @@ export default function page() {
         </div>
       </Modal>
     </main>
-  );
+  )
 }

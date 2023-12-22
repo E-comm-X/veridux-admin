@@ -1,10 +1,10 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import Image from "next/image";
-import ImageIcon from "@mui/icons-material/Image";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import AddIcon from "@mui/icons-material/Add"
+import CloseIcon from "@mui/icons-material/Close"
+import Image from "next/image"
+import ImageIcon from "@mui/icons-material/Image"
 export default function AddCategory() {
   return (
     <main>
@@ -71,8 +71,8 @@ export default function AddCategory() {
               placeholder="Type Category description...."
               name=""
               id=""
-              cols="30"
-              rows="10"
+              cols={30}
+              rows={10}
               className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#d1d1d1] border-2 outline-none bg-[#E5E5E51F] p-2"
             ></textarea>
           </div>
@@ -117,5 +117,5 @@ export default function AddCategory() {
         </div>
       </div>
     </main>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-export default function () {
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+export default function Page() {
   return (
     <div className=" p-4 mb-4 flex flex-col  gap-3 ">
       <h3 className="text-base font-semibold md:basis-[20%] basis-full ">
@@ -47,15 +47,17 @@ export default function () {
               <label htmlFor="" className="font-semibold text-sm ">
                 Bussiness Type
               </label>
-              <select name="business type" id="business"
-                className= " rounded text-sm font-semibold text-[#00101E73] border-[#d1d1d1] border-2 outline-none bg-[#E5E5E51F] p-2"
-
+              <select
+                name="business type"
+                id="business"
+                className=" rounded text-sm font-semibold text-[#00101E73] border-[#d1d1d1] border-2 outline-none bg-[#E5E5E51F] p-2"
               >
-                <option selected value="India">Business type</option>
+                <option selected value="India">
+                  Business type
+                </option>
                 <option value="Sri Lanka">Sri Lanka</option>
                 <option value="Australia">Australia</option>
               </select>
-              
             </div>
           </div>
           <div className="mt-8 flex gap-6 items-center">
@@ -68,5 +70,5 @@ export default function () {
         </form>
       </div>
     </div>
-  );
+  )
 }

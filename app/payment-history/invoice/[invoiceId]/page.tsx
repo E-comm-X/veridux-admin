@@ -1,12 +1,11 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import Image from "next/image";
-import AddIcon from "@mui/icons-material/Add";
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import ReceiptIcon from "@mui/icons-material/Receipt"
+import Image from "next/image"
+import AddIcon from "@mui/icons-material/Add"
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 
 export default function INvoiceDetails() {
   return (
@@ -34,13 +33,21 @@ export default function INvoiceDetails() {
         <div className="md:w-1/2 w-full">
           <div className="flex justify-between">
             <h3 className="font-bold text-xl">
-              Show Order Summary <span><ArrowDropUpIcon style={{fill: "#97A3B6"}} /></span>
+              Show Order Summary{" "}
+              <span>
+                <ArrowDropUpIcon style={{ fill: "#97A3B6" }} />
+              </span>
             </h3>
             <h3 className="font-bold text-xl">$23</h3>
           </div>
           <div className="flex mt-4  border-2 rounded-lg ">
             <div className="imageContainer basis-[20%] relative">
-              <Image fill={true} className="absolute" src="/veridux-logo.svg" />
+              <Image
+                alt=""
+                fill={true}
+                className="absolute"
+                src="/veridux-logo.svg"
+              />
             </div>
             <div className="textContainer basis-[80%] p-4">
               <div className="title flex justify-between">
@@ -89,7 +96,7 @@ export default function INvoiceDetails() {
           <h3 className="font-semibold text-lg mt-6  ">Payment Details </h3>
           <div className="mt-8 flex justify-between">
             <h4 className="font-semibold text-base">Payment</h4>
-           <KeyboardArrowDownIcon style={{fill: "#97A3B6"}} />
+            <KeyboardArrowDownIcon style={{ fill: "#97A3B6" }} />
           </div>
           <hr className="h-px mt-4 mb-4 bg-gray-200 border-[1px] " />
 
@@ -107,7 +114,7 @@ export default function INvoiceDetails() {
                   <p className="font-medium text-[#677489]">Edit</p>
                 </div>
               </div>
-              <Image src="/veridux-logo.svg" width={40} height={40} />
+              <Image alt="" src="/veridux-logo.svg" width={40} height={40} />
             </div>
             <div className="payment2 basis-[40%] flex flex-col md:flex-row rounded-lg p-2 gap-4 justify-evenly border-[#E3E8EF] border-2">
               <div>
@@ -121,7 +128,7 @@ export default function INvoiceDetails() {
                   <p className="font-medium text-[#677489]">Edit</p>
                 </div>
               </div>
-              <Image src="/veridux-logo.svg" width={40} height={40} />
+              <Image alt="" src="/veridux-logo.svg" width={40} height={40} />
             </div>
             <div className="payment3 p-4 basis-[20%] border-[#E3E8EF] rounded-lg border 2 justify-center items-center">
               <div className="iconConatiner flex items-center justify-center border-8 rounded-lg w-[60px] border-[#4B7DF3]">
@@ -194,11 +201,15 @@ export default function INvoiceDetails() {
           </div>
           <div className="flex mt-6 gap-2 items-center">
             <input type="checkbox" name="" id="" />
-            <p className="text-base font-medium text-[#677489]">Billing address is same as shipping</p>
+            <p className="text-base font-medium text-[#677489]">
+              Billing address is same as shipping
+            </p>
           </div>
-          <button className="text-white text-base font-bold text-center bg-[#4B7DF3] mt-4 rounded-lg px-[11px] py-[14px] w-full">Pay $51:00</button>
+          <button className="text-white text-base font-bold text-center bg-[#4B7DF3] mt-4 rounded-lg px-[11px] py-[14px] w-full">
+            Pay $51:00
+          </button>
         </div>
       </section>
     </main>
-  );
+  )
 }

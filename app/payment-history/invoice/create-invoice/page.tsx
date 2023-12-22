@@ -1,7 +1,7 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import ReceiptIcon from "@mui/icons-material/Receipt";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import ReceiptIcon from "@mui/icons-material/Receipt"
 
 export default function CreateInvoice() {
   return (
@@ -38,7 +38,12 @@ export default function CreateInvoice() {
                   placeholder="Automatically generated or enter a custom invoice number..."
                 />
                 <div className="flex flex-col">
-                  <label className= "font-medium text-lg mt-4 mb-2 " htmlFor="clientName">Client Name:</label>
+                  <label
+                    className="font-medium text-lg mt-4 mb-2 "
+                    htmlFor="clientName"
+                  >
+                    Client Name:
+                  </label>
                   <input
                     className=" w-full rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#006FCF] border-2 outline-none bg-[#ffffff] p-2"
                     type="text"
@@ -46,7 +51,12 @@ export default function CreateInvoice() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="quantity" className= "font-medium text-lg mt-4 mb-2 ">Quantity:</label>
+                  <label
+                    htmlFor="quantity"
+                    className="font-medium text-lg mt-4 mb-2 "
+                  >
+                    Quantity:
+                  </label>
                   <input
                     type="text"
                     className=" w-full rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#006FCF] border-2 outline-none bg-[#ffffff] p-2"
@@ -54,14 +64,16 @@ export default function CreateInvoice() {
                   />
                 </div>
                 <div className="mt-4 mb-2 ">
-                <ButtonUI text="Add" />
-
+                  <ButtonUI text="Add" />
                 </div>
               </div>
               <div className="left basis-[50%]  ">
                 <div className="dateContainer  flex items-center gap-8">
                   <div className="flex flex-col basis[50%]">
-                    <label htmlFor="" className= "font-medium text-lg mt-4 mb-2 ">
+                    <label
+                      htmlFor=""
+                      className="font-medium text-lg mt-4 mb-2 "
+                    >
                       Issue Date
                     </label>
                     <select
@@ -78,7 +90,10 @@ export default function CreateInvoice() {
                     </select>
                   </div>
                   <div className="flex flex-col basis[50%]">
-                    <label htmlFor="" className= "font-medium text-lg mt-4 mb-2 ">
+                    <label
+                      htmlFor=""
+                      className="font-medium text-lg mt-4 mb-2 "
+                    >
                       Due Date
                     </label>
                     <select
@@ -96,7 +111,9 @@ export default function CreateInvoice() {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="" className= "font-medium text-lg mt-4 mb-2 ">Invoice Items:</label>
+                  <label htmlFor="" className="font-medium text-lg mt-4 mb-2 ">
+                    Invoice Items:
+                  </label>
                   <input
                     className=" w-full rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#006FCF] border-2 outline-none bg-[#ffffff] p-2"
                     type="text"
@@ -104,7 +121,9 @@ export default function CreateInvoice() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="" className= "font-medium text-lg mt-4 mb-2 ">Unit Price:</label>
+                  <label htmlFor="" className="font-medium text-lg mt-4 mb-2 ">
+                    Unit Price:
+                  </label>
                   <input
                     type="text"
                     className=" w-full rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#006FCF] border-2 outline-none bg-[#ffffff] p-2"
@@ -114,21 +133,31 @@ export default function CreateInvoice() {
               </div>
             </div>
             <div className="bottom">
-              <h4  className= "font-medium text-lg mt-4 mb-2 ">Addition Information (Optional)</h4>
+              <h4 className="font-medium text-lg mt-4 mb-2 ">
+                Addition Information (Optional)
+              </h4>
               <div className="flex flex-col">
-              <label htmlFor="notes" className= "font-medium text-lg mt-4 mb-2 ">Notes:</label>
-              <textarea name="" id="" cols="30" rows="10" 
-              placeholder="Add any additional notes or terms here..."
-              className=" mb-5 rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#006FCF] border-2 outline-none bg-[#ffffff] p-2"
-              
-              ></textarea>
+                <label
+                  htmlFor="notes"
+                  className="font-medium text-lg mt-4 mb-2 "
+                >
+                  Notes:
+                </label>
+                <textarea
+                  name=""
+                  id=""
+                  cols={30}
+                  rows={10}
+                  placeholder="Add any additional notes or terms here..."
+                  className=" mb-5 rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#006FCF] border-2 outline-none bg-[#ffffff] p-2"
+                ></textarea>
               </div>
-             
+
               <ButtonUI text="Create Invoice" />
             </div>
           </div>
         </div>
       </div>
     </main>
-  );
+  )
 }

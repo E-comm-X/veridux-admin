@@ -1,7 +1,7 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Image from "next/image";
-import AddIcon from "@mui/icons-material/Add";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Image from "next/image"
+import AddIcon from "@mui/icons-material/Add"
 
 export default function ProductsData() {
   return (
@@ -48,12 +48,14 @@ export default function ProductsData() {
               </div>
               <div className="imageContainer flex mt-6 gap-4 ">
                 <Image
+                  alt=""
                   src="/veridux-logo.svg"
                   width={69}
                   height={69}
                   className="rounded border-[1px] border-[#006FCF]"
                 />
                 <Image
+                  alt=""
                   src="/veridux-logo.svg"
                   width={69}
                   height={69}
@@ -82,5 +84,5 @@ export default function ProductsData() {
         </form>
       </div>
     </div>
-  );
+  )
 }

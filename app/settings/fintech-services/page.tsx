@@ -1,22 +1,22 @@
-"use client";
-import { useState } from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Link from "next/link";
-import StorageIcon from "@mui/icons-material/Storage";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import PaymentsIcon from "@mui/icons-material/Payments";
-import WalletIcon from "@mui/icons-material/Wallet";
-import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import GpsFixedIcon from "@mui/icons-material/GpsFixed";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
-import Modal from "@/components/CreateVendorModal";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+"use client"
+import { useState } from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Link from "next/link"
+import StorageIcon from "@mui/icons-material/Storage"
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
+import PaymentsIcon from "@mui/icons-material/Payments"
+import WalletIcon from "@mui/icons-material/Wallet"
+import RequestQuoteIcon from "@mui/icons-material/RequestQuote"
+import LocalAtmIcon from "@mui/icons-material/LocalAtm"
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser"
+import GpsFixedIcon from "@mui/icons-material/GpsFixed"
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong"
+import Modal from "@/components/CreateVendorModal"
+import AddIcon from "@mui/icons-material/Add"
+import RemoveIcon from "@mui/icons-material/Remove"
 
-export default function page() {
-  const [open, setOpen] = useState(false);
+export default function Page() {
+  const [open, setOpen] = useState(false)
 
   return (
     <main>
@@ -59,7 +59,10 @@ export default function page() {
         <Link href="/setting/support" className="font-semibold text-sm">
           Support
         </Link>
-        <Link href="/settings/fintech-services/user-group" className="font-semibold text-sm">
+        <Link
+          href="/settings/fintech-services/user-group"
+          className="font-semibold text-sm"
+        >
           User Groups
         </Link>
       </div>
@@ -76,8 +79,8 @@ export default function page() {
                   Payment Processing Options
                 </h2>
                 <p className="font-normal text-sm text-[#00000099] ">
-                  Strengthen your admin account's security with an extra layer
-                  of protection.
+                  Strengthen your admin account&apos;s security with an extra
+                  layer of protection.
                 </p>
               </div>
             </div>
@@ -111,7 +114,7 @@ export default function page() {
               <div>
                 <h2 className="font-bold text-base">Currency Options</h2>
                 <p className="font-normal text-sm text-[#00000099] ">
-                  Choose the currencies you'll support for transactions
+                  Choose the currencies you&apos;ll support for transactions
                 </p>
               </div>
             </div>
@@ -148,7 +151,7 @@ export default function page() {
                 Real-Time Transaction Monitoring
               </h2>
               <p className="font-normal text-sm text-[#00000099] ">
-                Choose the currencies you'll support for transactions
+                Choose the currencies you&apos;ll support for transactions
               </p>
             </div>
           </div>
@@ -197,9 +200,7 @@ export default function page() {
                 id=""
                 className=" rounded text-sm font-semibold text-[#006FCFD9] border-[#d1d1d1] border-2 outline-none bg-[#006FCF21] p-2"
               >
-                <option required value="">
-                  Select Country
-                </option>
+                <option value="">Select Country</option>
               </select>
             </div>
             <div className="flex flex-col gap-2">
@@ -233,10 +234,9 @@ export default function page() {
                 Description
               </label>
               <textarea
-                col="10"
-                row="30"
+                cols={10}
+                rows={30}
                 className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#006FCFD9] border-[#006FCFD9] border-2 outline-none bg-[#006FCF21] p-2"
-                type="text"
                 placeholder="A brief description of the fee. This could be helpful for users who are not familiar with your services"
               ></textarea>
             </div>
@@ -252,5 +252,5 @@ export default function page() {
         </div>
       </Modal>
     </main>
-  );
+  )
 }

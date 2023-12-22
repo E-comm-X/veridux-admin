@@ -1,6 +1,6 @@
-import React from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Image from "next/image";
+import React from "react"
+import MoreVertIcon from "@mui/icons-material/MoreVert"
+import Image from "next/image"
 
 export default function VendorDocuments() {
   return (
@@ -15,7 +15,7 @@ export default function VendorDocuments() {
             <MoreVertIcon />
           </div>
           <div className="flex items-center flex-col  justify-items-center p-4">
-            <Image src="/veridux-logo.svg" width={93} height={93} />
+            <Image alt="" src="/veridux-logo.svg" width={93} height={93} />
             <h3 className="font-semibold text-xs">CAC DOC ONE.PDF</h3>
           </div>
         </div>
@@ -24,7 +24,7 @@ export default function VendorDocuments() {
             <MoreVertIcon />
           </div>
           <div className="flex items-center flex-col  justify-items-center p-4">
-            <Image src="/veridux-logo.svg" width={93} height={93} />
+            <Image alt="" src="/veridux-logo.svg" width={93} height={93} />
             <h3 className="font-semibold text-xs">CAC DOC ONE.PDF</h3>
           </div>
         </div>
@@ -33,12 +33,11 @@ export default function VendorDocuments() {
             <MoreVertIcon />
           </div>
           <div className="flex items-center flex-col  justify-items-center p-4">
-            <Image src="/veridux-logo.svg" width={93} height={93} />
+            <Image alt="" src="/veridux-logo.svg" width={93} height={93} />
             <h3 className="font-semibold text-xs">CAC DOC ONE.PDF</h3>
           </div>
         </div>
-        
       </div>
     </div>
-  );
+  )
 }

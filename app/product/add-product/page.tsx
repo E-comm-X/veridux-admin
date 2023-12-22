@@ -1,9 +1,9 @@
-import React from "react";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import AddIcon from "@mui/icons-material/Add";
-import ButtonUI from "@/components/ButtonUI";
-import Image from "next/image";
-import ImageIcon from "@mui/icons-material/Image";
+import React from "react"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import AddIcon from "@mui/icons-material/Add"
+import ButtonUI from "@/components/ButtonUI"
+import Image from "next/image"
+import ImageIcon from "@mui/icons-material/Image"
 
 export default function AddProduct() {
   return (
@@ -41,15 +41,15 @@ export default function AddProduct() {
             <label
               htmlFor="productname"
               className="text-sm font-medium mb-5 "
-              placeholder=" Provide A Detail Description for the product..."
+              // placeholder=" Provide A Detail Description for the product..."
             >
               Product Description
             </label>
             <textarea
               name=""
               id=""
-              cols="30"
-              rows="10"
+              cols={30}
+              rows={10}
               className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#d1d1d1] border-2 outline-none bg-[#E5E5E51F] p-2"
             ></textarea>
           </div>
@@ -69,20 +69,41 @@ export default function AddProduct() {
                   fill={true}
                   className="absolute"
                   src="/veridux-logo.svg"
+                  alt=""
                 />
               </div>
               <div className="image2  w-[132px] h-[132px] border-2 grid grid-cols-5 grid-rows-5 gap-4  gap-12">
                 <div className="col-span-2">
-                  <Image width={132} height={62} src="/veridux-logo.svg" />
+                  <Image
+                    alt=""
+                    width={132}
+                    height={62}
+                    src="/veridux-logo.svg"
+                  />
                 </div>
                 <div className="col-span-2 col-start-1 row-start-2">
-                  <Image width={132} height={62} src="/veridux-logo.svg" />
+                  <Image
+                    alt=""
+                    width={132}
+                    height={62}
+                    src="/veridux-logo.svg"
+                  />
                 </div>
                 <div className="col-start-3 row-start-1">
-                  <Image width={132} height={62} src="/veridux-logo.svg" />
+                  <Image
+                    alt=""
+                    width={132}
+                    height={62}
+                    src="/veridux-logo.svg"
+                  />
                 </div>
                 <div className="col-start-3 row-start-2">
-                  <Image width={132} height={62} src="/veridux-logo.svg" />
+                  <Image
+                    alt=""
+                    width={132}
+                    height={62}
+                    src="/veridux-logo.svg"
+                  />
                 </div>
               </div>
             </div>
@@ -156,5 +177,5 @@ export default function AddProduct() {
         </div>
       </div>
     </main>
-  );
+  )
 }

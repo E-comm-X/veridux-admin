@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 export default function UserWallet() {
   return (
@@ -19,14 +19,14 @@ export default function UserWallet() {
             <p className="text-[#000000A6] font-bold mb-2">$3000</p>
           </div>
         </div>
-        <div class=" inline-block   w-0.5 self-stretch bg-[#D9D9D9] "></div>
+        <div className=" inline-block   w-0.5 self-stretch bg-[#D9D9D9] "></div>
         <div className="lockWallet basis-[20%] self-center  flex flex-col gap-2">
-            <h2 className="font-bold text-lg self-center ">Lock Wallet</h2>
-            <div className="bg-[#000000] rounded-full w-[50px] h-[24px] self-center relative">
-                <div className="absolute bg-white rounded-full w-[24px] h-[24px] w-full"></div>
-            </div>
+          <h2 className="font-bold text-lg self-center ">Lock Wallet</h2>
+          <div className="bg-[#000000] rounded-full w-[50px] h-[24px] self-center relative">
+            <div className="absolute bg-white rounded-full w-[24px] h-[24px] w-full"></div>
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Link from "next/link";
-import HouseSidingIcon from "@mui/icons-material/HouseSiding";
-import Image from "next/image";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Link from "next/link"
+import HouseSidingIcon from "@mui/icons-material/HouseSiding"
+import Image from "next/image"
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 
 export default function page() {
   return (
@@ -61,6 +61,7 @@ export default function page() {
           <div className="bg-white border-[1px] rounded-lg px-4 py-6 flex flex-col gap-4">
             <div className="flex justify-between itenms-center">
               <Image
+                alt=""
                 width={44}
                 height={23}
                 className="w-[44px] h-[44px] "
@@ -76,6 +77,7 @@ export default function page() {
           <div className="bg-white border-[1px] rounded-lg px-4 py-6 flex flex-col gap-4">
             <div className="flex justify-between itenms-center">
               <Image
+                alt=""
                 width={44}
                 height={23}
                 className="w-[44px] h-[44px] "
@@ -91,6 +93,7 @@ export default function page() {
           <div className="bg-white border-[1px] rounded-lg px-4 py-6 flex flex-col gap-4">
             <div className="flex justify-between itenms-center">
               <Image
+                alt=""
                 width={44}
                 height={23}
                 className="w-[44px] h-[44px] "
@@ -106,6 +109,7 @@ export default function page() {
           <div className="bg-white border-[1px] rounded-lg px-4 py-6 flex flex-col gap-4">
             <div className="flex justify-between itenms-center">
               <Image
+                alt=""
                 width={44}
                 height={23}
                 className="w-[44px] h-[44px] "
@@ -120,46 +124,50 @@ export default function page() {
           </div>
         </div>
         <div className="parent bg-white border-[1px] rounded-lg mt-6 px-4 py-6 ">
-        <h3 className="font-bold text-[19.27px]"> Direct Bank Transfers</h3>
-        <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-        <div className="container flex  flex-col md:flex-row">
-          <div className="right flex basis-[45%] gap-4 ">
-            <div className="iconContainer  w-[53px] rounded-lg h-[53px] bg-[#006FCF40] flex items-center justify-center">
-               <HouseSidingIcon style={{fill: "#006FCF"}} />
+          <h3 className="font-bold text-[19.27px]"> Direct Bank Transfers</h3>
+          <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
+          <div className="container flex  flex-col md:flex-row">
+            <div className="right flex basis-[45%] gap-4 ">
+              <div className="iconContainer  w-[53px] rounded-lg h-[53px] bg-[#006FCF40] flex items-center justify-center">
+                <HouseSidingIcon style={{ fill: "#006FCF" }} />
+              </div>
+              <div className="inputContainer basis-[80%] flex flex-col gap-4">
+                <label
+                  htmlFor="country"
+                  className="font-semibold text-[19.27px]"
+                >
+                  Select your preferred Bank
+                </label>
+                <select
+                  name="usa"
+                  id=""
+                  className=" rounded w-full text-sm font-semibold text-[#00101E73] border-[#d1d1d1] border-2 outline-none bg-[#E5E5E51F] p-4"
+                >
+                  <option selected value="India">
+                    KeyStone Bank
+                  </option>
+                  <option value="Sri Lanka">Access Bank</option>
+                  <option value="Australia">First Bank</option>
+                </select>
+              </div>
             </div>
-            <div className="inputContainer basis-[80%] flex flex-col gap-4">
-              <label htmlFor="country" className="font-semibold text-[19.27px]">
-              Select your preferred Bank
-              </label>
-              <select name="usa" id=""
-              className=" rounded w-full text-sm font-semibold text-[#00101E73] border-[#d1d1d1] border-2 outline-none bg-[#E5E5E51F] p-4"
-              
+            <div className="left basis-[45%] flex flex-col gap-4">
+              <label
+                htmlFor="Currency symbol"
+                className="font-semibold text-[19.27px]"
               >
-                <option selected value="India">
-                KeyStone Bank
-              </option>
-              <option value="Sri Lanka">Access Bank</option>
-              <option value="Australia">First Bank</option>
-              </select>
+                Bank Account
+              </label>
+              <input
+                type="text"
+                placeholder="453467087"
+                className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#00000057] border-2 outline-none  p-4"
+              />
+              <ButtonUI text="Save" />
             </div>
-          </div>
-          <div className="left basis-[45%] flex flex-col gap-4">
-            <label
-              htmlFor="Currency symbol"
-              className="font-semibold text-[19.27px]"
-            >
-              Bank Account
-            </label>
-            <input
-              type="text"
-              placeholder="453467087"
-              className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#00101E73] border-[#00000057] border-2 outline-none  p-4"
-            />
-            <ButtonUI text="Save" />
           </div>
         </div>
       </div>
-      </div>
     </main>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Link from "next/link";
-import Image from "next/image";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Link from "next/link"
+import Image from "next/image"
 
 export default function adminDetails() {
   return (
@@ -39,7 +39,10 @@ export default function adminDetails() {
         <Link href="/setting/security" className="font-semibold text-sm">
           Security & Compliance
         </Link>
-        <Link href="/setting/fintech-services" className="font-semibold text-sm">
+        <Link
+          href="/setting/fintech-services"
+          className="font-semibold text-sm"
+        >
           Fintech Services
         </Link>
         <Link href="/setting/support" className="font-semibold text-sm">
@@ -55,7 +58,12 @@ export default function adminDetails() {
         <div className="right self-start basis-full md:basis-[50%] bg-white  border-[1px] rounded-lg px-4 py-8  border-[#0000004F] ">
           <div className="flex  gap-8 ">
             <div className="imageContainer border-[1px] rounded-lg w-[156px] h-[156px] relative  ">
-              <Image className="absolute" fill={true} src="/veridux-logo.svg"/>
+              <Image
+                className="absolute"
+                fill={true}
+                src="/veridux-logo.svg"
+                alt=""
+              />
             </div>
             <div className="detailsContainer">
               <h5 className="font-semibold text-xl">Linda brate</h5>
@@ -78,28 +86,51 @@ export default function adminDetails() {
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Remove a privilege</h4>
-              <p className="text-[14.53px] font-semibold">Add a new privilege</p>
+              <p className="text-[14.53px] font-semibold">
+                Add a new privilege
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Update Privilege</h4>
-              <p className="text-[14.53px] font-semibold">Modify an existing privilege</p>
+              <p className="text-[14.53px] font-semibold">
+                Modify an existing privilege
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
-              <h4 className="text-[19.82px] font-bold">Update Permitted Groups for Privilege</h4>
-              <p className="text-[14.53px] font-semibold">Adjust permitted groups for a privilege</p>
+              <h4 className="text-[19.82px] font-bold">
+                Update Permitted Groups for Privilege
+              </h4>
+              <p className="text-[14.53px] font-semibold">
+                Adjust permitted groups for a privilege
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
@@ -108,78 +139,128 @@ export default function adminDetails() {
               <p className="text-[14.53px] font-semibold">Remove a privilege</p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Get All Privileges</h4>
-              <p className="text-[14.53px] font-semibold">Retrieve a list of all privileges</p>
+              <p className="text-[14.53px] font-semibold">
+                Retrieve a list of all privileges
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Get Privilege Data</h4>
-              <p className="text-[14.53px] font-semibold">Access detailed information about a privilege</p>
+              <p className="text-[14.53px] font-semibold">
+                Access detailed information about a privilege
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Add Permission Group</h4>
-              <p className="text-[14.53px] font-semibold">Create a new permission group</p>
+              <p className="text-[14.53px] font-semibold">
+                Create a new permission group
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Add Permission Group</h4>
-              <p className="text-[14.53px] font-semibold">Create a new permission group</p>
+              <p className="text-[14.53px] font-semibold">
+                Create a new permission group
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Add Permission Group</h4>
-              <p className="text-[14.53px] font-semibold">Create a new permission group</p>
+              <p className="text-[14.53px] font-semibold">
+                Create a new permission group
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Add Permission Group</h4>
-              <p className="text-[14.53px] font-semibold">Create a new permission group</p>
+              <p className="text-[14.53px] font-semibold">
+                Create a new permission group
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
           <div className="flex justify-between items-center gap-4 mt-4">
             <div className="texts">
               <h4 className="text-[19.82px] font-bold">Add Permission Group</h4>
-              <p className="text-[14.53px] font-semibold">Create a new permission group</p>
+              <p className="text-[14.53px] font-semibold">
+                Create a new permission group
+              </p>
             </div>
             <div className="checkbox rounded-lg bg-[#006FCF40] w-[43px] h-[43px] ">
-              <input type="checkbox" name="" id="" className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                className="bg-[#006FCF40] w-[43px] h-[43px] rounded-lg"
+              />
             </div>
           </div>
-
-
-
-
         </div>
       </div>
     </main>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import Link from "next/link";
-import { deliveriesData } from "@/data/delivriesData";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import Link from "next/link"
+import { deliveriesData } from "@/data/delivriesData"
 
 import DeliverySummary from "../DeliverySummary"
 
@@ -36,21 +36,18 @@ export default function Page() {
           </div>
         </Link>
         <Link href="/deliveries/shipped">
-        <div className="mr-4">
-          <p className="font-semibold text-xl">Shipped</p>
-          <hr className="rounded-md w-ful border-2  border-[#006FCF]" />
-        </div>
+          <div className="mr-4">
+            <p className="font-semibold text-xl">Shipped</p>
+            <hr className="rounded-md w-ful border-2  border-[#006FCF]" />
+          </div>
         </Link>
         <Link href="/deliveries/failed">
-        <div className="mr-4">
-          <p className="font-semibold text-xl">Cancelled</p>
-          <hr className="rounded-md w-ful  border-2" />
-        </div>
+          <div className="mr-4">
+            <p className="font-semibold text-xl">Cancelled</p>
+            <hr className="rounded-md w-ful  border-2" />
+          </div>
         </Link>
 
-
-       
-       
         <div className="mr-4">
           <p className="font-semibold text-xl">Action required</p>
           <hr className="rounded-md w-ful border-2" />
@@ -59,7 +56,7 @@ export default function Page() {
       <div className="flex gap-8 flex-wrap">
         {deliveriesData
           .filter((data) => data.status === "Shipped")
-          .map((filterData) => (
+          .map((filterData, index) => (
             <DeliverySummary
               departure={filterData.departure}
               arrival={filterData.arrival}
@@ -71,6 +68,8 @@ export default function Page() {
               shippingAddress={filterData.shippingAddress}
               vendorName={filterData.vendorName}
               vendorImage={filterData.vendorImage}
+              key={index}
+              image={filterData.image}
             />
           ))}
         <div className="text-center">
@@ -80,5 +79,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }

@@ -1,6 +1,6 @@
 import React from "react"
 import { Input } from "./Input"
-import { SearchIcon } from "@/icons"
+import { Search as SearchIcon } from "@mui/icons-material"
 
 export const Search = ({ className }: { className?: string }) => {
   return (

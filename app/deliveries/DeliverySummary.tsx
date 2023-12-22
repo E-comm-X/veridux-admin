@@ -1,28 +1,27 @@
-import Image from "next/image";
-import PauseIcon from "@mui/icons-material/Pause";
-import MessageIcon from "@mui/icons-material/Message";
-import CallIcon from "@mui/icons-material/Call";
+import Image from "next/image"
+import PauseIcon from "@mui/icons-material/Pause"
+import MessageIcon from "@mui/icons-material/Message"
+import CallIcon from "@mui/icons-material/Call"
 
-function shippingStatus(status) {
+function shippingStatus(status: any) {
   return status === "incoming"
     ? "bg-[#FF9900] border-[1px] border-[#8C5400] px-4  py-2 text-white rounded text-center"
     : status === "Shipped"
-    ?"bg-[#3EC2003B] border-[1px] border-[#3EC2006E] px-4 py-2 text-[#3EC2006E] rounded text-center"
+    ? "bg-[#3EC2003B] border-[1px] border-[#3EC2006E] px-4 py-2 text-[#3EC2006E] rounded text-center"
     : status === "Cancelled"
     ? "bg-[#C200003B] border-[1px] border-[#C200006E] px-4  py-2 text-[#C200006E] rounded text-center"
     : null
 }
 
-function text(sign) {
+function text(sign: number) {
   return sign > 0
     ? "text-[#0D894F] font-medium font-xs"
     : sign < 0
     ? "text-[#F04438] font-xs font-medium "
     : sign === 0
     ? "text-[#667085] font-xs font-medium"
-    : value4
+    : ""
 }
-
 
 export default function DeliverySummary({
   departure,
@@ -36,7 +35,7 @@ export default function DeliverySummary({
   shippingAddress,
   vendorName,
   vendorImage,
-}) {
+}: any) {
   return (
     <div className="bg-white rounded-lg border-[2px] border-[#00000014] p-6 md:basis-[31%] basis-full ">
       <div className="flex top ">
@@ -61,9 +60,7 @@ export default function DeliverySummary({
           </div>
         </div>
         <div className="top-left basis-[20%] ml-auto h-[40px]">
-          <button className={shippingStatus(status)}>
-            {status}
-          </button>
+          <button className={shippingStatus(status) as any}>{status}</button>
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
@@ -131,7 +128,6 @@ export default function DeliverySummary({
           </div>
         </div>
       </div>
-      
     </div>
-  );
+  )
 }

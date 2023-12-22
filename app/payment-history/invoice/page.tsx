@@ -1,9 +1,9 @@
-import React from "react";
-import InvoiceTable from "./InvoiceTable";
-import ButtonUI from "@/components/ButtonUI";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-export default function () {
+import React from "react"
+import InvoiceTable from "./InvoiceTable"
+import ButtonUI from "@/components/ButtonUI"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import ReceiptIcon from "@mui/icons-material/Receipt"
+export default function Page() {
   return (
     <main>
       <div className="md:flex justify-between align-center text-black">
@@ -27,5 +27,5 @@ export default function () {
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       <InvoiceTable />
     </main>
-  );
+  )
 }

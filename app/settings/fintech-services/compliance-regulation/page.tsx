@@ -1,14 +1,14 @@
-"use client";
-import { useState } from "react";
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import Link from "next/link";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import Modal from "@/components/CreateVendorModal";
-import CheckIcon from "@mui/icons-material/Check";
-export default function page() {
-  const [open, setOpen] = useState(false);
+"use client"
+import { useState } from "react"
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Link from "next/link"
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
+import Modal from "@/components/CreateVendorModal"
+import CheckIcon from "@mui/icons-material/Check"
+export default function Page() {
+  const [open, setOpen] = useState(false)
 
   return (
     <main>
@@ -163,9 +163,7 @@ export default function page() {
                 id=""
                 className=" rounded text-sm font-semibold text-[#006FCFD9] border-[#006FCF] border-2 outline-none bg-[#006FCF21] p-4"
               >
-                <option required value="">
-                  Select Country
-                </option>
+                <option value="">Select Country</option>
               </select>
             </div>
 
@@ -181,5 +179,5 @@ export default function page() {
         </div>
       </Modal>
     </main>
-  );
+  )
 }

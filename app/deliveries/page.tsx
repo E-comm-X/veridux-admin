@@ -1,11 +1,11 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import Link from "next/link";
-import { deliveriesData } from "@/data/delivriesData";
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import Link from "next/link"
+import { deliveriesData } from "@/data/delivriesData"
 
-import DeliverySummary from "./DeliverySummary";
+import DeliverySummary from "./DeliverySummary"
 
 export default function Page() {
   return (
@@ -55,7 +55,7 @@ export default function Page() {
       <div className="flex gap-8 flex-wrap">
         {deliveriesData
           .filter((data) => data.status === "incoming")
-          .map((filterData) => (
+          .map((filterData, index) => (
             <DeliverySummary
               departure={filterData.departure}
               arrival={filterData.arrival}
@@ -67,6 +67,8 @@ export default function Page() {
               shippingAddress={filterData.shippingAddress}
               vendorName={filterData.vendorName}
               vendorImage={filterData.vendorImage}
+              key={index}
+              image={filterData.image}
             />
           ))}
         <div className="text-center">
@@ -76,5 +78,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }

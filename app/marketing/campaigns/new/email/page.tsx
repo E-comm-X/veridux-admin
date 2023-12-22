@@ -1,5 +1,4 @@
 "use client"
-import RichTextEditor from "@/components/Editor"
 import { H4, Text } from "@/components/Typography"
 import { Button } from "@mui/material"
 import { DatePicker, Divider, Form, Input, Select, TimePicker } from "antd"
@@ -68,7 +67,6 @@ const CreateEmailCampaign = () => {
                 className="border-[#006FCF]"
                 placeholder="Enter the subject of your email..."
               />
-              {/* <Editor editorState={editorState} onChange={setEditorState} /> */}
             </Form.Item>
             <div className="mt-10">
               <H4 className="text-semibold">Schedule Sending</H4>
