@@ -6,7 +6,7 @@ import Link from "next/link";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Modal from "@/components/CreateVendorModal";
-
+import CheckIcon from "@mui/icons-material/Check";
 export default function page() {
   const [open, setOpen] = useState(false);
 
@@ -96,27 +96,87 @@ export default function page() {
       </div>
       {/* Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className=" w-96">
-          <form action="">
-            <h2 className="text-black text-4xl mt-2 text-center">Create Vendor</h2>
-            <div className="flex flex-col gap-2 mt-2">
-              <label htmlFor="vendor" className="font-semibold text-xl">Vendor</label>
-              <input id="vendor" type="text" placeholder="Full Name" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none"/>
-            </div> 
-            <div className="flex flex-col gap-2 mt-2">
-              <label htmlFor="phone"  className="font-semibold text-xl">Phone Number</label>
-              <input type="text" placeholder="Enter Phone Number" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none" />
+        <div className="w-96 md:w-auto">
+          <form action="" className="flex flex-col">
+            <h2 className="text-center font-bold text-2xl">KYC Requirement</h2>
+            <p className="text-center font-normal text-base">
+              KYC requirements are essential for establishing trust and
+              compliance within your ecosystem
+            </p>
+            <h3 className="font-semibold  text-xl mb-2  mt-2 ">
+              Document Types
+            </h3>
+            <div className="container mt-2 mb-2 ">
+              <div className="flex  flex-wrap md:flex-nowrap gap-4">
+                <div className="flex bg-[#006FCF1A] basis-[30%]  rounded-lg border-2 border-[#006FCF] items-center p-2 gap-4">
+                  <div className="iconContainer w-[26px] h-[26px] rounded-full flex items-center justify-center rounded-full bg-[#006FCF40] border-[#006FCF] border-2 ">
+                    <CheckIcon style={{ fill: "#006FCF" }} />
+                  </div>
+                  <h5 className="text-[29.24px] font-semibold text-[#006FCF]">
+                    Pdf
+                  </h5>
+                </div>
+                <div className="flex bg-[#006FCF1A] basis-[30%] rounded-lg border-2 border-[#006FCF] items-center p-2 gap-4">
+                  <div className="iconContainer w-[26px] h-[26px] rounded-full flex items-center justify-center rounded-full bg-[#006FCF40] border-[#006FCF] border-2 ">
+                    <CheckIcon style={{ fill: "#006FCF" }} />
+                  </div>
+                  <h5 className="text-[29.24px] font-semibold text-[#006FCF]">
+                    Png
+                  </h5>
+                </div>
+                <div className="flex bg-[#006FCF1A] basis-[30%] rounded-lg border-2 border-[#006FCF] items-center p-2 gap-4">
+                  <div className="iconContainer w-[26px] h-[26px] rounded-full flex items-center justify-center rounded-full bg-[#006FCF40] border-[#006FCF] border-2 ">
+                    <CheckIcon style={{ fill: "#006FCF" }} />
+                  </div>
+                  <h5 className="text-[29.24px] font-semibold text-[#006FCF]">
+                    Word
+                  </h5>
+                </div>
+                <div className="flex bg-[#006FCF1A] basis-[30%] rounded-lg border-2 border-[#006FCF] items-center p-2 gap-4">
+                  <div className="iconContainer w-[26px] h-[26px] rounded-full flex items-center justify-center rounded-full bg-[#006FCF40] border-[#006FCF] border-2 ">
+                    <CheckIcon style={{ fill: "#006FCF" }} />
+                  </div>
+                  <h5 className="text-[29.24px] font-semibold text-[#006FCF]">
+                    jpg
+                  </h5>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 mt-2">
-              <label htmlFor="industry"  className="font-semibold text-xl">Industry</label>
-              <input type="text" placeholder="Select Your Industry" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none"  />
+            <h3 className="font-semibold  text-xl">Store Details</h3>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder=" Registration Number"
+                className="mt-2 rounded text-sm font-semibold placeholder:text-[#006FCFD9] border-[#006FCF] border-2 outline-none bg-[#006FCF21] py-4 px-8"
+              />
+              <div className="iconContainer absolute bottom-[12px] left-[7px] w-[26px] h-[26px] rounded-full flex items-center justify-center rounded-full bg-[#006FCF40] border-[#006FCF] border-2 ">
+                <CheckIcon style={{ fill: "#006FCF" }} />
+              </div>
             </div>
-            <div className="flex flex-col gap-2 mt-2" >
-              <label htmlFor="services"  className="font-semibold text-xl">Vendor</label>
-              <input type="text" placeholder="Select Services" className=" border-2 p-2 rounded border-[#006FCF] bg-[#006FCF1F] outline-none" />
+
+            <div className="flex flex-col gap-2 ">
+              <label htmlFor="" className="font-semibold text-xl mt-2">
+                Currency
+              </label>
+              <select
+                name=""
+                id=""
+                className=" rounded text-sm font-semibold text-[#006FCFD9] border-[#006FCF] border-2 outline-none bg-[#006FCF21] p-4"
+              >
+                <option required value="">
+                  Select Country
+                </option>
+              </select>
             </div>
-            <button className=" my-4 w-full flex align-center justify-center text-center text-white bg-[#006FCF] font-semibold  rounded px-2 py-2">Add Vendor</button>
-            {/* <ButtonUI text="Add Vendor"></ButtonUI> */}
+
+            <div className="buttonConatiner text-center mx-auto  flex mt-4 ">
+              <button className=" flex align-center mr-6 justify-center text-center text-[#006FCF] bg-[#006FCF40] font-semibold  rounded px-4 py-2 ">
+                Cancel
+              </button>
+              <button className=" flex align-center justify-center text-center text-white bg-[#006FCF] font-semibold  rounded px-4 py-2 ">
+                Save
+              </button>
+            </div>
           </form>
         </div>
       </Modal>
