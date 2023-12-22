@@ -4,8 +4,6 @@ import { H3, H4, Text } from "@/components/Typography"
 import { ChartUpIcon } from "@/icons"
 import React from "react"
 
-const continentSubscribers = []
-
 export const ActiveSubcribers = () => {
   return (
     <div className="bg-white border-[1px] md:p-[24px] p-[16px] rounded-[10px]">

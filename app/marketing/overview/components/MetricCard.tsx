@@ -17,7 +17,7 @@ export interface metricProps {
 
 export const MetricCard: FC<metricProps> = ({ ...props }) => {
   return (
-    <div className="bg-white border-[1px] md:p-[16px] p-[10px] rounded-[10px] flex flex-col justify-between md:h-[260px] h-[185px]">
+    <div className="bg-white border-[1px] md:p-[16px] p-[10px] rounded-[10px] flex flex-col justify-between md:h-[230px] h-[185px]">
       <div className="flex justify-between flex-row">
         <div className="p-[6.67px] rounded-[10px] border-[1px]">
           <Layers className="text-primary" />
