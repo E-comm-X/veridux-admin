@@ -1,8 +1,6 @@
 "use client"
 import { H2, H3, H5, Text } from "@/components/Typography"
 import { ChevronRight, Edit } from "@mui/icons-material"
-import { Button } from "@mui/material"
-import { Avatar, Divider } from "antd"
 import React from "react"
 
 export const TimeZone = () => {
@@ -28,10 +26,9 @@ export const TimeZone = () => {
 
         <div className="md:p-[24px] p-[16px] flex items-center justify-between cursor-pointer">
           <div>
-            <H5>Set Your Time Zone</H5>
+            <H5>Choose Your Language</H5>
             <Text className="text-grey-500">
-              Choose the time zone that reflects your location or operational
-              base
+              Select your preferred language for the platform&apos;s interface.
             </Text>
           </div>
           <ChevronRight />
