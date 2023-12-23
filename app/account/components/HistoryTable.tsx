@@ -4,11 +4,23 @@ import Box from "@mui/material/Box"
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid"
 import { H4, H5, H6, Text } from "@/components/Typography"
 import { Tag } from "antd"
+import { DeleteOutline, EditOutlined } from "@mui/icons-material"
 
 const RenderTitle = (params: any) => {
   // const [title, subtitle] = params?.value?.split("-")
   return <H6>{params.value}</H6>
 }
+
+const RenderActions = (params: any) => {
+  // const [title, subtitle] = params?.value?.split("-")
+  return (
+    <div className="flex gap-2 items-center">
+      <EditOutlined />
+      <DeleteOutline />
+    </div>
+  )
+}
+
 const RenderStatus = (params: any) => {
   return (
     <>
@@ -64,6 +76,7 @@ const columns: GridColDef[] = [
     headerName: "Actions",
     editable: true,
     flex: 1,
+    renderCell: RenderActions,
   },
 ]
 
