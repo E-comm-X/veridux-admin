@@ -11,7 +11,7 @@ const navItems = [
 
 export const AccountNav = ({ active }: { active: string }) => {
   return (
-    <div className="p-[24px] md:pt-[4rem] flex md:flex-col flex-row gap-[24px] md:gap-[0] items-center md:border-r-[1px]">
+    <div className="p-[24px] md:pt-[4rem] flex md:flex-col flex-row gap-[24px] md:gap-[0] items-center md:justify-start justify-center md:border-r-[1px] flex-wrap">
       {navItems.map((item) => (
         <Link
           href={`/account/${item.key}`}
@@ -20,7 +20,7 @@ export const AccountNav = ({ active }: { active: string }) => {
             item.key === active
               ? "text-primary font-bold bg-[#006FCF2B]"
               : "text-[#00000099] font-semibold"
-          } capitalize cursor-pointer rounded-[10px] w-full text-center py-[20px]`}
+          } capitalize cursor-pointer rounded-[10px] md:w-full text-center md:p-[20px] p-[10px]`}
         >
           {item.name}
         </Link>

@@ -9,7 +9,7 @@ export const Profile = () => {
   return (
     <div>
       <H3 className="mb-[2rem]">My Profile</H3>
-      <div className="rounded-[27px] border-[1px] md:p-[24px] flex md:flex-row flex-col justify-between items-center mb-[2rem]">
+      <div className="rounded-[27px] border-[1px] md:p-[24px] p-[16px] flex md:flex-row flex-col justify-between md:items-center mb-[2rem] gap-3">
         <div className="flex gap-[17px] items-center">
           <Avatar src="/avatar.png" size={118} />
           <div>
@@ -30,7 +30,7 @@ export const Profile = () => {
         </Button>
       </div>
 
-      <div className="rounded-[27px] border-[1px] md:p-[24px] mb-[2rem]">
+      <div className="rounded-[27px] border-[1px] md:p-[24px] p-[16px] mb-[2rem]">
         <div className="flex justify-between items-center mb-[1rem]">
           <H5>Personal Information</H5>
           <Button
@@ -75,7 +75,7 @@ export const Profile = () => {
         </div>
       </div>
 
-      <div className="rounded-[27px] border-[1px] md:p-[24px] mb-[2rem]">
+      <div className="rounded-[27px] border-[1px] md:p-[24px] p-[16px] mb-[2rem]">
         <div className="flex justify-between items-center mb-[1rem]">
           <H5>Personal Information</H5>
           <Button
