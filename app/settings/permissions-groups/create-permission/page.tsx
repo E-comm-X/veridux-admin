@@ -1,5 +1,8 @@
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
+"use client"
+import React, { useState } from "react"
+import ButtonUI from "@/components/ButtonUI"
+import Modal from "@/components/CreateVendorModal";
+
 
 export default function CreateUserGroup() {
   return (
