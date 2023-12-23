@@ -150,8 +150,7 @@ export default function Page() {
                 Fee Description
               </label>
               <textarea
-                cols={10}
-                rows={30}
+                
                 className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#006FCFD9] border-[#006FCFD9] border-2 outline-none bg-[#006FCF21] p-2"
                 placeholder="A brief description of the fee. This could be helpful for users who are not familiar with your services"
               ></textarea>

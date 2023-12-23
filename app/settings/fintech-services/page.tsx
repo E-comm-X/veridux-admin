@@ -179,7 +179,7 @@ export default function Page() {
       </div>
       {/* Modal */}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className=" w-96">
+        <div className=" w-96 ">
           <form action="" className="flex flex-col">
             <h2 className="text-center font-bold text-2xl">
               Transaction Fee Settings
@@ -234,8 +234,7 @@ export default function Page() {
                 Description
               </label>
               <textarea
-                cols={10}
-                rows={30}
+                
                 className="rounded placeholder:text-sm placeholder:font-semibold placeholder:text-[#006FCFD9] border-[#006FCFD9] border-2 outline-none bg-[#006FCF21] p-2"
                 placeholder="A brief description of the fee. This could be helpful for users who are not familiar with your services"
               ></textarea>

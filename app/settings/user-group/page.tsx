@@ -13,7 +13,7 @@ export default function UserGroupHome() {
       </p>
       <Link href="/settings/user-group/create-usergroup">
         <button className="text-center rounded-lg py-6 px-4 bg-[#000000] text-white outline-none">
-          Create New Permission
+          Create User Group
         </button>
       </Link>
     </main>
