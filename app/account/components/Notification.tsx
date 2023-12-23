@@ -3,6 +3,7 @@ import { H2, H3, H5, Text } from "@/components/Typography"
 import { ChevronRight, Edit, Settings } from "@mui/icons-material"
 import { Switch } from "antd"
 import React from "react"
+import Link from "next/link"
 
 export const Notification = () => {
   return (
@@ -62,7 +63,10 @@ export const Notification = () => {
           <Switch className="bg-black" />
         </div>
       </div>
-      <div className="md:p-[24px] p-[16px] flex items-center justify-between cursor-pointer rounded-[27px] border-[1px]">
+      <Link
+        href={"/account/notification/history"}
+        className="md:p-[24px] p-[16px] flex items-center justify-between cursor-pointer rounded-[27px] border-[1px]"
+      >
         <div>
           <H5>Notification History</H5>
           <Text className="text-grey-500 md:w-[60%] w-[70%]">
@@ -72,7 +76,7 @@ export const Notification = () => {
           </Text>
         </div>
         <ChevronRight />
-      </div>
+      </Link>
     </div>
   )
 }

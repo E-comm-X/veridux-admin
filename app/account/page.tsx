@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import { H2, Text } from "@/components/Typography"
 import { Button } from "@mui/material"
