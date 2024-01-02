@@ -1,10 +1,14 @@
 "use client"
-import { Call, EmailOutlined } from "@mui/icons-material"
-import { Button, Input } from "antd"
+import { Button, Form, Input } from "antd"
 import Image from "next/image"
-import Link from "next/link"
+import { useLogin } from "@/hooks/useLogin"
+import { useState } from "react"
+import { LoadingOutlined } from "@ant-design/icons"
 
 export default function PhoneLogin() {
+  const [phone_number, setPhone] = useState("")
+  const [password, setPassword] = useState("")
+  const { login, isLoading } = useLogin({ phone_number, password })
   return (
     <div className={`container bg-white h-screen mx-auto`}>
       <div className="flex flex-col items-center justify-between h-full px-6 rounded-md md:py-14 md:px-12">
@@ -29,23 +33,36 @@ export default function PhoneLogin() {
             Log into your account to proceed
           </p>
 
-          <div className="flex flex-col w-full space-y-6 justify-center">
+          <Form
+            className="flex flex-col w-full space-y-6 justify-center"
+            onFinish={login}
+          >
             <div className="w-full">
               <label htmlFor="">Phone</label>
-              <Input type="phone" size="large" className="w-full py-3" />
+              <Input
+                type="phone"
+                size="large"
+                className="w-full py-3"
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
             <div>
               <label htmlFor="">Password</label>
-              <Input.Password size="large" className="w-full py-3" />
+              <Input.Password
+                size="large"
+                className="w-full py-3"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <Button
               size="large"
               className="w-full py-3 bg-primary"
               type="primary"
+              htmlType="submit"
             >
-              Log In
+              {isLoading ? <LoadingOutlined /> : "Log In"}
             </Button>
-          </div>
+          </Form>
         </div>
 
         <div className="flex w-full items-start text-base500 text-[14px] justify-between md:text-[16px] md:items-center">
