@@ -27,7 +27,8 @@
     "recharts": "^2.10.3",
     "slate": "^0.101.5",
     "slate-history": "^0.100.0",
-    "slate-react": "^0.101.5"
+    "slate-react": "^0.101.5",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@types/node": "^20",

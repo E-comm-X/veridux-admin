@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+}
+
+@media (prefers-color-scheme: dark) {
+}
+
+body {
+}
+
+.ant-select-selector {
+  border-color: #006fcf !important;
+}
