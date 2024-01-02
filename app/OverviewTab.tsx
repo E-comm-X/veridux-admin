@@ -24,6 +24,6 @@ const items: TabsProps["items"] = [
   },
 ]
 
-export const OverviewTab: React.FC = () => (
-  <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-)
+export const OverviewTab: React.FC = () => {
+  return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+}
