@@ -1,16 +1,16 @@
-"use client";
-import ButtonUI from "@/components/ButtonUI";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
-import Modal from "@/components/CreateVendorModal";
-import Link from "next/link";
-import VendorData from "./VendorData";
-import UserActivity from "@/app/users/[id]/UserActivity";
-import VendorDocuments from "./VendorDocuments";
+"use client"
+import ButtonUI from "@/components/ButtonUI"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import AddIcon from "@mui/icons-material/Add"
+import { useState } from "react"
+import Modal from "@/components/CreateVendorModal"
+import Link from "next/link"
+import VendorData from "./VendorData"
+import VendorDocuments from "./VendorDocuments"
+import UserActivity from "../../users/[id]/UserActivity"
 
 export default function VendorPage() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <main>
@@ -110,5 +110,5 @@ export default function VendorPage() {
         </div>
       </Modal>
     </main>
-  );
+  )
 }
