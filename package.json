@@ -25,6 +25,7 @@
     "react-dom": "^18",
     "react-redux": "^9.0.4",
     "recharts": "^2.10.3",
+    "redux-logger": "^3.0.6",
     "slate": "^0.101.5",
     "slate-history": "^0.100.0",
     "slate-react": "^0.101.5",

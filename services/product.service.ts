@@ -10,8 +10,8 @@ export const productApi = createApi({
     addProduct: builder.mutation<ProductI, ProductRequestI>({
       query: (data) => {
         const formdata = new FormData()
-        formdata.append("preview_image", data.preview_image)
-        formdata.append("store_id", data.store_id)
+        formdata.append("preview_image", data.preview_image as Blob, "test")
+        // formdata.append("store_id", data.store_id)
         formdata.append("product_name", data.product_name)
         formdata.append("details", data.details)
         formdata.append("price", data.price)
@@ -22,6 +22,10 @@ export const productApi = createApi({
           url: "/new",
           method: "POST",
           body: formdata,
+          maxBodyLength: Infinity,
+          headers: {
+            authorization: `Bearer ${data.authToken}`,
+          },
         }
       },
     }),

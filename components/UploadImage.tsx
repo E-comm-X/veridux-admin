@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons"
 import { Modal, Upload } from "antd"
 import type { RcFile, UploadProps } from "antd/es/upload"
 import type { UploadFile } from "antd/es/upload/interface"
+import { ProductRequestI } from "@/interfaces/product"
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -13,7 +14,9 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error)
   })
 
-export const UploadImage: React.FC = () => {
+export const UploadImage: React.FC<{
+  setProductPreviewImage: React.Dispatch<React.SetStateAction<ProductRequestI>>
+}> = ({ setProductPreviewImage }) => {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState("")
   const [previewTitle, setPreviewTitle] = useState("")
@@ -35,6 +38,12 @@ export const UploadImage: React.FC = () => {
 
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
     setFileList(newFileList)
+    if (newFileList.length >= 1) {
+      setProductPreviewImage((prev) => ({
+        ...prev,
+        preview_image: newFileList[0]?.originFileObj as Blob,
+      }))
+    }
     console.log(newFileList[0].originFileObj)
   }
 

@@ -1,9 +1,71 @@
 "use client"
-import React from "react"
-import { Input, Select } from "antd"
+import React, { useState } from "react"
+import { Button, Input, Select, message } from "antd"
 import { UploadImage } from "@/components/UploadImage"
+import { useAddProductMutation } from "@/services/product.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { ProductRequestI } from "@/interfaces/product"
+import { useGetAllCategoriesQuery } from "@/services/category.service"
+import { useGetAllStoresQuery } from "@/services/store.service"
+import { LoadingOutlined } from "@ant-design/icons"
+
+const reqData: ProductRequestI = {
+  preview_image: null,
+  store_id: "",
+  product_name: "",
+  details: "",
+  price: "",
+  total_quantity: "",
+  category_ids: "",
+  brand_name: "",
+  package_size: "",
+  authToken: "",
+}
+
+const transformData = (data: { name: string; id: string }[]) => {
+  const newData =
+    data &&
+    data?.map((data) => ({
+      label: data.name,
+      value: data.id,
+    }))
+  return newData
+}
 
 export default function AddProduct() {
+  const [addProductMutation, { isLoading }] = useAddProductMutation()
+  const { token } = useAuthToken()
+  const [formData, setFormData] = useState<ProductRequestI>({
+    ...reqData,
+    authToken: token as string,
+  })
+  const { data: categories } = useGetAllCategoriesQuery(null)
+  const { data: stores } = useGetAllStoresQuery(null)
+
+  const categoryOptions = transformData(categories as [])
+  const storesOptions = transformData(stores as [])
+  const addProduct = async () => {
+    try {
+      if (
+        formData.brand_name &&
+        formData.preview_image &&
+        formData.price &&
+        formData.product_name &&
+        formData.total_quantity &&
+        formData.category_ids &&
+        formData.package_size &&
+        formData.store_id
+      ) {
+        await addProductMutation(formData).unwrap()
+        message.success("Product Added Successfully")
+      } else {
+        message.warning("Please Fill All Fields")
+      }
+    } catch (error: any) {
+      console.log(error)
+      message.error(`Failed: ${error.data.message}`)
+    }
+  }
   return (
     <main>
       {/* headeding */}
@@ -29,11 +91,17 @@ export default function AddProduct() {
                 type="text"
                 placeholder="Enter Product Name"
                 size="large"
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    product_name: e.target.value,
+                  }))
+                }
               />
             </div>
             <div className="mb-5">
               <label
-                htmlFor="productname"
+                htmlFor=""
                 className="text-sm font-medium block mb-1"
                 // placeholder=" Provide A Detail Description for the product..."
               >
@@ -43,34 +111,80 @@ export default function AddProduct() {
                 name=""
                 id=""
                 style={{ minHeight: "8rem" }}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    details: e.target.value,
+                  }))
+                }
               ></Input.TextArea>
             </div>
             <div className="mb-5">
               <label htmlFor="" className="text-sm font-medium block mb-1">
                 Quantity
               </label>
-              <Input type="number" placeholder="Enter Quantity" size="large" />
+              <Input
+                type="number"
+                placeholder="Enter Quantity"
+                size="large"
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    total_quantity: e.target.value,
+                  }))
+                }
+              />
             </div>
             <div className="mb-5">
               <label htmlFor="" className="text-sm font-medium block mb-1">
                 Brand Name
               </label>
-              <Input type="text" placeholder="Enter Brand Name" size="large" />
+              <Input
+                type="text"
+                placeholder="Enter Brand Name"
+                size="large"
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    brand_name: e.target.value,
+                  }))
+                }
+              />
             </div>
             <div className="mb-5">
               <label htmlFor="" className="text-sm font-medium block mb-1">
                 Package size
               </label>
               <Input
-                type="number"
+                type="text"
                 placeholder="Enter Package size"
                 size="large"
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    package_size: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
-          <div className="left basis[50%] lg:basis[546px] p-4  rounded-lg border-[1px] border-[#E0E2E7] ">
-            <h3 className="font-medium text-base mb-4">Product Image</h3>
-            <UploadImage />
+
+          <div>
+            <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] ">
+              <h3 className="font-medium text-base mb-4">Product Image</h3>
+              <UploadImage setProductPreviewImage={setFormData} />
+            </div>
+
+            {/* Add Product */}
+            <Button
+              onClick={addProduct}
+              size="large"
+              className="mt-5 bg-primary w-[70%] mx-auto block"
+              type="primary"
+              disabled={isLoading}
+            >
+              {isLoading ? <LoadingOutlined /> : "Add Product"}
+            </Button>
           </div>
         </div>
         <div className="middle w-full md:w-[48%] mt-6">
@@ -83,7 +197,18 @@ export default function AddProduct() {
               >
                 Select Category:
               </label>
-              <Select placeholder="Category" size="large" className="w-full" />
+              <Select
+                placeholder="Category"
+                size="large"
+                className="w-full"
+                options={categoryOptions}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    category_ids: value,
+                  }))
+                }
+              />
             </div>
 
             <div className="mb-5">
@@ -97,6 +222,7 @@ export default function AddProduct() {
                 placeholder="Sub Category"
                 size="large"
                 className="w-full"
+                disabled
               />
             </div>
             <div>
@@ -106,7 +232,18 @@ export default function AddProduct() {
               >
                 Store
               </label>
-              <Select placeholder="Store" size="large" className="w-full" />
+              <Select
+                placeholder="Store"
+                size="large"
+                className="w-full"
+                options={storesOptions}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    store_id: value,
+                  }))
+                }
+              />
             </div>
           </div>
         </div>
@@ -122,8 +259,15 @@ export default function AddProduct() {
                   </span>
                 </div>
                 <input
+                  type="number"
                   className="w-[100%] font-medium text-xl border-0 outline-none placeholder:text-black placeholder:text-lg placeholder:font-medium"
                   placeholder=""
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      price: e.target.value,
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -136,6 +280,7 @@ export default function AddProduct() {
                   </span>
                 </div>
                 <input
+                  type="number"
                   className=" w-[100%] font-medium text-xl border-0 outline-none placeholder:text-black placeholder:text-lg placeholder:font-medium"
                   placeholder=""
                 />

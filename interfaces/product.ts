@@ -69,7 +69,7 @@ export interface ProductI {
 }
 
 export interface ProductRequestI {
-  preview_image: Blob
+  preview_image: Blob | null
   store_id: string
   product_name: string
   details: string
@@ -77,4 +77,6 @@ export interface ProductRequestI {
   total_quantity: string
   category_ids: string
   brand_name: string
+  package_size: string
+  authToken: string
 }

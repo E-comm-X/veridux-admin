@@ -1,24 +1,23 @@
-import { ProductI, ProductRequestI } from "@/interfaces/product"
+import { CategoriesResponseI, CategoryI } from "@/interfaces/categories"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-export const productApi = createApi({
-  reducerPath: "productApi",
+export const categoryApi = createApi({
+  reducerPath: "categoryApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/product`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/product/category`,
   }),
   endpoints: (builder) => ({
-    addProduct: builder.mutation<ProductI, ProductRequestI>({
-      query: (data) => {
-        const formData = new FormData()
-        formData.append("preview_image", data.preview_image)
+    getAllCategories: builder.query<CategoryI[], null>({
+      query: () => {
         return {
-          url: "/new",
-          method: "POST",
-          body: data,
+          url: "/get",
+          method: "GET",
         }
       },
+      transformResponse: (data: CategoriesResponseI) =>
+        data.data.product_categories,
     }),
   }),
 })
 
-export const { useAddProductMutation } = productApi
+export const { useGetAllCategoriesQuery } = categoryApi

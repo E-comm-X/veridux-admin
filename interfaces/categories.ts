@@ -16,3 +16,7 @@ export interface CategoryI {
   __v: number
   id: string
 }
+
+export interface CategoriesResponseI {
+  data: { product_categories: CategoryI[] }
+}
