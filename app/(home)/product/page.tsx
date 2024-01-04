@@ -1,8 +1,11 @@
-import React from 'react'
-import ButtonUI from "@/components/ButtonUI";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import AddIcon from "@mui/icons-material/Add";
-import ProductsTable from './ProductsTable'
+"use client"
+import React from "react"
+import ButtonUI from "@/components/ButtonUI"
+import FilterAltIcon from "@mui/icons-material/FilterAlt"
+import AddIcon from "@mui/icons-material/Add"
+import ProductsTable from "./ProductsTable"
+import Link from "next/link"
+import { Button } from "@mui/material"
 export default function Page() {
   return (
     <main>
@@ -13,9 +16,16 @@ export default function Page() {
         </div>
         <div className="mt-2 flex items-center gap-4">
           <div className="ml-auto">
-            <ButtonUI text="Add Products">
-              <AddIcon />
-            </ButtonUI>
+            <Link href={"/product/new"}>
+              <Button
+                style={{ textTransform: "capitalize" }}
+                className="bg-primary"
+                variant="contained"
+                startIcon={<AddIcon />}
+              >
+                Add Product
+              </Button>
+            </Link>
           </div>
           <ButtonUI text="Filter by Date">
             <FilterAltIcon />
@@ -24,7 +34,6 @@ export default function Page() {
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       <ProductsTable />
-
     </main>
   )
 }
