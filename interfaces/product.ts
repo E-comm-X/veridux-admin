@@ -67,3 +67,14 @@ export interface ProductI {
   original_price?: number
   commission?: number
 }
+
+export interface ProductRequestI {
+  preview_image: Blob
+  store_id: string
+  product_name: string
+  details: string
+  price: string
+  total_quantity: string
+  category_ids: string
+  brand_name: string
+}

@@ -86,7 +86,7 @@ export default function AddProduct() {
               <Select placeholder="Category" size="large" className="w-full" />
             </div>
 
-            <div>
+            <div className="mb-5">
               <label
                 htmlFor="category"
                 className="font-medium text-base block mb-1"
@@ -98,6 +98,15 @@ export default function AddProduct() {
                 size="large"
                 className="w-full"
               />
+            </div>
+            <div>
+              <label
+                htmlFor="category"
+                className="font-medium text-base block mb-1"
+              >
+                Store
+              </label>
+              <Select placeholder="Store" size="large" className="w-full" />
             </div>
           </div>
         </div>
