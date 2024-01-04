@@ -68,6 +68,10 @@ export interface ProductI {
   commission?: number
 }
 
+export interface ProductResponseI {
+  data: { products: ProductI[] }
+}
+
 export interface ProductRequestI {
   preview_image: Blob | null
   store_id: string

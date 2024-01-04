@@ -1,80 +1,103 @@
 "use client"
 import React from "react"
-import Box from "@mui/material/Box"
-import { DataGrid } from "@mui/x-data-grid"
-import FileDownloadIcon from "@mui/icons-material/FileDownload"
-import { dividerClasses } from "@mui/material"
+import { Avatar, Space, Table, Tag } from "antd"
+import type { ColumnsType } from "antd/es/table"
+import { useGetAllProductsQuery } from "@/services/product.service"
+import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
+import { ProductI } from "@/interfaces/product"
 
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
+const columns: ColumnsType<ProductI> = [
   {
-    field: "firstName",
-    headerName: "First name",
-    width: 150,
-    editable: true,
+    title: "Product Name",
+    dataIndex: "name",
+    key: "name",
+    render: (text, record) => (
+      <div className="flex items-center gap-3">
+        <Avatar src={record.preview_image} />
+        <p>{text}</p>
+      </div>
+    ),
   },
   {
-    field: "lastName",
-    headerName: "Last name",
-    width: 150,
-    editable: true,
+    title: "Pricing",
+    dataIndex: "price",
+    key: "price",
+    render: (text) => <p>₦{Number(text).toFixed(2)}</p>,
   },
   {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 110,
-    editable: true,
+    title: "Brand",
+    dataIndex: "brand_name",
+    key: "brand_name",
   },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params: any) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    title: "Purchased",
+    dataIndex: "purchased",
+    key: "purchased",
+    render: (text) => <p>-</p>,
+  },
+  {
+    title: "Vendor",
+    dataIndex: "store",
+    key: "store",
+    render: (text, record) => (
+      <p>{record.store?.name || <p className="ml-[2rem]">-</p>}</p>
+    ),
+  },
+  {
+    title: "Total Sale",
+    dataIndex: "Total_Sale",
+    key: "Total_Sale",
+    render: (text) => <p>-</p>,
+  },
+  {
+    title: "Rating",
+    dataIndex: "rating",
+    key: "rating",
+    render: (text) => <p>{Number(text).toFixed(1)}/5</p>,
+  },
+  {
+    title: "Date Created",
+    dataIndex: "createdAt",
+    key: "createdAt",
+    render: (text) => {
+      const date = new Date(text).toDateString()
+      return <p>{date}</p>
+    },
+  },
+
+  {
+    title: "",
+    key: "action",
+    render: (_, record) => {
+      return (
+        <>
+          {/* <Space size="middle">
+            <a>Invite {record.name}</a>
+            <a>Delete</a>
+          </Space> */}
+          <>
+            <MoreOutlined />
+          </>
+        </>
+      )
+    },
   },
 ]
 
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-]
+export const ProductsTable: React.FC = () => {
+  const { data, isLoading } = useGetAllProductsQuery(null)
 
-function Table() {
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
-    </Box>
-  )
-}
-
-export default function ProductsTable() {
-  return (
-    <div>
-      <h2 className="text-xl text-black font-bold mb-4">Products</h2>
-      <Table />
-    </div>
+    <>
+      {isLoading ? (
+        <LoadingOutlined />
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={data?.slice(0).reverse()}
+          rowSelection={{}}
+        />
+      )}
+    </>
   )
 }

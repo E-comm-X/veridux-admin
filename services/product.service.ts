@@ -1,4 +1,8 @@
-import { ProductI, ProductRequestI } from "@/interfaces/product"
+import {
+  ProductI,
+  ProductRequestI,
+  ProductResponseI,
+} from "@/interfaces/product"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const productApi = createApi({
@@ -29,7 +33,16 @@ export const productApi = createApi({
         }
       },
     }),
+    getAllProducts: builder.query<ProductI[], null>({
+      query() {
+        return {
+          url: "/get",
+          method: "GET",
+        }
+      },
+      transformResponse: (data: ProductResponseI) => data.data.products,
+    }),
   }),
 })
 
-export const { useAddProductMutation } = productApi
+export const { useAddProductMutation, useGetAllProductsQuery } = productApi
