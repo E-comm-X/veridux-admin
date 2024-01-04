@@ -1,10 +1,5 @@
 "use client"
 import React from "react"
-import FilterAltIcon from "@mui/icons-material/FilterAlt"
-import AddIcon from "@mui/icons-material/Add"
-import ButtonUI from "@/components/ButtonUI"
-import Image from "next/image"
-import ImageIcon from "@mui/icons-material/Image"
 import { Input, Select } from "antd"
 import { UploadImage } from "@/components/UploadImage"
 
