@@ -15,7 +15,7 @@ export const productApi = createApi({
       query: (data) => {
         const formdata = new FormData()
         formdata.append("preview_image", data.preview_image as Blob, "test")
-        // formdata.append("store_id", data.store_id)
+        formdata.append("store_id", data.store_id)
         formdata.append("product_name", data.product_name)
         formdata.append("details", data.details)
         formdata.append("price", data.price)

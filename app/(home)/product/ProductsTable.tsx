@@ -13,7 +13,11 @@ const columns: ColumnsType<ProductI> = [
     key: "name",
     render: (text, record) => (
       <div className="flex items-center gap-3">
-        <Avatar src={record.preview_image} />
+        <Avatar
+          className="rounded-[8px]"
+          size={"large"}
+          src={record.preview_image}
+        />
         <p>{text}</p>
       </div>
     ),

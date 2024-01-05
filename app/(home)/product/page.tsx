@@ -27,9 +27,9 @@ export default function Page() {
               </Button>
             </Link>
           </div>
-          <ButtonUI text="Filter by Date">
+          {/* <ButtonUI text="Filter by Date">
             <FilterAltIcon />
-          </ButtonUI>
+          </ButtonUI> */}
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />

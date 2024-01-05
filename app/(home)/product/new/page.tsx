@@ -198,6 +198,7 @@ export default function AddProduct() {
                 Select Category:
               </label>
               <Select
+                showSearch
                 placeholder="Category"
                 size="large"
                 className="w-full"
@@ -233,6 +234,7 @@ export default function AddProduct() {
                 Store
               </label>
               <Select
+                showSearch
                 placeholder="Store"
                 size="large"
                 className="w-full"
