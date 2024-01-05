@@ -2,7 +2,10 @@
 import React, { useState } from "react"
 import { Button, Input, Select, message } from "antd"
 import { UploadImage } from "@/components/UploadImage"
-import { useAddProductMutation } from "@/services/product.service"
+import {
+  useAddProductMutation,
+  useGetAllProductsQuery,
+} from "@/services/product.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { ProductRequestI } from "@/interfaces/product"
 import { useGetAllCategoriesQuery } from "@/services/category.service"
@@ -34,6 +37,7 @@ const transformData = (data: { name: string; id: string }[]) => {
 
 export default function AddProduct() {
   const [addProductMutation, { isLoading }] = useAddProductMutation()
+  const { refetch } = useGetAllProductsQuery(null)
   const { token } = useAuthToken()
   const [formData, setFormData] = useState<ProductRequestI>({
     ...reqData,
@@ -57,12 +61,12 @@ export default function AddProduct() {
         formData.store_id
       ) {
         await addProductMutation(formData).unwrap()
+        await refetch()
         message.success("Product Added Successfully")
       } else {
         message.warning("Please Fill All Fields")
       }
     } catch (error: any) {
-      console.log(error)
       message.error(`Failed: ${error.data.message}`)
     }
   }

@@ -5,7 +5,8 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import AddIcon from "@mui/icons-material/Add"
 import { ProductsTable } from "./ProductsTable"
 import Link from "next/link"
-import { Button } from "@mui/material"
+import { Button } from "antd"
+import { AddCategory } from "./AddCategory"
 export default function Page() {
   return (
     <main>
@@ -17,19 +18,12 @@ export default function Page() {
         <div className="mt-2 flex items-center gap-4">
           <div className="ml-auto">
             <Link href={"/product/new"}>
-              <Button
-                style={{ textTransform: "capitalize" }}
-                className="bg-primary"
-                variant="contained"
-                startIcon={<AddIcon />}
-              >
-                Add Product
+              <Button className="bg-primary" type="primary" size="large">
+                + Add Product
               </Button>
             </Link>
           </div>
-          {/* <ButtonUI text="Filter by Date">
-            <FilterAltIcon />
-          </ButtonUI> */}
+          <AddCategory />
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />

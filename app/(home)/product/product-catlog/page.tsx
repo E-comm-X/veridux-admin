@@ -1,3 +1,4 @@
+"use client"
 import React from "react"
 import ButtonUI from "@/components/ButtonUI"
 import FilterAltIcon from "@mui/icons-material/FilterAlt"

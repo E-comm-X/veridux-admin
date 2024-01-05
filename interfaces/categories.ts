@@ -20,3 +20,9 @@ export interface CategoryI {
 export interface CategoriesResponseI {
   data: { product_categories: CategoryI[] }
 }
+
+export interface CategoryRequestI {
+  name: string
+  is_first_level?: boolean
+  description: string
+}
