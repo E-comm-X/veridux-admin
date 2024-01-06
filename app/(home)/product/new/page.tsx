@@ -61,8 +61,8 @@ export default function AddProduct() {
         formData.store_id
       ) {
         await addProductMutation(formData).unwrap()
-        await refetch()
         message.success("Product Added Successfully")
+        await refetch()
       } else {
         message.warning("Please Fill All Fields")
       }

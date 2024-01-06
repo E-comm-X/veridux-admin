@@ -1,10 +1,38 @@
 "use client"
 import React from "react"
-import { Avatar, Space, Table, Tag } from "antd"
+import { Avatar, Button, Popover, Space, Table, Tag } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { ProductI } from "@/interfaces/product"
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
+
+const MoreAction = (_: any, record: ProductI) => {
+  const [open, setOpen] = React.useState<boolean>(false)
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen)
+  }
+  return (
+    <Popover
+      placement="bottom"
+      trigger="click"
+      open={open}
+      onOpenChange={handleOpenChange}
+      content={
+        <div className="flex flex-col p-0 m-0 gap-2">
+          <Button type="primary" className="bg-primary" icon={<EditOutlined />}>
+            Edit
+          </Button>
+          <Button type="default" danger icon={<DeleteOutlined />}>
+            Delete
+          </Button>
+        </div>
+      }
+    >
+      <MoreOutlined />
+    </Popover>
+  )
+}
 
 const columns: ColumnsType<ProductI> = [
   {
@@ -72,19 +100,7 @@ const columns: ColumnsType<ProductI> = [
   {
     title: "",
     key: "action",
-    render: (_, record) => {
-      return (
-        <>
-          {/* <Space size="middle">
-            <a>Invite {record.name}</a>
-            <a>Delete</a>
-          </Space> */}
-          <>
-            <MoreOutlined />
-          </>
-        </>
-      )
-    },
+    render: (text, record) => <MoreAction {...text} {...record} />,
   },
 ]
 
