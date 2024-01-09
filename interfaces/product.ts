@@ -56,7 +56,7 @@ export interface ProductI {
   price: string | number
   variants?: any[]
   rating: number | string
-  categories?: CategoriesI[]
+  categories: CategoriesI[]
   total_quantity?: number
   sub_images?: string[]
   tags?: string[]
@@ -68,19 +68,36 @@ export interface ProductI {
   commission?: number
 }
 
-export interface ProductResponseI {
+export interface ProductsResponseI {
   data: { products: ProductI[] }
 }
 
+export interface ProductResponseI {
+  data: { product: ProductI }
+}
+
 export interface ProductRequestI {
-  preview_image: Blob | null
+  preview_image: Blob | null | string
   store_id: string
   product_name: string
   details: string
-  price: string
-  total_quantity: string
-  category_ids: string
+  price: string | number
+  total_quantity: string | number
+  category_ids: string | string[]
   brand_name: string
   package_size: string
   authToken: string
+}
+
+export interface ProductUpdateRequestI {
+  product_name: string
+  details: string
+  price: string | number
+  total_quantity: string | number
+  product_categories_to_add: string[]
+  product_categories_to_remove: string[]
+  brand_name: string
+  package_size: string
+  authToken: string
+  product_id: string
 }

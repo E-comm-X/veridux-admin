@@ -2,6 +2,7 @@ import {
   ProductI,
   ProductRequestI,
   ProductResponseI,
+  ProductsResponseI,
 } from "@/interfaces/product"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -18,9 +19,9 @@ export const productApi = createApi({
         formdata.append("store_id", data.store_id)
         formdata.append("product_name", data.product_name)
         formdata.append("details", data.details)
-        formdata.append("price", data.price)
-        formdata.append("total_quantity", data.total_quantity)
-        formdata.append("category_ids", data.category_ids)
+        formdata.append("price", data.price as string)
+        formdata.append("total_quantity", data.total_quantity as string)
+        formdata.append("category_ids", data.category_ids as string)
         formdata.append("brand_name", data.brand_name)
         return {
           url: "/new",
@@ -33,6 +34,13 @@ export const productApi = createApi({
         }
       },
     }),
+    updateProduct: builder.mutation<ProductI, ProductRequestI>({
+      query: (data) => {
+        return {
+          url: "/update",
+        }
+      },
+    }),
     getAllProducts: builder.query<ProductI[], null>({
       query() {
         return {
@@ -40,9 +48,22 @@ export const productApi = createApi({
           method: "GET",
         }
       },
-      transformResponse: (data: ProductResponseI) => data.data.products,
+      transformResponse: (data: ProductsResponseI) => data.data.products,
+    }),
+    getProduct: builder.query<ProductI, { id: string }>({
+      query({ id }) {
+        return {
+          url: `/info/get?product_id=${id}`,
+          method: "GET",
+        }
+      },
+      transformResponse: (data: ProductResponseI) => data.data.product,
     }),
   }),
 })
 
-export const { useAddProductMutation, useGetAllProductsQuery } = productApi
+export const {
+  useAddProductMutation,
+  useGetAllProductsQuery,
+  useGetProductQuery,
+} = productApi

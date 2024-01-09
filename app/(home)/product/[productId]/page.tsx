@@ -1,49 +1,313 @@
 "use client"
-import React from "react";
-import ButtonUI from "@/components/ButtonUI";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import AddIcon from "@mui/icons-material/Add";
-import Link from "next/link";
-import ProductVendorData from "./ProductVendorData";
-import ProductsData from "./ProductsData"
-export default function ProductDetails() {
-  return (
-    <div>
-      <div className="md:flex justify-between align-center text-black">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-2xl text-black font-bold">All Products</h2>
-          <p className="font-normal text-base text-[#0000006E]">Today</p>
-        </div>
-        <div className="mt-2 flex items-center gap-4">
-          <div className="ml-auto">
-            <ButtonUI text="Add Products">
-              <AddIcon />
-            </ButtonUI>
-          </div>
-          <ButtonUI text="Filter by Date">
-            <FilterAltIcon />
-          </ButtonUI>
-        </div>
-      </div>
-      <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-      <div className="flex lg:flex-row gap-4 items-center">
-        <Link href="/vendors">
-          <div className="mr-4">
-            <p className="font-semibold text-xl">Products</p>
-            <hr className="rounded-md w-ful  border-2" />
-          </div>
-        </Link>
+import React, { useEffect, useState } from "react"
+import { Button, Input, Select, message } from "antd"
+import { UploadImage } from "@/components/UploadImage"
+import {
+  useAddProductMutation,
+  useGetAllProductsQuery,
+  useGetProductQuery,
+} from "@/services/product.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { ProductRequestI } from "@/interfaces/product"
+import { useGetAllCategoriesQuery } from "@/services/category.service"
+import { useGetAllStoresQuery } from "@/services/store.service"
+import { LoadingOutlined } from "@ant-design/icons"
+import { useParams } from "next/navigation"
 
-        <div className="mr-4">
-          <p className="font-semibold text-xl">Products Information</p>
-          <hr className="rounded-md w-ful border-[#006FCF] border-2" />
-        </div>
-      </div>
-      <div className="parent bg-white rounded-lg py-10 px-8 mt-6">
-        <ProductsData />
-        <hr />
-        <ProductVendorData />
-      </div>
-    </div>
-  );
+const reqData: ProductRequestI = {
+  preview_image: null,
+  store_id: "",
+  product_name: "",
+  details: "",
+  price: "",
+  total_quantity: "",
+  category_ids: "",
+  brand_name: "",
+  package_size: "",
+  authToken: "",
+}
+
+const transformData = (data: { name: string; id: string }[]) => {
+  const newData =
+    data &&
+    data?.map((data) => ({
+      label: data.name,
+      value: data.id,
+    }))
+  return newData
+}
+
+export default function UpdateProduct() {
+  const { productId } = useParams()
+  const { token } = useAuthToken()
+  const [formData, setFormData] = useState<ProductRequestI>({
+    ...reqData,
+    authToken: token as string,
+  })
+
+  const { data: product, isLoading: loadingProduct } = useGetProductQuery({
+    id: productId as string,
+  })
+  console.log(product)
+
+  useEffect(() => {
+    if (product) {
+      setFormData((prev) => ({
+        ...prev,
+        ...product,
+        preview_image: product.preview_image as string,
+        price: product.price as string,
+        total_quantity: product.total_quantity as any,
+        product_name: product.name as string,
+        category_ids: product.categories.map((cat) => cat.id) as string[],
+      }))
+    }
+  }, [product])
+
+  const [addProductMutation, { isLoading }] = useAddProductMutation()
+  const { refetch } = useGetAllProductsQuery(null)
+
+  const { data: categories } = useGetAllCategoriesQuery(null)
+  const { data: stores } = useGetAllStoresQuery(null)
+
+  const categoryOptions = transformData(categories as [])
+  const storesOptions = transformData(stores as [])
+  const addProduct = async () => {
+    try {
+      if (
+        formData.brand_name &&
+        formData.preview_image &&
+        formData.price &&
+        formData.product_name &&
+        formData.total_quantity &&
+        formData.category_ids &&
+        formData.package_size &&
+        formData.store_id
+      ) {
+        await addProductMutation(formData).unwrap()
+        message.success("Product Added Successfully")
+        await refetch()
+      } else {
+        message.warning("Please Fill All Fields")
+      }
+    } catch (error: any) {
+      message.error(`Failed: ${error.data.message}`)
+    }
+  }
+  return (
+    <>
+      {loadingProduct ? (
+        <LoadingOutlined />
+      ) : (
+        <main>
+          {/* headeding */}
+          <div className="md:flex justify-between align-center text-black">
+            <div className="flex flex-col gap-2">
+              <h2 className="text-2xl text-black font-bold">
+                Update Product - {product?.name}
+              </h2>
+            </div>
+          </div>
+          <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
+          {/* body */}
+          <div className="parent bg-white rounded-lg py-10 px-8 mt-6">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-10">
+              <div className="right px-4 py-8   lg:basis-[489px] rounded-lg border-[1px] border-[#E0E2E7] flex flex-col ">
+                <div className="mb-5">
+                  <label
+                    htmlFor="productname"
+                    className="text-sm font-medium block mb-1"
+                  >
+                    Product Name
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="Enter Product Name"
+                    size="large"
+                    value={formData.product_name}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        product_name: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="mb-5">
+                  <label
+                    htmlFor=""
+                    className="text-sm font-medium block mb-1"
+                    // placeholder=" Provide A Detail Description for the product..."
+                  >
+                    Product Description
+                  </label>
+                  <Input.TextArea
+                    name=""
+                    id=""
+                    style={{ minHeight: "8rem" }}
+                    value={formData.details}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        details: e.target.value,
+                      }))
+                    }
+                  ></Input.TextArea>
+                </div>
+                <div className="mb-5">
+                  <label htmlFor="" className="text-sm font-medium block mb-1">
+                    Quantity
+                  </label>
+                  <Input
+                    type="number"
+                    placeholder="Enter Quantity"
+                    size="large"
+                    value={formData.total_quantity}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        total_quantity: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="mb-5">
+                  <label htmlFor="" className="text-sm font-medium block mb-1">
+                    Brand Name
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="Enter Brand Name"
+                    size="large"
+                    value={formData.brand_name}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        brand_name: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="mb-5">
+                  <label htmlFor="" className="text-sm font-medium block mb-1">
+                    Package size
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="Enter Package size"
+                    size="large"
+                    value={formData.package_size}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        package_size: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] ">
+                  <h3 className="font-medium text-base mb-4">Product Image</h3>
+                  <UploadImage setProductPreviewImage={setFormData} />
+                </div>
+
+                <div className="grid grid-cols-2 gap-[10px]">
+                  {/* Update Product */}
+                  <Button
+                    onClick={addProduct}
+                    size="large"
+                    className="mt-5 bg-primary block"
+                    type="primary"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <LoadingOutlined /> : "Update Product"}
+                  </Button>
+                  {/* Hide Product */}
+                  <Button
+                    size="large"
+                    className="mt-5 block"
+                    danger
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <LoadingOutlined /> : "Hide Product"}
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <div className="middle w-full md:w-[48%] mt-6">
+              <h2 className="text-base font-semibold mb-4">Product Category</h2>
+              <div className="rounded-lg border-[1px] border-[#E0E2E7] p-4">
+                <div className="mb-5">
+                  <label
+                    htmlFor="category"
+                    className="font-medium text-base mb-1 block mb-1"
+                  >
+                    Select Category:
+                  </label>
+                  <Select
+                    placeholder="Category"
+                    size="large"
+                    className="w-full"
+                    options={categoryOptions}
+                    value={formData.category_ids}
+                    mode="multiple"
+                    onChange={(value) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        category_ids: value,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="bottom basis-[50%] md:w-[48%]">
+              <h2 className="text-base font-semibold mb-4 mt-4">Pricing</h2>
+              <div className=" rounded-lg border-[1px] border-[#E0E2E7] flex justify-between gap-[1rem] p-6">
+                <div>
+                  <h3 className="font-medium text-lg">Price</h3>
+                  <div className="flex items-center gap-4 border-[#C1C1C1] rounded border-[1px] mt-5  pr-10">
+                    <div className="signContainer h-[50px] w-[50px] bg-[#A1A1A15E] rounded relative">
+                      <span className="font-medium text-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        $
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      className="w-[100%] font-medium text-xl border-0 outline-none placeholder:text-black placeholder:text-lg placeholder:font-medium"
+                      placeholder=""
+                      value={formData.price}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          price: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-medium text-lg">Discount</h3>
+                  <div className="flex items-center gap-4 border-[#C1C1C1] rounded border-[1px] mt-5  pr-10">
+                    <div className="signContainer h-[50px] w-[50px] bg-[#A1A1A15E] rounded relative">
+                      <span className="font-medium text-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        $
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      className=" w-[100%] font-medium text-xl border-0 outline-none placeholder:text-black placeholder:text-lg placeholder:font-medium"
+                      placeholder=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      )}
+    </>
+  )
 }

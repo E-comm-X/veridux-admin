@@ -6,8 +6,12 @@ import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { ProductI } from "@/interfaces/product"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import Link from "next/link"
 
-const MoreAction = (_: any, record: ProductI) => {
+const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
+  text,
+  record,
+}) => {
   const [open, setOpen] = React.useState<boolean>(false)
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
@@ -20,9 +24,15 @@ const MoreAction = (_: any, record: ProductI) => {
       onOpenChange={handleOpenChange}
       content={
         <div className="flex flex-col p-0 m-0 gap-2">
-          <Button type="primary" className="bg-primary" icon={<EditOutlined />}>
-            Edit
-          </Button>
+          <Link href={`/product/${record._id}`}>
+            <Button
+              type="primary"
+              className="bg-primary"
+              icon={<EditOutlined />}
+            >
+              Update
+            </Button>
+          </Link>
           <Button type="default" danger icon={<DeleteOutlined />}>
             Delete
           </Button>
@@ -100,7 +110,7 @@ const columns: ColumnsType<ProductI> = [
   {
     title: "",
     key: "action",
-    render: (text, record) => <MoreAction {...text} {...record} />,
+    render: (text, record) => <MoreAction {...{ text, record }} />,
   },
 ]
 
