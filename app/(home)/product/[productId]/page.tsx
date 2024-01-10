@@ -8,23 +8,24 @@ import {
   useGetProductQuery,
 } from "@/services/product.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { ProductRequestI } from "@/interfaces/product"
+import { ProductUpdateRequestI } from "@/interfaces/product"
 import { useGetAllCategoriesQuery } from "@/services/category.service"
 import { useGetAllStoresQuery } from "@/services/store.service"
 import { LoadingOutlined } from "@ant-design/icons"
 import { useParams } from "next/navigation"
+import { CategoryI } from "@/interfaces/categories"
 
-const reqData: ProductRequestI = {
-  preview_image: null,
-  store_id: "",
+const reqData: ProductUpdateRequestI = {
   product_name: "",
   details: "",
   price: "",
   total_quantity: "",
-  category_ids: "",
   brand_name: "",
   package_size: "",
   authToken: "",
+  product_categories_to_add: [],
+  product_categories_to_remove: [],
+  product_id: "",
 }
 
 const transformData = (data: { name: string; id: string }[]) => {
@@ -40,15 +41,19 @@ const transformData = (data: { name: string; id: string }[]) => {
 export default function UpdateProduct() {
   const { productId } = useParams()
   const { token } = useAuthToken()
-  const [formData, setFormData] = useState<ProductRequestI>({
+  const [formData, setFormData] = useState<ProductUpdateRequestI>({
     ...reqData,
     authToken: token as string,
   })
+  const [toAddCat, setToAddCat] = useState<{ label: string; value: string }[]>(
+    []
+  )
 
   const { data: product, isLoading: loadingProduct } = useGetProductQuery({
     id: productId as string,
   })
-  console.log(product)
+  const { data: categories } = useGetAllCategoriesQuery(null)
+  const { data: stores } = useGetAllStoresQuery(null)
 
   useEffect(() => {
     if (product) {
@@ -59,16 +64,17 @@ export default function UpdateProduct() {
         price: product.price as string,
         total_quantity: product.total_quantity as any,
         product_name: product.name as string,
-        category_ids: product.categories.map((cat) => cat.id) as string[],
       }))
+      const cat_ids = product.categories?.map((cat) => cat.id) as string[]
+      const to_add = categories?.filter((cat) => {
+        return !cat_ids.includes(cat.id)
+      })
+      setToAddCat(transformData(to_add as []))
     }
-  }, [product])
+  }, [product, categories])
 
   const [addProductMutation, { isLoading }] = useAddProductMutation()
   const { refetch } = useGetAllProductsQuery(null)
-
-  const { data: categories } = useGetAllCategoriesQuery(null)
-  const { data: stores } = useGetAllStoresQuery(null)
 
   const categoryOptions = transformData(categories as [])
   const storesOptions = transformData(stores as [])
@@ -76,15 +82,11 @@ export default function UpdateProduct() {
     try {
       if (
         formData.brand_name &&
-        formData.preview_image &&
         formData.price &&
         formData.product_name &&
-        formData.total_quantity &&
-        formData.category_ids &&
-        formData.package_size &&
-        formData.store_id
+        formData.total_quantity
       ) {
-        await addProductMutation(formData).unwrap()
+        // await addProductMutation(formData).unwrap()
         message.success("Product Added Successfully")
         await refetch()
       } else {
@@ -208,17 +210,17 @@ export default function UpdateProduct() {
               </div>
 
               <div>
-                <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] ">
+                {/* <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] ">
                   <h3 className="font-medium text-base mb-4">Product Image</h3>
                   <UploadImage setProductPreviewImage={setFormData} />
-                </div>
+                </div> */}
 
-                <div className="p-4 mt-5 rounded-lg border-[1px] border-[#E0E2E7] ">
+                {/* <div className="p-4 mt-5 rounded-lg border-[1px] border-[#E0E2E7] ">
                   <h3 className="font-medium text-base mb-4">
                     Product Variant
                   </h3>
                   <UploadImage setProductPreviewImage={setFormData} />
-                </div>
+                </div> */}
 
                 <div className="grid grid-cols-2 gap-[10px]">
                   {/* Update Product */}
@@ -251,21 +253,47 @@ export default function UpdateProduct() {
                     htmlFor="category"
                     className="font-medium text-base mb-1 block mb-1"
                   >
-                    Select Category:
+                    Add to Categories:
                   </label>
                   <Select
-                    placeholder="Category"
+                    placeholder="Add to Categories"
                     size="large"
                     className="w-full"
-                    options={categoryOptions}
-                    value={formData.category_ids}
+                    options={toAddCat}
+                    value={formData.product_categories_to_add}
                     mode="multiple"
-                    onChange={(value) =>
+                    onChange={(value) => {
+                      setFormData((prev) => {
+                        if (true) {
+                          return {
+                            ...prev,
+                            product_categories_to_add: value,
+                          }
+                        }
+                      })
+                    }}
+                  />
+                </div>
+                <div className="mb-5">
+                  <label
+                    htmlFor="category"
+                    className="font-medium text-base mb-1 block mb-1"
+                  >
+                    Remove from Categories:
+                  </label>
+                  <Select
+                    placeholder="Remove from Categories"
+                    size="large"
+                    className="w-full"
+                    options={transformData(product?.categories as [])}
+                    value={formData.product_categories_to_remove}
+                    mode="multiple"
+                    onChange={(value) => {
                       setFormData((prev) => ({
                         ...prev,
-                        category_ids: value,
+                        product_categories_to_remove: value,
                       }))
-                    }
+                    }}
                   />
                 </div>
               </div>

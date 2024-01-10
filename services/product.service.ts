@@ -38,6 +38,11 @@ export const productApi = createApi({
       query: (data) => {
         return {
           url: "/update",
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${data.authToken}`,
+          },
+          data,
         }
       },
     }),
@@ -66,4 +71,5 @@ export const {
   useAddProductMutation,
   useGetAllProductsQuery,
   useGetProductQuery,
+  useUpdateProductMutation,
 } = productApi
