@@ -213,6 +213,13 @@ export default function UpdateProduct() {
                   <UploadImage setProductPreviewImage={setFormData} />
                 </div>
 
+                <div className="p-4 mt-5 rounded-lg border-[1px] border-[#E0E2E7] ">
+                  <h3 className="font-medium text-base mb-4">
+                    Product Variant
+                  </h3>
+                  <UploadImage setProductPreviewImage={setFormData} />
+                </div>
+
                 <div className="grid grid-cols-2 gap-[10px]">
                   {/* Update Product */}
                   <Button
