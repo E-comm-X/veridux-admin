@@ -37,12 +37,10 @@ export const productApi = createApi({
     }),
     updateProduct: builder.mutation<ProductI, ProductUpdateRequestI>({
       query: (data) => {
-        console.log(data)
         return {
           url: "/update",
           method: "PATCH",
-          data: JSON.stringify(data),
-          maxBodyLength: Infinity,
+          body: data,
           headers: {
             authorization: `Bearer ${data.authToken}`,
           },

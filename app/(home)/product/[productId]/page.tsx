@@ -48,7 +48,11 @@ export default function UpdateProduct() {
     []
   )
 
-  const { data: product, isLoading: loadingProduct } = useGetProductQuery({
+  const {
+    data: product,
+    isLoading: loadingProduct,
+    refetch: refechProduct,
+  } = useGetProductQuery({
     id: productId as string,
   })
   const { data: categories } = useGetAllCategoriesQuery(null)
@@ -84,7 +88,8 @@ export default function UpdateProduct() {
         formData.total_quantity
       ) {
         await updateProductMutation(formData).unwrap()
-        message.success("Product Added Successfully")
+        message.success("Product Updated Successfully")
+        await refechProduct()
         await refetch()
       } else {
         message.warning("Please Fill All Fields")
