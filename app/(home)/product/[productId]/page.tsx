@@ -3,17 +3,15 @@ import React, { useEffect, useState } from "react"
 import { Button, Input, Select, message } from "antd"
 import { UploadImage } from "@/components/UploadImage"
 import {
-  useAddProductMutation,
   useGetAllProductsQuery,
   useGetProductQuery,
+  useUpdateProductMutation,
 } from "@/services/product.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { ProductUpdateRequestI } from "@/interfaces/product"
 import { useGetAllCategoriesQuery } from "@/services/category.service"
-import { useGetAllStoresQuery } from "@/services/store.service"
 import { LoadingOutlined } from "@ant-design/icons"
 import { useParams } from "next/navigation"
-import { CategoryI } from "@/interfaces/categories"
 
 const reqData: ProductUpdateRequestI = {
   product_name: "",
@@ -44,6 +42,7 @@ export default function UpdateProduct() {
   const [formData, setFormData] = useState<ProductUpdateRequestI>({
     ...reqData,
     authToken: token as string,
+    product_id: productId as string,
   })
   const [toAddCat, setToAddCat] = useState<{ label: string; value: string }[]>(
     []
@@ -53,17 +52,17 @@ export default function UpdateProduct() {
     id: productId as string,
   })
   const { data: categories } = useGetAllCategoriesQuery(null)
-  const { data: stores } = useGetAllStoresQuery(null)
 
   useEffect(() => {
     if (product) {
       setFormData((prev) => ({
         ...prev,
-        ...product,
-        preview_image: product.preview_image as string,
+        details: product.details as string,
+        brand_name: product.brand_name as string,
         price: product.price as string,
         total_quantity: product.total_quantity as any,
         product_name: product.name as string,
+        product_id: productId as string,
       }))
       const cat_ids = product.categories?.map((cat) => cat.id) as string[]
       const to_add = categories?.filter((cat) => {
@@ -71,14 +70,12 @@ export default function UpdateProduct() {
       })
       setToAddCat(transformData(to_add as []))
     }
-  }, [product, categories])
+  }, [product, categories, productId])
 
-  const [addProductMutation, { isLoading }] = useAddProductMutation()
+  const [updateProductMutation, { isLoading }] = useUpdateProductMutation()
   const { refetch } = useGetAllProductsQuery(null)
 
-  const categoryOptions = transformData(categories as [])
-  const storesOptions = transformData(stores as [])
-  const addProduct = async () => {
+  const updateProduct = async () => {
     try {
       if (
         formData.brand_name &&
@@ -86,7 +83,7 @@ export default function UpdateProduct() {
         formData.product_name &&
         formData.total_quantity
       ) {
-        // await addProductMutation(formData).unwrap()
+        await updateProductMutation(formData).unwrap()
         message.success("Product Added Successfully")
         await refetch()
       } else {
@@ -225,7 +222,7 @@ export default function UpdateProduct() {
                 <div className="grid grid-cols-2 gap-[10px]">
                   {/* Update Product */}
                   <Button
-                    onClick={addProduct}
+                    onClick={updateProduct}
                     size="large"
                     className="mt-5 bg-primary block"
                     type="primary"

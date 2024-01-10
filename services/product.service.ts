@@ -2,6 +2,7 @@ import {
   ProductI,
   ProductRequestI,
   ProductResponseI,
+  ProductUpdateRequestI,
   ProductsResponseI,
 } from "@/interfaces/product"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
@@ -34,15 +35,17 @@ export const productApi = createApi({
         }
       },
     }),
-    updateProduct: builder.mutation<ProductI, ProductRequestI>({
+    updateProduct: builder.mutation<ProductI, ProductUpdateRequestI>({
       query: (data) => {
+        console.log(data)
         return {
           url: "/update",
           method: "PATCH",
+          data: JSON.stringify(data),
+          maxBodyLength: Infinity,
           headers: {
-            Authorization: `Bearer ${data.authToken}`,
+            authorization: `Bearer ${data.authToken}`,
           },
-          data,
         }
       },
     }),
