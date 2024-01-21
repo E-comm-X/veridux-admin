@@ -87,6 +87,28 @@ export const productApi = createApi({
         }
       },
     }),
+    showProduct: builder.mutation<
+      {
+        success: boolean
+        message: string
+        data: null
+      },
+      { id: string; authToken: string }
+    >({
+      query({ id, authToken }) {
+        return {
+          url: `/show`,
+          method: "POST",
+          body: {
+            product_id: id,
+          },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          redirect: "follow",
+        }
+      },
+    }),
   }),
 })
 
@@ -96,4 +118,5 @@ export const {
   useGetProductQuery,
   useUpdateProductMutation,
   useHideProductMutation,
+  useShowProductMutation,
 } = productApi
