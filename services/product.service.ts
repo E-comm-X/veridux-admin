@@ -65,6 +65,22 @@ export const productApi = createApi({
       },
       transformResponse: (data: ProductResponseI) => data.data.product,
     }),
+    hideProduct: builder.mutation<
+      {
+        success: boolean
+        message: string
+        data: null
+      },
+      { id: string }
+    >({
+      query({ id }) {
+        return {
+          url: `/hide`,
+          method: "POST",
+          body: { product_id: id },
+        }
+      },
+    }),
   }),
 })
 
