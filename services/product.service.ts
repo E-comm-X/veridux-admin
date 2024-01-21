@@ -77,10 +77,13 @@ export const productApi = createApi({
         return {
           url: `/hide`,
           method: "POST",
-          body: { product_id: id },
+          body: {
+            product_id: id,
+          },
           headers: {
             authorization: `Bearer ${authToken}`,
           },
+          redirect: "follow",
         }
       },
     }),

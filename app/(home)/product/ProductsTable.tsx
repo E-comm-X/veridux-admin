@@ -23,8 +23,9 @@ const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
     useHideProductMutation()
   const hideProduct = async () => {
     try {
+      console.log(record._id)
       const data = await hideProductMutation({
-        id: record._id,
+        id: record._id as string,
         authToken: token as string,
       }).unwrap()
       message.success(data.message)
