@@ -71,13 +71,16 @@ export const productApi = createApi({
         message: string
         data: null
       },
-      { id: string }
+      { id: string; authToken: string }
     >({
-      query({ id }) {
+      query({ id, authToken }) {
         return {
           url: `/hide`,
           method: "POST",
           body: { product_id: id },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
         }
       },
     }),
@@ -89,4 +92,5 @@ export const {
   useGetAllProductsQuery,
   useGetProductQuery,
   useUpdateProductMutation,
+  useHideProductMutation,
 } = productApi

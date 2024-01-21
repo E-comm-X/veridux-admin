@@ -1,12 +1,14 @@
 "use client"
 import React from "react"
-import { Avatar, Button, Popover, Space, Table, Tag } from "antd"
+import { Avatar, Button, Popover, Space, Table, Tag, message } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { ProductI } from "@/interfaces/product"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 import Link from "next/link"
+import { useHideProductMutation } from "@/services/product.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
 
 const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
   text,
@@ -15,6 +17,22 @@ const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
   const [open, setOpen] = React.useState<boolean>(false)
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
+  }
+  const { token } = useAuthToken()
+  const [hideProductMutation, { isLoading: isHiding }] =
+    useHideProductMutation()
+  const hideProduct = async () => {
+    try {
+      const data = await hideProductMutation({
+        id: record._id,
+        authToken: token as string,
+      }).unwrap()
+      message.success(data.message)
+    } catch (error: any) {
+      console.log(error)
+
+      message.error(error.data.message)
+    }
   }
   return (
     <Popover
@@ -33,8 +51,13 @@ const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
               Update
             </Button>
           </Link>
-          <Button type="default" danger icon={<DeleteOutlined />}>
-            Delete
+          <Button
+            type="default"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={hideProduct}
+          >
+            {isHiding ? <LoadingOutlined /> : "Hide"}
           </Button>
         </div>
       }
