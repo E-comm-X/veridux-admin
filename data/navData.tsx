@@ -42,35 +42,35 @@ export const navItems = [
     icon: <Receipt color="primary" />,
     children: [],
   },
-  {
-    name: "Deliveries",
-    url: "/deliveries",
-    icon: <LocalShipping color="primary" />,
-    children: [],
-  },
-  {
-    name: "Marketing",
-    url: "",
-    icon: <Campaign color="primary" />,
-    children: [
-      {
-        name: "Overview",
-        url: "/marketing/overview",
-      },
-      {
-        name: "Campaigns",
-        url: "/marketing/campaigns",
-      },
-      {
-        name: "Create Mail",
-        url: "/marketing/campaigns/new/email",
-      },
-      // {
-      //   name: "Create Campaign",
-      //   url: "/marketing/Create-campaign",
-      // },
-    ],
-  },
+  // {
+  //   name: "Deliveries",
+  //   url: "/deliveries",
+  //   icon: <LocalShipping color="primary" />,
+  //   children: [],
+  // },
+  // {
+  //   name: "Marketing",
+  //   url: "",
+  //   icon: <Campaign color="primary" />,
+  //   children: [
+  //     {
+  //       name: "Overview",
+  //       url: "/marketing/overview",
+  //     },
+  //     {
+  //       name: "Campaigns",
+  //       url: "/marketing/campaigns",
+  //     },
+  //     {
+  //       name: "Create Mail",
+  //       url: "/marketing/campaigns/new/email",
+  //     },
+  //     // {
+  //     //   name: "Create Campaign",
+  //     //   url: "/marketing/Create-campaign",
+  //     // },
+  //   ],
+  // },
   {
     name: "Settings",
     url: "",
