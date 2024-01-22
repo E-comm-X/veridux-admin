@@ -71,4 +71,8 @@ export const storeApi = createApi({
   }),
 })
 
-export const { useGetAllStoresQuery, useToggleStoreStatusMutation } = storeApi
+export const {
+  useGetAllStoresQuery,
+  useToggleStoreStatusMutation,
+  useCreateStoreMutation,
+} = storeApi
