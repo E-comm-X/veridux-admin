@@ -20,7 +20,11 @@ export const storeApi = createApi({
       transformResponse: (data: StoresResponseI) => data.data.stores,
     }),
     toggleStoreStatus: builder.mutation<
-      StoreI,
+      {
+        success: boolean
+        message: string
+        data: null
+      },
       {
         id: string
         authToken: string
@@ -30,8 +34,8 @@ export const storeApi = createApi({
       query: ({ id, authToken, action }) => {
         return {
           url: `/${action}`,
-          method: "PATCH",
-          body: { id },
+          method: "POST",
+          body: { store_id: id },
           headers: {
             authorization: `Bearer ${authToken}`,
           },
@@ -41,4 +45,4 @@ export const storeApi = createApi({
   }),
 })
 
-export const { useGetAllStoresQuery } = storeApi
+export const { useGetAllStoresQuery, useToggleStoreStatusMutation } = storeApi

@@ -11,7 +11,10 @@ import {
   message,
 } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import { useGetAllStoresQuery } from "@/services/store.service"
+import {
+  useGetAllStoresQuery,
+  useToggleStoreStatusMutation,
+} from "@/services/store.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { StoreI } from "@/interfaces/store"
 import { VendorI } from "@/interfaces/product"
@@ -28,8 +31,27 @@ const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
     setOpen(newOpen)
   }
   const { token } = useAuthToken()
+  const [mutate, { isLoading }] = useToggleStoreStatusMutation()
+  const { refetch, isLoading: loadingStores } = useGetAllStoresQuery({
+    authToken: token as string,
+  })
 
-  const activateStore = async () => {}
+  const toggleStoreStatus = async (
+    action: "open" | "close" | "activate" | "deactivate"
+  ) => {
+    try {
+      const response = await mutate({
+        action,
+        id: record._id,
+        authToken: token as string,
+      }).unwrap()
+      message.success(response.message)
+      await refetch()
+      message.success("Stores table updated successfully")
+    } catch (error: any) {
+      message.error(error.data.message)
+    }
+  }
   return (
     <Popover
       placement="bottom"
@@ -37,29 +59,49 @@ const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
       open={open}
       onOpenChange={handleOpenChange}
       content={
-        <div className="flex flex-col p-0 m-0 gap-2">
-          <p className="text-center text-lg mb-1">{record.name}</p>
-          <div className="flex gap-2">
-            <Button
-              type="primary"
-              className="bg-primary w-full"
-              onClick={activateStore}
-            >
-              Activate Store
-            </Button>
-            <Button type="default" danger className="w-full">
-              Deactivate Store
-            </Button>
-          </div>
-          <div className="flex gap-2 w-full">
-            <Button type="primary" className="bg-primary w-full">
-              Open Store
-            </Button>
-            <Button type="default" danger className="w-full">
-              Close Store
-            </Button>
-          </div>
-        </div>
+        <>
+          {isLoading ? (
+            <LoadingOutlined />
+          ) : (
+            <div className="flex flex-col p-0 m-0 gap-2">
+              <p className="text-center text-lg mb-1">{record.name}</p>
+              <div className="flex flex-col gap-2">
+                <Button
+                  type="primary"
+                  className="bg-primary w-full"
+                  onClick={async () => await toggleStoreStatus("activate")}
+                >
+                  Activate Store
+                </Button>
+                <Button
+                  type="default"
+                  danger
+                  className="w-full"
+                  onClick={async () => await toggleStoreStatus("deactivate")}
+                >
+                  Deactivate Store
+                </Button>
+              </div>
+              {/* <div className="flex gap-2 w-full">
+                <Button
+                  type="primary"
+                  className="bg-primary w-full"
+                  onClick={async () => await toggleStoreStatus("open")}
+                >
+                  Open Store
+                </Button>
+                <Button
+                  type="default"
+                  danger
+                  className="w-full"
+                  onClick={async () => await toggleStoreStatus("close")}
+                >
+                  Close Store
+                </Button>
+              </div> */}
+            </div>
+          )}
+        </>
       }
     >
       <MoreOutlined />
@@ -112,7 +154,7 @@ const columns: ColumnsType<StoreI> = [
           Activated
         </Tag>
       ) : (
-        <Tag color="success" className="px-3 py-1">
+        <Tag color="error" className="px-3 py-1">
           Deactivated
         </Tag>
       )
@@ -129,7 +171,7 @@ const columns: ColumnsType<StoreI> = [
           Open
         </Tag>
       ) : (
-        <Tag color="success" className="px-3 py-1">
+        <Tag color="error" className="px-3 py-1">
           Closed
         </Tag>
       )
