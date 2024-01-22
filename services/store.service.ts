@@ -19,6 +19,25 @@ export const storeApi = createApi({
       },
       transformResponse: (data: StoresResponseI) => data.data.stores,
     }),
+    toggleStoreStatus: builder.mutation<
+      StoreI,
+      {
+        id: string
+        authToken: string
+        action: "open" | "close" | "activate" | "deactivate"
+      }
+    >({
+      query: ({ id, authToken, action }) => {
+        return {
+          url: `/${action}`,
+          method: "PATCH",
+          body: { id },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
   }),
 })
 
