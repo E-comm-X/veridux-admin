@@ -64,23 +64,26 @@ const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
             <LoadingOutlined />
           ) : (
             <div className="flex flex-col p-0 m-0 gap-2">
-              <p className="text-center text-lg mb-1">{record.name}</p>
+              <p className="text-center text-md mb-1">{record.name}</p>
               <div className="flex flex-col gap-2">
-                <Button
-                  type="primary"
-                  className="bg-primary w-full"
-                  onClick={async () => await toggleStoreStatus("activate")}
-                >
-                  Activate Store
-                </Button>
-                <Button
-                  type="default"
-                  danger
-                  className="w-full"
-                  onClick={async () => await toggleStoreStatus("deactivate")}
-                >
-                  Deactivate Store
-                </Button>
+                {record.is_activated ? (
+                  <Button
+                    type="default"
+                    danger
+                    className="w-full"
+                    onClick={async () => await toggleStoreStatus("deactivate")}
+                  >
+                    Deactivate Store
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    className="bg-primary w-full"
+                    onClick={async () => await toggleStoreStatus("activate")}
+                  >
+                    Activate Store
+                  </Button>
+                )}
               </div>
               {/* <div className="flex gap-2 w-full">
                 <Button

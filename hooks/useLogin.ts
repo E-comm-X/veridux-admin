@@ -22,6 +22,7 @@ export const useLogin = ({ phone_number, email, password }: SignInRequest) => {
 
       return response
     } catch (error: any) {
+      console.log(error)
       message.error(error.data.message)
       throw error
     }
