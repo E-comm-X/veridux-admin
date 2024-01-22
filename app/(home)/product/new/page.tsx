@@ -44,7 +44,7 @@ export default function AddProduct() {
     authToken: token as string,
   })
   const { data: categories } = useGetAllCategoriesQuery(null)
-  const { data: stores } = useGetAllStoresQuery(null)
+  const { data: stores } = useGetAllStoresQuery({ authToken: token as string })
 
   const categoryOptions = transformData(categories as [])
   const storesOptions = transformData(stores as [])
