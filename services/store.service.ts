@@ -10,7 +10,7 @@ export const storeApi = createApi({
     getAllStores: builder.query<StoreI[], null>({
       query: () => {
         return {
-          url: "/get",
+          url: "/admin/get",
           method: "GET",
         }
       },
