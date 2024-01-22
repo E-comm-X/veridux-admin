@@ -38,6 +38,7 @@ const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
       onOpenChange={handleOpenChange}
       content={
         <div className="flex flex-col p-0 m-0 gap-2">
+          <p className="text-center text-lg mb-1">{record.name}</p>
           <div className="flex gap-2">
             <Button
               type="primary"
