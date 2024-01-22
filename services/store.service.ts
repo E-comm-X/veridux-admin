@@ -7,11 +7,14 @@ export const storeApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/store`,
   }),
   endpoints: (builder) => ({
-    getAllStores: builder.query<StoreI[], null>({
-      query: () => {
+    getAllStores: builder.query<StoreI[], { authToken: string }>({
+      query: ({ authToken }) => {
         return {
           url: "/admin/get",
           method: "GET",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
         }
       },
       transformResponse: (data: StoresResponseI) => data.data.stores,

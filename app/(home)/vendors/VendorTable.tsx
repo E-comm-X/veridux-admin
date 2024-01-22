@@ -1,11 +1,70 @@
 "use client"
 import React from "react"
-import { Avatar, Select, Space, Table, Tag } from "antd"
+import {
+  Avatar,
+  Button,
+  Popover,
+  Select,
+  Space,
+  Table,
+  Tag,
+  message,
+} from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { useGetAllStoresQuery } from "@/services/store.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { StoreI } from "@/interfaces/store"
 import { VendorI } from "@/interfaces/product"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { DeleteOutlined, EditOutlined } from "@mui/icons-material"
+import Link from "next/link"
+
+const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
+  text,
+  record,
+}) => {
+  const [open, setOpen] = React.useState<boolean>(false)
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen)
+  }
+  const { token } = useAuthToken()
+
+  const activateStore = async () => {}
+  return (
+    <Popover
+      placement="bottom"
+      trigger="click"
+      open={open}
+      onOpenChange={handleOpenChange}
+      content={
+        <div className="flex flex-col p-0 m-0 gap-2">
+          <div className="flex gap-2">
+            <Button
+              type="primary"
+              className="bg-primary w-full"
+              onClick={activateStore}
+            >
+              Activate Store
+            </Button>
+            <Button type="default" danger className="w-full">
+              Deactivate Store
+            </Button>
+          </div>
+          <div className="flex gap-2 w-full">
+            <Button type="primary" className="bg-primary w-full">
+              Open Store
+            </Button>
+            <Button type="default" danger className="w-full">
+              Close Store
+            </Button>
+          </div>
+        </div>
+      }
+    >
+      <MoreOutlined />
+    </Popover>
+  )
+}
 
 const columns: ColumnsType<StoreI> = [
   {
@@ -29,15 +88,6 @@ const columns: ColumnsType<StoreI> = [
       </div>
     ),
   },
-  // {
-  //   title: "Vendor Id",
-  //   dataIndex: "vendor",
-  //   key: "vendor",
-  //   render: (text, record) => {
-  //     const vendor = record.vendor as VendorI
-  //     return <p>#{String(vendor.id).slice(0, 5)}</p>
-  //   },
-  // },
   {
     title: "Total Sale",
     dataIndex: "Total_Sale",
@@ -56,13 +106,30 @@ const columns: ColumnsType<StoreI> = [
     dataIndex: "is_activated",
     key: "is_activated",
     render: (text, record) => {
-      const status = record.is_open ? (
+      const status = record.is_activated ? (
         <Tag color="success" className="px-3 py-1">
           Activated
         </Tag>
       ) : (
         <Tag color="success" className="px-3 py-1">
           Deactivated
+        </Tag>
+      )
+      return <p>{status}</p>
+    },
+  },
+  {
+    title: "Opened",
+    dataIndex: "is_open",
+    key: "is_open",
+    render: (text, record) => {
+      const status = record.is_open ? (
+        <Tag color="success" className="px-3 py-1">
+          Open
+        </Tag>
+      ) : (
+        <Tag color="success" className="px-3 py-1">
+          Closed
         </Tag>
       )
       return <p>{status}</p>
@@ -77,45 +144,36 @@ const columns: ColumnsType<StoreI> = [
       return <p>{date}</p>
     },
   },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    render: (text, record) => {
-      return (
-        <Select
-          className="w-full placeholder:text-primary"
-          placeholder="Action"
-          options={[
-            { label: "Activate", value: "activate" },
-            { label: "Deactivate", value: "deactivate" },
-          ]}
-        />
-      )
-    },
-  },
+  // {
+  //   title: "Action",
+  //   dataIndex: "action",
+  //   key: "action",
+  //   render: (text, record) => {
+  //     return (
+  //       <Select
+  //         className="w-full placeholder:text-primary"
+  //         placeholder="Action"
+  //         options={[
+  //           { label: "Activate", value: "activate" },
+  //           { label: "Deactivate", value: "deactivate" },
+  //         ]}
+  //       />
+  //     )
+  //   },
+  // },
 
   {
-    title: "",
+    title: "Actions",
     key: "more",
-    render: (_, record) => {
-      return (
-        <>
-          {/* <Space size="middle">
-            <a>Invite {record.name}</a>
-            <a>Delete</a>
-          </Space> */}
-          <>
-            <MoreOutlined />
-          </>
-        </>
-      )
-    },
+    render: (text, record) => <MoreAction {...{ text, record }} />,
   },
 ]
 
 export const VendorTable: React.FC = () => {
-  const { data, isLoading } = useGetAllStoresQuery(null)
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetAllStoresQuery({
+    authToken: token as string,
+  })
 
   return (
     <>
