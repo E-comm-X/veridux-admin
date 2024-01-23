@@ -229,7 +229,7 @@ export const VendorTable: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data?.slice(0).reverse()}
-          rowSelection={{}}
+          // rowSelection={{}}
         />
       )}
     </>

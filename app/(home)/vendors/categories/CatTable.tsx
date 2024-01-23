@@ -191,7 +191,7 @@ export const CategoriesTable: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data?.slice(0).reverse()}
-          rowSelection={{}}
+          // rowSelection={{}}
         />
       )}
     </>
