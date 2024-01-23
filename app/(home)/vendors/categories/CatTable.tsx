@@ -8,6 +8,7 @@ import {
   Space,
   Table,
   Tag,
+  Tooltip,
   message,
 } from "antd"
 import type { ColumnsType } from "antd/es/table"
@@ -119,6 +120,19 @@ const columns: ColumnsType<StoreCategory> = [
     render: (text, record) => (
       <div className="flex items-center gap-3">
         <p>{text}</p>
+      </div>
+    ),
+  },
+
+  {
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
+    render: (text, record) => (
+      <div className="flex items-center gap-3 cursor-pointer">
+        <Tooltip title={record.description}>
+          <p>{record.description.slice(0, 80)}...</p>
+        </Tooltip>
       </div>
     ),
   },

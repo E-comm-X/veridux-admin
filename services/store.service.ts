@@ -1,5 +1,4 @@
 import { StoreCategory, StoreI, StoresResponseI } from "@/interfaces/store"
-import { createStore } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const storeApi = createApi({
@@ -59,6 +58,30 @@ export const storeApi = createApi({
       query: ({ authToken, data }) => {
         return {
           url: `/new`,
+          method: "POST",
+          body: data,
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
+
+    createStoreCategory: builder.mutation<
+      { message: string },
+      {
+        authToken: string
+        data: {
+          name: string
+          description: string
+          is_first_level: boolean
+          // store_category_ids: string[]
+        }
+      }
+    >({
+      query: ({ authToken, data }) => {
+        return {
+          url: `/category/new`,
           method: "POST",
           body: data,
           headers: {
