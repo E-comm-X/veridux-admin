@@ -75,7 +75,8 @@ export const storeApi = createApi({
           name: string
           description: string
           is_first_level: boolean
-          // store_category_ids: string[]
+          parent_category_id?: string[]
+          preview_image?: string
         }
       }
     >({
@@ -138,4 +139,5 @@ export const {
   useCreateStoreMutation,
   useGetStoreCategoriesQuery,
   useToggleStoreCategoryStatusMutation,
+  useCreateStoreCategoryMutation,
 } = storeApi
