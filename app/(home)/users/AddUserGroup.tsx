@@ -1,10 +1,34 @@
 "use client"
-import { Button, Form, Input, Modal } from "antd"
+import { Button, Form, Input, Modal, message } from "antd"
 import React, { useState } from "react"
+import {
+  useCreateUserGroupMutation,
+  useGetUserGroupsQuery,
+} from "@/services/usergroup.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { LoadingOutlined } from "@ant-design/icons"
 
 export const AddUserGroup = () => {
   const [open, setOpen] = useState(false)
   const [group_name, setGroup_name] = useState("")
+  const { token } = useAuthToken()
+  const { refetch } = useGetUserGroupsQuery({ authToken: token as string })
+  const [mutate, { isLoading }] = useCreateUserGroupMutation()
+  const create = async () => {
+    try {
+      const res = await mutate({
+        authToken: token as string,
+        group_name,
+      }).unwrap()
+      console.log(res)
+      await refetch()
+      message.success("User Group Created Successfully")
+      setOpen(false)
+    } catch (error: any) {
+      message.error(error.data.message)
+    }
+  }
+
   return (
     <div>
       <Button
@@ -21,7 +45,7 @@ export const AddUserGroup = () => {
         footer={false}
         title={"Add new User Group"}
       >
-        <Form className="mt-5">
+        <Form className="mt-5" onFinish={create}>
           <Form.Item>
             <Input
               size="large"
@@ -36,9 +60,9 @@ export const AddUserGroup = () => {
             className="bg-primary w-full"
             size="large"
             htmlType="submit"
-            disabled={/^\s*$/.test(group_name)}
+            disabled={/^\s*$/.test(group_name) || isLoading}
           >
-            Create User Group
+            {isLoading ? <LoadingOutlined /> : "Create User Group"}
           </Button>
         </Form>
       </Modal>
