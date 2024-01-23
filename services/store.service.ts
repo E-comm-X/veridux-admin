@@ -82,6 +82,30 @@ export const storeApi = createApi({
         data: { store_categories: StoreCategory[] }
       }) => data.data.store_categories,
     }),
+
+    toggleStoreCategoryStatus: builder.mutation<
+      {
+        success: boolean
+        message: string
+        data: null
+      },
+      {
+        id: string
+        authToken: string
+        action: "hide" | "show"
+      }
+    >({
+      query: ({ id, authToken, action }) => {
+        return {
+          url: `/category/${action}`,
+          method: "POST",
+          body: { store_category_id: id },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
   }),
 })
 
@@ -90,4 +114,5 @@ export const {
   useToggleStoreStatusMutation,
   useCreateStoreMutation,
   useGetStoreCategoriesQuery,
+  useToggleStoreCategoryStatusMutation,
 } = storeApi

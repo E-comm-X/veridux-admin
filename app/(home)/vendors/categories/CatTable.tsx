@@ -13,7 +13,7 @@ import {
 import type { ColumnsType } from "antd/es/table"
 import {
   useGetStoreCategoriesQuery,
-  useToggleStoreStatusMutation,
+  useToggleStoreCategoryStatusMutation,
 } from "@/services/store.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { StoreCategory } from "@/interfaces/store"
@@ -31,14 +31,13 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
     setOpen(newOpen)
   }
   const { token } = useAuthToken()
-  const [mutate, { isLoading }] = useToggleStoreStatusMutation()
+  const [mutate, { isLoading }] = useToggleStoreCategoryStatusMutation()
   const { refetch, isLoading: loadingStores } = useGetStoreCategoriesQuery({
     authToken: token as string,
   })
 
-  const toggleStoreStatus = async (
-    action: "open" | "close" | "activate" | "deactivate"
-  ) => {
+  const toggleStoreStatus = async (action: "hide" | "show") => {
+    console.log(record)
     try {
       const response = await mutate({
         action,
@@ -66,12 +65,12 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
             <div className="flex flex-col p-0 m-0 gap-2">
               <p className="text-center text-md mb-1">{record.name}</p>
               <div className="flex flex-col gap-2">
-                {record.hidden ? (
+                {!record.hidden ? (
                   <Button
                     type="default"
                     danger
                     className="w-full"
-                    onClick={async () => await toggleStoreStatus("deactivate")}
+                    onClick={async () => await toggleStoreStatus("hide")}
                   >
                     Hide
                   </Button>
@@ -79,7 +78,7 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
                   <Button
                     type="primary"
                     className="bg-primary w-full"
-                    onClick={async () => await toggleStoreStatus("activate")}
+                    onClick={async () => await toggleStoreStatus("show")}
                   >
                     Show
                   </Button>
@@ -147,7 +146,7 @@ const columns: ColumnsType<StoreCategory> = [
     dataIndex: "hidden",
     key: "hidden",
     render: (text, record) => {
-      const status = record.hidden ? (
+      const status = !record.hidden ? (
         <Tag color="success" className="px-3 py-1">
           Shown
         </Tag>
