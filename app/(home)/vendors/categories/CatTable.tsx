@@ -3,6 +3,9 @@ import React from "react"
 import {
   Avatar,
   Button,
+  Form,
+  Input,
+  Modal,
   Popover,
   Select,
   Space,
@@ -15,6 +18,7 @@ import type { ColumnsType } from "antd/es/table"
 import {
   useGetStoreCategoriesQuery,
   useToggleStoreCategoryStatusMutation,
+  useUpdateCategoryMutation,
 } from "@/services/store.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { StoreCategory } from "@/interfaces/store"
@@ -22,17 +26,26 @@ import { VendorI } from "@/interfaces/product"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { DeleteOutlined, EditOutlined } from "@mui/icons-material"
 import Link from "next/link"
+import { store } from "@/context/store"
 
 const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
   text,
   record,
 }) => {
   const [open, setOpen] = React.useState<boolean>(false)
+  const [openModal, setOpenModal] = React.useState<boolean>(false)
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
   }
   const { token } = useAuthToken()
   const [mutate, { isLoading }] = useToggleStoreCategoryStatusMutation()
+  const [update, { isLoading: updating }] = useUpdateCategoryMutation()
+  const [formData, setFormData] = React.useState({
+    name: record.name,
+    description: record.description,
+    store_category_id: record._id,
+  })
+
   const { refetch, isLoading: loadingStores } = useGetStoreCategoriesQuery({
     authToken: token as string,
   })
@@ -52,63 +65,136 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
       message.error(error.data.message)
     }
   }
+
+  const isFilled = Object.values(formData).every((el) => Boolean(el))
+  const updateCategory = async () => {
+    try {
+      // if (
+      //   formData.is_first_level === false &&
+      //   formData.parent_category_id.length === 0
+      // ) {
+      //   message.error("Please select a parent category")
+      //   return
+      // }
+      const response = await update({
+        data: formData,
+        authToken: token as string,
+      }).unwrap()
+      message.success(response.message)
+      await refetch()
+      setOpen(false)
+      setOpenModal(false)
+      // message.success("Stores table updated successfully")
+    } catch (error: any) {
+      message.error(error.data.message)
+    }
+  }
   return (
-    <Popover
-      placement="bottom"
-      trigger="click"
-      open={open}
-      onOpenChange={handleOpenChange}
-      content={
-        <>
-          {isLoading ? (
-            <LoadingOutlined />
-          ) : (
-            <div className="flex flex-col p-0 m-0 gap-2">
-              <p className="text-center text-md mb-1">{record.name}</p>
-              <div className="flex flex-col gap-2">
-                {!record.hidden ? (
-                  <Button
-                    type="default"
-                    danger
-                    className="w-full"
-                    onClick={async () => await toggleStoreStatus("hide")}
-                  >
-                    Hide
-                  </Button>
-                ) : (
-                  <Button
-                    type="primary"
-                    className="bg-primary w-full"
-                    onClick={async () => await toggleStoreStatus("show")}
-                  >
-                    Show
-                  </Button>
-                )}
-              </div>
-              {/* <div className="flex gap-2 w-full">
+    <>
+      <Popover
+        placement="bottom"
+        trigger="click"
+        open={open}
+        onOpenChange={handleOpenChange}
+        content={
+          <>
+            {isLoading ? (
+              <LoadingOutlined />
+            ) : (
+              <div className="flex flex-col p-0 m-0 gap-2">
+                <p className="text-center text-md mb-1">{record.name}</p>
+                <div className="flex flex-col gap-2">
+                  {!record.hidden ? (
+                    <Button
+                      type="default"
+                      danger
+                      className="w-full"
+                      onClick={async () => await toggleStoreStatus("hide")}
+                    >
+                      Hide
+                    </Button>
+                  ) : (
+                    <Button
+                      type="primary"
+                      className="bg-primary w-full"
+                      onClick={async () => await toggleStoreStatus("show")}
+                    >
+                      Show
+                    </Button>
+                  )}
+                </div>
                 <Button
                   type="primary"
                   className="bg-primary w-full"
-                  onClick={async () => await toggleStoreStatus("open")}
+                  onClick={() => setOpenModal(true)}
                 >
-                  Open Store
+                  Update Details
                 </Button>
-                <Button
-                  type="default"
-                  danger
-                  className="w-full"
-                  onClick={async () => await toggleStoreStatus("close")}
-                >
-                  Close Store
-                </Button>
-              </div> */}
+              </div>
+            )}
+          </>
+        }
+      >
+        <MoreOutlined />
+      </Popover>
+
+      <Modal
+        open={openModal}
+        onCancel={() => setOpenModal(false)}
+        footer={false}
+      >
+        <div className="">
+          <Form onFinish={updateCategory}>
+            <h2 className="text-black text-2xl mt-2 mb-5 text-center">
+              Update - {record.name}
+            </h2>
+            <div className="flex flex-col gap-2 mt-2">
+              <label htmlFor="category" className="font-semibold text-xl">
+                Name
+              </label>
+              <Input
+                size="large"
+                id="category"
+                type="text"
+                placeholder="Category Name"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
+                }
+              />
             </div>
-          )}
-        </>
-      }
-    >
-      <MoreOutlined />
-    </Popover>
+            <div className="flex flex-col gap-2 mt-2">
+              <label htmlFor="phone" className="font-semibold text-xl">
+                Description
+              </label>
+              <Input
+                size="large"
+                type="text"
+                placeholder="Enter Description"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <Button
+              className=" w-full bg-[#006FCF] mt-5"
+              disabled={!isFilled}
+              type="primary"
+              size="large"
+              htmlType="submit"
+            >
+              {updating ? <LoadingOutlined /> : "Update"}
+            </Button>
+            {/* <ButtonUI text="Add Vendor"></ButtonUI> */}
+          </Form>
+        </div>
+      </Modal>
+    </>
   )
 }
 

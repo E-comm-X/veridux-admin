@@ -91,6 +91,28 @@ export const storeApi = createApi({
         }
       },
     }),
+    updateCategory: builder.mutation<
+      { message: string },
+      {
+        authToken: string
+        data: {
+          store_category_id: string
+          name: string
+          description: string
+        }
+      }
+    >({
+      query: ({ authToken, data }) => {
+        return {
+          url: `/category/update`,
+          method: "PATCH",
+          body: data,
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
 
     getStoreCategories: builder.query<StoreCategory[], { authToken: string }>({
       query: ({ authToken }) => {
@@ -140,4 +162,5 @@ export const {
   useGetStoreCategoriesQuery,
   useToggleStoreCategoryStatusMutation,
   useCreateStoreCategoryMutation,
+  useUpdateCategoryMutation,
 } = storeApi
