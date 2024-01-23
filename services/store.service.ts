@@ -68,6 +68,15 @@ export const storeApi = createApi({
         }
       },
     }),
+
+    getStoreCategories: builder.query<[], null>({
+      query: () => {
+        return {
+          url: "/category/get",
+          method: "GET",
+        }
+      },
+    }),
   }),
 })
 

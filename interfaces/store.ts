@@ -37,3 +37,15 @@ export interface StoreI {
 export interface StoresResponseI {
   data: { stores: StoreI[] }
 }
+
+export interface StoreCategory {
+  children_categories: string[]
+  _id: string
+  name: string
+  description: string
+  hidden: boolean
+  sub_categories: string[]
+  is_first_level: boolean
+  __v: string
+  id: string
+}
