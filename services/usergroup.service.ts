@@ -1,4 +1,4 @@
-import { SignInRequest, SignInResponse } from "@/interfaces/auth"
+import { userGroupI } from "@/interfaces/userGroup"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const userGroupApi = createApi({
@@ -7,7 +7,10 @@ export const userGroupApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/usergroup`,
   }),
   endpoints: (builder) => ({
-    getUserGroups: builder.query<SignInResponse, { authToken: string }>({
+    getUserGroups: builder.query<
+      { data: { user_group: userGroupI[] } },
+      { authToken: string }
+    >({
       query: ({ authToken }) => {
         return {
           url: "/",
