@@ -72,7 +72,7 @@ export const storeApi = createApi({
     getStoreCategories: builder.query<StoreCategory[], null>({
       query: () => {
         return {
-          url: "/category/get",
+          url: "/category/gethidden",
           method: "GET",
         }
       },
