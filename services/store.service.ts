@@ -45,9 +45,8 @@ export const storeApi = createApi({
     }),
 
     createStore: builder.mutation<
-      StoreI,
+      { message: string },
       {
-        id: string
         authToken: string
         data: {
           name: string
@@ -69,11 +68,14 @@ export const storeApi = createApi({
       },
     }),
 
-    getStoreCategories: builder.query<StoreCategory[], null>({
-      query: () => {
+    getStoreCategories: builder.query<StoreCategory[], { authToken: string }>({
+      query: ({ authToken }) => {
         return {
           url: "/category/gethidden",
           method: "GET",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
         }
       },
       transformResponse: (data: {
