@@ -14,6 +14,7 @@ import { IconButton } from "@mui/material"
 import { useGetUserGroupsQuery } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { userGroupI } from "@/interfaces/userGroup"
+import { UpdateUserGroup } from "./UpdateUserGroup"
 
 export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
@@ -32,9 +33,7 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
             onOpenChange={(visible) => setOpenPopover(!openPopover)}
             content={
               <div className="flex flex-col gap-2">
-                <Button type="text" icon={<EditOutlined />}>
-                  Edit
-                </Button>
+                <UpdateUserGroup group_id={group._id} name={group.group_name} />
                 <Button
                   type="text"
                   danger
