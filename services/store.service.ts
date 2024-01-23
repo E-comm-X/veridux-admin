@@ -1,4 +1,4 @@
-import { StoreI, StoresResponseI } from "@/interfaces/store"
+import { StoreCategory, StoreI, StoresResponseI } from "@/interfaces/store"
 import { createStore } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -69,13 +69,16 @@ export const storeApi = createApi({
       },
     }),
 
-    getStoreCategories: builder.query<[], null>({
+    getStoreCategories: builder.query<StoreCategory[], null>({
       query: () => {
         return {
           url: "/category/get",
           method: "GET",
         }
       },
+      transformResponse: (data: {
+        data: { store_categories: StoreCategory[] }
+      }) => data.data.store_categories,
     }),
   }),
 })
@@ -84,4 +87,5 @@ export const {
   useGetAllStoresQuery,
   useToggleStoreStatusMutation,
   useCreateStoreMutation,
+  useGetStoreCategoriesQuery,
 } = storeApi
