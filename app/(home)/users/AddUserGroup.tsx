@@ -36,7 +36,7 @@ export const AddUserGroup = () => {
             className="bg-primary w-full"
             size="large"
             htmlType="submit"
-            disabled={!group_name}
+            disabled={/^\s*$/.test(group_name)}
           >
             Create User Group
           </Button>

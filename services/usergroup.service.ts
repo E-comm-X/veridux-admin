@@ -21,7 +21,23 @@ export const userGroupApi = createApi({
         }
       },
     }),
+    createUserGroup: builder.mutation<
+      { data: { message: string } },
+      { authToken: string; group_name: string }
+    >({
+      query: ({ authToken, group_name }) => {
+        return {
+          url: "/new",
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          body: { group_name },
+        }
+      },
+    }),
   }),
 })
 
-export const { useGetUserGroupsQuery } = userGroupApi
+export const { useGetUserGroupsQuery, useCreateUserGroupMutation } =
+  userGroupApi
