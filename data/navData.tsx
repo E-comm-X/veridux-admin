@@ -25,9 +25,18 @@ export const navItems = [
   },
   {
     name: "Vendors",
-    url: "/vendors",
+    url: "",
     icon: <Storefront color="primary" />,
-    children: [],
+    children: [
+      {
+        name: "Vendors",
+        url: "/vendors",
+      },
+      {
+        name: "Categories",
+        url: "/vendors/categories",
+      },
+    ],
   },
   {
     name: "Product",
