@@ -18,6 +18,9 @@ import { userGroupI } from "@/interfaces/userGroup"
 export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
   const { token } = useAuthToken()
+  const disabled =
+    group.group_name.toLowerCase() === "enduser" ||
+    group.group_name.toLowerCase() === "vendor"
   return (
     <Card className="w-full" key={group._id}>
       <div className="flex flex-col">
@@ -32,7 +35,12 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
                 <Button type="text" icon={<EditOutlined />}>
                   Edit
                 </Button>
-                <Button type="text" danger icon={<DeleteOutlined />}>
+                <Button
+                  type="text"
+                  danger
+                  icon={<DeleteOutlined />}
+                  disabled={disabled}
+                >
                   Delete
                 </Button>
               </div>
