@@ -18,7 +18,6 @@ const columns: ColumnsType<userI> = [
     render: (text, record) => (
       <div className="flex items-center gap-3">
         <Avatar
-          className="rounded-[8px]"
           size={"large"}
           src={record.profile_picture}
           icon={<UserOutlined />}
@@ -92,6 +91,9 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
           columns={columns}
           dataSource={data?.data.users.slice(0).reverse()}
           rowSelection={{}}
+          pagination={{
+            pageSizeOptions: ["20", "30", "50"],
+          }}
         />
       )}
     </>

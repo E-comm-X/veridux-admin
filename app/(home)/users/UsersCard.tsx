@@ -15,6 +15,7 @@ import { useAuthToken } from "@/hooks/useAuthToken"
 import { userGroupI } from "@/interfaces/userGroup"
 import { UpdateUserGroup } from "./UpdateUserGroup"
 import { useGetUsersInGroupQuery } from "@/services/usergroup.service"
+import { UserGroup } from "./UserGroup"
 
 export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
@@ -37,6 +38,7 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
             onOpenChange={(visible) => setOpenPopover(!openPopover)}
             content={
               <div className="flex flex-col gap-2">
+                <UserGroup name={group.group_name} id={group._id} />
                 <UpdateUserGroup group_id={group._id} name={group.group_name} />
                 <Button
                   type="text"
