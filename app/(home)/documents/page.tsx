@@ -6,7 +6,7 @@ import { DocumentsRequestTable } from "./DocumentsRequestTable"
 const Page = () => {
   return (
     <div>
-      <H2>Documents</H2>
+      <H2 className="mb-7">Documents</H2>
       <div>
         <DocumentsRequestTable />
       </div>
