@@ -11,14 +11,18 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons"
 import { IconButton } from "@mui/material"
-import { useGetUserGroupsQuery } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { userGroupI } from "@/interfaces/userGroup"
 import { UpdateUserGroup } from "./UpdateUserGroup"
+import { useGetUsersInGroupQuery } from "@/services/usergroup.service"
 
 export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
   const { token } = useAuthToken()
+  const { data, isLoading } = useGetUsersInGroupQuery({
+    group_id: group._id,
+    authToken: token as string,
+  })
   const disabled =
     group.group_name.toLowerCase() === "enduser" ||
     group.group_name.toLowerCase() === "vendor"
@@ -55,26 +59,27 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
           User group for <b className="text-primary">{group.group_name}`</b>
         </p>
         <div className="mt-5">
-          <Avatar.Group
-            maxCount={2}
-            maxStyle={{
-              color: "#f56a00",
-              backgroundColor: "#fde3cf",
-            }}
-          >
-            <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />
-            <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-            <Tooltip title="Ant User" placement="top">
-              <Avatar
-                style={{ backgroundColor: "#87d068" }}
-                icon={<UserOutlined />}
-              />
-            </Tooltip>
-            <Avatar
-              style={{ backgroundColor: "#1677ff" }}
-              icon={<AntDesignOutlined />}
-            />
-          </Avatar.Group>
+          {isLoading ? (
+            <LoadingOutlined />
+          ) : (
+            <Avatar.Group
+              maxCount={10}
+              maxStyle={{
+                color: "#f56a00",
+                backgroundColor: "#fde3cf",
+              }}
+            >
+              {data?.data.users.map((user) => (
+                <Tooltip title={user.firstname} key={user._id}>
+                  <Avatar
+                    size="default"
+                    src={user.profile_picture}
+                    icon={<UserOutlined />}
+                  />
+                </Tooltip>
+              ))}
+            </Avatar.Group>
+          )}
         </div>
       </div>
     </Card>
