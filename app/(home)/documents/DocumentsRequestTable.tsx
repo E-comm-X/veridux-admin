@@ -197,7 +197,6 @@ export const DocumentsRequestTable: React.FC = () => {
   const { data, isLoading } = useGetAllDocumentRequestsQuery({
     authToken: token as string,
   })
-  console.log(data)
 
   return (
     <>

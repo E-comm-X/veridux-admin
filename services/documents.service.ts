@@ -56,8 +56,6 @@ export const documentsApi = createApi({
       }
     >({
       query: ({ documents_to_approve, documents_to_reject, authToken }) => {
-        console.log({ documents_to_approve, documents_to_reject })
-
         return {
           url: "/status/update",
           body:
