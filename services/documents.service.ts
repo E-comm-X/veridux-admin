@@ -56,11 +56,14 @@ export const documentsApi = createApi({
       }
     >({
       query: ({ documents_to_approve, documents_to_reject, authToken }) => {
+        console.log({ documents_to_approve, documents_to_reject })
+
         return {
           url: "/status/update",
-          data: documents_to_approve
-            ? { documents_to_approve }
-            : { documents_to_reject },
+          body:
+            (documents_to_approve?.length as number) > 0
+              ? { documents_to_approve }
+              : { documents_to_reject },
           method: "PATCH",
           headers: {
             authorization: `Bearer ${authToken}`,

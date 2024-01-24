@@ -30,7 +30,7 @@ export const categoryApi = createApi({
 
         return {
           url: "/new",
-          data: data,
+          body: data,
           method: "POST",
           headers: {
             authorization: `Bearer ${authToken}`,

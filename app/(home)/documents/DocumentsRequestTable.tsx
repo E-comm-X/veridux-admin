@@ -1,32 +1,14 @@
 "use client"
 import React from "react"
-import {
-  Avatar,
-  Button,
-  Drawer,
-  Popover,
-  Select,
-  Space,
-  Table,
-  Tag,
-  message,
-} from "antd"
+import { Avatar, Button, Drawer, Popover, Table, Tag, message } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import {
-  useGetAllStoresQuery,
-  useToggleStoreStatusMutation,
-} from "@/services/store.service"
 import {
   useGetAllDocumentRequestsQuery,
   useUpdateDocumentMutation,
 } from "@/services/documents.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
-import { StoreI } from "@/interfaces/store"
-import { VendorI } from "@/interfaces/product"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { DeleteOutlined, EditOutlined, PictureAsPdf } from "@mui/icons-material"
 import { UserOutlined } from "@ant-design/icons"
-import Link from "next/link"
 import { DocumentRequestI } from "@/interfaces/documents"
 import { DocumentsTable } from "./DocumentsTable"
 import { useGetUserQuery } from "@/services/usergroup.service"
@@ -40,7 +22,7 @@ const SubmittedBy: React.FC<{ text: any; record: DocumentRequestI }> = ({
     authToken: token as string,
     user_id: record.user,
   })
-  console.log(data)
+  // console.log(data)
   return (
     <div className="flex items-center gap-3">
       <Avatar size={"small"}>
@@ -166,28 +148,28 @@ const columns: ColumnsType<DocumentRequestI> = [
     render: (text, record) => <SubmittedBy {...{ text, record }} />,
   },
 
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (text, record) => {
-      const status =
-        record.status.toLowerCase() === "approved" ? (
-          <Tag color="success" className="px-3 py-1">
-            Approved
-          </Tag>
-        ) : record.status.toLowerCase() === "pending" ? (
-          <Tag color="warning" className="px-3 py-1">
-            Pending
-          </Tag>
-        ) : (
-          <Tag color="error" className="px-3 py-1">
-            Rejected
-          </Tag>
-        )
-      return <p>{status}</p>
-    },
-  },
+  // {
+  //   title: "Status",
+  //   dataIndex: "status",
+  //   key: "status",
+  //   render: (text, record) => {
+  //     const status =
+  //       record.status.toLowerCase() === "approved" ? (
+  //         <Tag color="success" className="px-3 py-1">
+  //           Approved
+  //         </Tag>
+  //       ) : record.status.toLowerCase() === "pending" ? (
+  //         <Tag color="warning" className="px-3 py-1">
+  //           Pending
+  //         </Tag>
+  //       ) : (
+  //         <Tag color="error" className="px-3 py-1">
+  //           Rejected
+  //         </Tag>
+  //       )
+  //     return <p>{status}</p>
+  //   },
+  // },
 
   {
     title: "Date Submitted",
