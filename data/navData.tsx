@@ -1,6 +1,7 @@
 import { OverviewIcon } from "@/icons"
 import {
   Campaign,
+  DocumentScanner,
   LocalShipping,
   PeopleAlt,
   Person,
@@ -42,6 +43,13 @@ export const navItems = [
     name: "Product",
     url: "/product",
     icon: <Sell color="primary" />,
+    children: [],
+  },
+
+  {
+    name: "Documents",
+    url: "/documents",
+    icon: <DocumentScanner color="primary" />,
     children: [],
   },
 
