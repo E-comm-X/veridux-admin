@@ -94,7 +94,7 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
             icon={<UserOutlined />}
           />
           <p className="capitalize">
-            {text} {record.lastname}
+            {record.firstname} {record.lastname}
           </p>
         </div>
       ),
