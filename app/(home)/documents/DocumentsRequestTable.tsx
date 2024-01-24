@@ -3,6 +3,7 @@ import React from "react"
 import {
   Avatar,
   Button,
+  Drawer,
   Popover,
   Select,
   Space,
@@ -24,6 +25,7 @@ import { DeleteOutlined, EditOutlined, PictureAsPdf } from "@mui/icons-material"
 import { UserOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import { DocumentRequestI } from "@/interfaces/documents"
+import { DocumentsTable } from "./DocumentsTable"
 
 const MoreAction: React.FC<{ text: any; record: DocumentRequestI }> = ({
   text,
@@ -102,7 +104,21 @@ const ViewDocuments: React.FC<{ text: any; record: DocumentRequestI }> = ({
   const [open, setOpen] = React.useState<boolean>(false)
   return (
     <>
-      <Button type="link">View Documents</Button>
+      <Button type="link" onClick={() => setOpen(true)}>
+        View Documents
+      </Button>
+      <div className="document-drawer">
+        <Drawer
+          title="Document"
+          placement="right"
+          // closable={false}
+          onClose={() => setOpen(false)}
+          open={open}
+          width={"100%"}
+        >
+          <DocumentsTable documents={record.documents} />
+        </Drawer>
+      </div>
     </>
   )
 }

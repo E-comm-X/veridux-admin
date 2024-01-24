@@ -8,6 +8,7 @@ import {
   Space,
   Table,
   Tag,
+  Tooltip,
   message,
 } from "antd"
 import type { ColumnsType } from "antd/es/table"
@@ -101,8 +102,12 @@ const columns: ColumnsType<DocumentI> = [
     key: "file_url",
     render: (text, record) => (
       <div className="flex items-center gap-3">
-        <PictureAsPdf />
-        <Link href={text}>View Document</Link>
+        <PictureAsPdf color="error" />
+        <Tooltip title={record.file_url}>
+          <Link href={text} className="text-primary underline" target="_blank">
+            View Document
+          </Link>
+        </Tooltip>
       </div>
     ),
   },
@@ -126,7 +131,7 @@ const columns: ColumnsType<DocumentI> = [
     key: "type",
     render: (text, record) => (
       <div className="flex items-center gap-3">
-        <p>{record.type.split("_").join(" ")}</p>
+        <p className="uppercase">{record.type.split("_").join(" ")}</p>
       </div>
     ),
   },
@@ -160,7 +165,7 @@ const columns: ColumnsType<DocumentI> = [
     key: "company_size",
     render: (text, record) => (
       <div className="flex items-center gap-3">
-        <p>{text}</p>
+        <p>{record.company_size ? text : "-"}</p>
       </div>
     ),
   },
