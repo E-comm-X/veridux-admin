@@ -46,17 +46,22 @@ export const documentsApi = createApi({
         data: { document_verification_request: DocumentRequestI[] }
       }) => data.data.document_verification_request,
     }),
-    addCategory: builder.mutation<
-      DocumentRequestI,
-      { data: CategoryRequestI; authToken: string | null }
-    >({
-      query: ({ data, authToken }) => {
-        console.log(data)
 
+    updateDocument: builder.mutation<
+      { message: string },
+      {
+        authToken: string
+        documents_to_approve?: string[]
+        documents_to_reject?: string[]
+      }
+    >({
+      query: ({ documents_to_approve, documents_to_reject, authToken }) => {
         return {
-          url: "/new",
-          data: data,
-          method: "POST",
+          url: "/status/update",
+          data: documents_to_approve
+            ? { documents_to_approve }
+            : { documents_to_reject },
+          method: "PATCH",
           headers: {
             authorization: `Bearer ${authToken}`,
           },
@@ -66,5 +71,8 @@ export const documentsApi = createApi({
   }),
 })
 
-export const { useGetAllDocumentRequestsQuery, useGetDocumentsByStatusQuery } =
-  documentsApi
+export const {
+  useGetAllDocumentRequestsQuery,
+  useGetDocumentsByStatusQuery,
+  useUpdateDocumentMutation,
+} = documentsApi

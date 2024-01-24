@@ -16,7 +16,10 @@ import {
   useGetAllStoresQuery,
   useToggleStoreStatusMutation,
 } from "@/services/store.service"
-import { useGetAllDocumentRequestsQuery } from "@/services/documents.service"
+import {
+  useGetAllDocumentRequestsQuery,
+  useUpdateDocumentMutation,
+} from "@/services/documents.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { StoreI } from "@/interfaces/store"
 import { VendorI } from "@/interfaces/product"
@@ -57,23 +60,22 @@ const MoreAction: React.FC<{ text: any; record: DocumentRequestI }> = ({
     setOpen(newOpen)
   }
   const { token } = useAuthToken()
-  const [mutate, { isLoading }] = useToggleStoreStatusMutation()
-  const { refetch, isLoading: loadingStores } = useGetAllStoresQuery({
+  const [mutate, { isLoading }] = useUpdateDocumentMutation()
+  const { refetch, isLoading: loadingStores } = useGetAllDocumentRequestsQuery({
     authToken: token as string,
   })
 
-  const toggleStoreStatus = async (
-    action: "open" | "close" | "activate" | "deactivate"
-  ) => {
+  const updateDocument = async (documents: {
+    documents_to_approve?: string[]
+    documents_to_reject?: string[]
+  }) => {
     try {
       const response = await mutate({
-        action,
-        id: record._id,
+        ...documents,
         authToken: token as string,
       }).unwrap()
       message.success(response.message)
       await refetch()
-      message.success("Stores table updated successfully")
     } catch (error: any) {
       message.error(error.data.message)
     }
@@ -94,7 +96,13 @@ const MoreAction: React.FC<{ text: any; record: DocumentRequestI }> = ({
                 <Button
                   type="primary"
                   className="bg-primary w-full text-xs"
-                  onClick={async () => await toggleStoreStatus("open")}
+                  onClick={async () =>
+                    await updateDocument({
+                      documents_to_approve: record.documents.map(
+                        (doc) => doc._id
+                      ),
+                    })
+                  }
                 >
                   Approve All Documents
                 </Button>
@@ -102,7 +110,13 @@ const MoreAction: React.FC<{ text: any; record: DocumentRequestI }> = ({
                   type="default"
                   danger
                   className="w-full text-xs"
-                  onClick={async () => await toggleStoreStatus("deactivate")}
+                  onClick={async () =>
+                    await updateDocument({
+                      documents_to_reject: record.documents.map(
+                        (doc) => doc._id
+                      ),
+                    })
+                  }
                 >
                   Reject All Documents
                 </Button>
