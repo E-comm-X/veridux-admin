@@ -25,7 +25,7 @@ const MoreAction: React.FC<{ text: any; record: userI; group_id: string }> = ({
   }
   const { token } = useAuthToken()
   const [mutate, { isLoading }] = useRemoveUserFromGroupMutation()
-  const { refetch, isLoading: loadingStores } = useGetUsersInGroupQuery({
+  const { refetch, isLoading: removingUser } = useGetUsersInGroupQuery({
     group_id,
     authToken: token as string,
   })
