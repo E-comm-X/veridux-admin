@@ -80,6 +80,36 @@ export const userGroupApi = createApi({
         }
       },
     }),
+    addUserToGroup: builder.mutation<
+      { message: string },
+      { authToken: string; user_id: string; group_id: string }
+    >({
+      query: ({ authToken, user_id, group_id }) => {
+        return {
+          url: "/adduser",
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          body: { user_id, group_id },
+        }
+      },
+    }),
+    removeUserFromGroup: builder.mutation<
+      { message: string },
+      { authToken: string; user_id: string; group_id: string }
+    >({
+      query: ({ authToken, user_id, group_id }) => {
+        return {
+          url: "/removeuser",
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          body: { user_id, group_id },
+        }
+      },
+    }),
   }),
 })
 
@@ -89,4 +119,6 @@ export const {
   useUpdateUserGroupMutation,
   useGetUserQuery,
   useGetUsersInGroupQuery,
+  useAddUserToGroupMutation,
+  useRemoveUserFromGroupMutation,
 } = userGroupApi
