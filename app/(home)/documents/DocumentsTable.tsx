@@ -5,6 +5,7 @@ import {
   Button,
   Popover,
   Select,
+  Skeleton,
   Space,
   Table,
   Tag,
@@ -27,7 +28,34 @@ import { useAuthToken } from "@/hooks/useAuthToken"
 import { DeleteOutlined, EditOutlined, PictureAsPdf } from "@mui/icons-material"
 import { UserOutlined } from "@ant-design/icons"
 import Link from "next/link"
-import { DocumentI } from "@/interfaces/documents"
+import { DocumentI, DocumentRequestI } from "@/interfaces/documents"
+import { useGetUserQuery } from "@/services/usergroup.service"
+
+const SubmittedBy: React.FC<{ text: any; record: DocumentI }> = ({
+  text,
+  record,
+}) => {
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetUserQuery({
+    authToken: token as string,
+    user_id: record.user,
+  })
+  return (
+    <>
+      <Skeleton loading={isLoading} active avatar />
+      {isLoading ? (
+        <></>
+      ) : (
+        <div className="flex items-center gap-3">
+          <Avatar size={"default"} src={data?.data.user.profile_picture}>
+            <UserOutlined />
+          </Avatar>
+          <p className="capitalize">{`${data?.data.user.firstname} ${data?.data.user.lastname}`}</p>
+        </div>
+      )}
+    </>
+  )
+}
 
 const MoreAction: React.FC<{ text: any; record: DocumentI }> = ({
   text,
@@ -125,14 +153,7 @@ const columns: ColumnsType<DocumentI> = [
     title: "Submitted By",
     dataIndex: "user",
     key: "user",
-    render: (text, record) => (
-      <div className="flex items-center gap-3">
-        <Avatar size={"large"}>
-          <UserOutlined />
-        </Avatar>
-        <p>{text}</p>
-      </div>
-    ),
+    render: (text, record) => <SubmittedBy {...{ text, record }} />,
   },
 
   {

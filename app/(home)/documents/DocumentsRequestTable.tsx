@@ -1,6 +1,15 @@
 "use client"
 import React from "react"
-import { Avatar, Button, Drawer, Popover, Table, Tag, message } from "antd"
+import {
+  Avatar,
+  Button,
+  Drawer,
+  Popover,
+  Skeleton,
+  Table,
+  Tag,
+  message,
+} from "antd"
 import type { ColumnsType } from "antd/es/table"
 import {
   useGetAllDocumentRequestsQuery,
@@ -18,18 +27,24 @@ const SubmittedBy: React.FC<{ text: any; record: DocumentRequestI }> = ({
   record,
 }) => {
   const { token } = useAuthToken()
-  const { data } = useGetUserQuery({
+  const { data, isLoading } = useGetUserQuery({
     authToken: token as string,
     user_id: record.user,
   })
-  // console.log(data)
   return (
-    <div className="flex items-center gap-3">
-      <Avatar size={"small"}>
-        <UserOutlined />
-      </Avatar>
-      <p>{text}</p>
-    </div>
+    <>
+      <Skeleton loading={isLoading} active avatar />
+      {isLoading ? (
+        <></>
+      ) : (
+        <div className="flex items-center gap-3">
+          <Avatar size={"default"} src={data?.data.user.profile_picture}>
+            <UserOutlined />
+          </Avatar>
+          <p className="capitalize">{`${data?.data.user.firstname} ${data?.data.user.lastname}`}</p>
+        </div>
+      )}
+    </>
   )
 }
 

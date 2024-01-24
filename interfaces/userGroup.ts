@@ -23,6 +23,7 @@ export interface userI {
   __v: number
   account_reference: string
   id: string
+  profile_picture: string
 }
 
 export interface profileI {
@@ -37,8 +38,6 @@ export interface profileI {
 }
 
 export interface userResponseI {
-  data: {
-    user: userI[]
-    profile: profileI[]
-  }
+  user: userI
+  profile: profileI
 }
