@@ -26,6 +26,27 @@ import { UserOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import { DocumentRequestI } from "@/interfaces/documents"
 import { DocumentsTable } from "./DocumentsTable"
+import { useGetUserQuery } from "@/services/usergroup.service"
+
+const SubmittedBy: React.FC<{ text: any; record: DocumentRequestI }> = ({
+  text,
+  record,
+}) => {
+  const { token } = useAuthToken()
+  const { data } = useGetUserQuery({
+    authToken: token as string,
+    user_id: record.user,
+  })
+  console.log(data)
+  return (
+    <div className="flex items-center gap-3">
+      <Avatar size={"small"}>
+        <UserOutlined />
+      </Avatar>
+      <p>{text}</p>
+    </div>
+  )
+}
 
 const MoreAction: React.FC<{ text: any; record: DocumentRequestI }> = ({
   text,
@@ -128,14 +149,7 @@ const columns: ColumnsType<DocumentRequestI> = [
     title: "Submitted By",
     dataIndex: "user",
     key: "user",
-    render: (text, record) => (
-      <div className="flex items-center gap-3">
-        <Avatar size={"large"}>
-          <UserOutlined />
-        </Avatar>
-        <p>{text}</p>
-      </div>
-    ),
+    render: (text, record) => <SubmittedBy {...{ text, record }} />,
   },
 
   {
