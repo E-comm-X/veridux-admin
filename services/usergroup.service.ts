@@ -1,4 +1,4 @@
-import { userGroupI } from "@/interfaces/userGroup"
+import { userGroupI, userResponseI } from "@/interfaces/userGroup"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const userGroupApi = createApi({
@@ -14,6 +14,20 @@ export const userGroupApi = createApi({
       query: ({ authToken }) => {
         return {
           url: "/",
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
+    getUser: builder.query<
+      { data: userResponseI },
+      { authToken: string; user_id: string }
+    >({
+      query: ({ authToken, user_id }) => {
+        return {
+          url: `/user/info?user_id=${user_id}`,
           method: "GET",
           headers: {
             authorization: `Bearer ${authToken}`,
@@ -59,4 +73,5 @@ export const {
   useGetUserGroupsQuery,
   useCreateUserGroupMutation,
   useUpdateUserGroupMutation,
+  useGetUserQuery,
 } = userGroupApi
