@@ -5,62 +5,50 @@ import type { ColumnsType } from "antd/es/table"
 import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { ProductI } from "@/interfaces/product"
+import { userI } from "@/interfaces/userGroup"
+import { UserOutlined } from "@ant-design/icons"
+import { useGetUsersInGroupQuery } from "@/services/usergroup.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
 
-const columns: ColumnsType<ProductI> = [
+const columns: ColumnsType<userI> = [
   {
-    title: "Product Name",
-    dataIndex: "name",
-    key: "name",
+    title: "Full Name",
+    dataIndex: "first_name",
+    key: "first_name",
     render: (text, record) => (
       <div className="flex items-center gap-3">
         <Avatar
           className="rounded-[8px]"
           size={"large"}
-          src={record.preview_image}
+          src={record.profile_picture}
+          icon={<UserOutlined />}
         />
-        <p>{text}</p>
+        <p className="capitalize">
+          {text} {record.lastname}
+        </p>
       </div>
     ),
   },
   {
-    title: "Pricing",
-    dataIndex: "price",
-    key: "price",
-    render: (text) => <p>₦{Number(text).toFixed(2)}</p>,
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+    render: (text) => <p>{text}</p>,
   },
   {
-    title: "Brand",
-    dataIndex: "brand_name",
-    key: "brand_name",
+    title: "Account Reference",
+    dataIndex: "account_reference",
+    key: "account_reference",
   },
   {
-    title: "Purchased",
-    dataIndex: "purchased",
-    key: "purchased",
+    title: "Phone Number",
+    dataIndex: "phone_number",
+    key: "phone_number",
     render: (text) => <p>-</p>,
   },
+
   {
-    title: "Vendor",
-    dataIndex: "store",
-    key: "store",
-    render: (text, record) => (
-      <p>{record.store?.name || <p className="ml-[2rem]">-</p>}</p>
-    ),
-  },
-  {
-    title: "Total Sale",
-    dataIndex: "Total_Sale",
-    key: "Total_Sale",
-    render: (text) => <p>-</p>,
-  },
-  {
-    title: "Rating",
-    dataIndex: "rating",
-    key: "rating",
-    render: (text) => <p>{Number(text).toFixed(1)}/5</p>,
-  },
-  {
-    title: "Date Created",
+    title: "Member Since",
     dataIndex: "createdAt",
     key: "createdAt",
     render: (text) => {
@@ -88,8 +76,12 @@ const columns: ColumnsType<ProductI> = [
   },
 ]
 
-export const ProductsTable: React.FC = () => {
-  const { data, isLoading } = useGetAllProductsQuery(null)
+export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetUsersInGroupQuery({
+    group_id,
+    authToken: token as string,
+  })
 
   return (
     <>
@@ -98,7 +90,7 @@ export const ProductsTable: React.FC = () => {
       ) : (
         <Table
           columns={columns}
-          dataSource={data?.slice(0).reverse()}
+          dataSource={data?.data.users.slice(0).reverse()}
           rowSelection={{}}
         />
       )}
