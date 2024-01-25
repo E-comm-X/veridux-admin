@@ -2,22 +2,44 @@
 import { H2, H3, H5, Text } from "@/components/Typography"
 import { Edit, Save } from "@mui/icons-material"
 import { Button } from "@mui/material"
-import { Avatar, Skeleton, Input } from "antd"
+import { Avatar, Skeleton, Input, message } from "antd"
 import React, { useEffect } from "react"
 import { useGetUserDataQuery } from "@/services/auth.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { UserOutlined, CloudUploadOutlined } from "@ant-design/icons"
+import {
+  UserOutlined,
+  CloudUploadOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons"
 import { UserDataI } from "@/interfaces/User"
+import { useUpdateProfileMutation } from "@/services/profile.service"
 
 export const Profile = () => {
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetUserDataQuery({
+  const { data, isLoading, refetch } = useGetUserDataQuery({
     authToken: token as string,
   })
   const [img, setImg] = React.useState<string>("")
   const [userData, setUserData] = React.useState<UserDataI>(data as UserDataI)
   const [file, setFile] = React.useState<File | null>(null)
   const [editImg, setEditImg] = React.useState<boolean>(false)
+  const [mutate, { isLoading: updating }] = useUpdateProfileMutation()
+  const updateProfile = async () => {
+    const { firstname, lastname, email, phone_number } = userData
+    try {
+      const response = await mutate({
+        ...{ firstname, lastname, email, phone_number, profile_picture: file },
+        authToken: token as string,
+      }).unwrap()
+      message.success(`Profile updated`)
+      setEditImg(false)
+
+      await refetch()
+    } catch (error: any) {
+      console.log(error)
+      message.error(error?.data?.message)
+    }
+  }
   useEffect(() => {
     if (data) {
       setUserData({ ...data })
@@ -25,8 +47,8 @@ export const Profile = () => {
   }, [data])
   const changeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (editImg) {
+      setFile(e.target.files![0])
       if (e.target.files) {
-        setFile(e.target.files[0])
         setUserData((prev) => ({
           ...prev,
           profile_picture: URL.createObjectURL(e.target.files![0]),
@@ -108,15 +130,17 @@ export const Profile = () => {
           variant="outlined"
           endIcon={editImg ? <Save /> : <Edit />}
           size="large"
-          onClick={() => {
+          onClick={async () => {
             if (editImg) {
-              setEditImg(false)
+              await updateProfile()
+              // setEditImg(false)
             } else {
               setEditImg(true)
             }
           }}
+          // onClick={updateProfile}
         >
-          {editImg ? "Save" : "Edit"}
+          {updating ? <LoadingOutlined /> : <>{editImg ? "Save" : "Edit"}</>}
         </Button>
       </div>
 

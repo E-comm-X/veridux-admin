@@ -25,7 +25,7 @@ export const store = configureStore({
       storeApi.middleware,
       userGroupApi.middleware,
       documentsApi.middleware,
-      productApi.middleware
+      profileApi.middleware
     ),
 })
 
