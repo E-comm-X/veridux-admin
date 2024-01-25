@@ -15,4 +15,14 @@ export interface privilege {
   description: string
   __v: number
   id: string
+  permitted_groups: permittedGroupsI[]
+}
+
+export interface permittedGroupsI {
+  _id: string
+  name: string
+  allowed_priviledges: string[]
+  restricted_priviledges: string[]
+  __v: 0
+  id: string
 }
