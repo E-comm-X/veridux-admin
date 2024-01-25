@@ -6,6 +6,7 @@ import {
   PeopleAlt,
   Person,
   Receipt,
+  SecurityOutlined,
   Sell,
   Settings,
   Storefront,
@@ -24,6 +25,7 @@ export const navItems = [
     icon: <PeopleAlt color="primary" />,
     children: [],
   },
+
   {
     name: "Vendors",
     url: "",
@@ -50,6 +52,12 @@ export const navItems = [
     name: "Documents",
     url: "/documents",
     icon: <DocumentScanner color="primary" />,
+    children: [],
+  },
+  {
+    name: "Permissions",
+    url: "/permissions",
+    icon: <SecurityOutlined color="primary" />,
     children: [],
   },
 
