@@ -2,24 +2,41 @@
 import { H2, H3, H5, Text } from "@/components/Typography"
 import { Edit } from "@mui/icons-material"
 import { Button } from "@mui/material"
-import { Avatar } from "antd"
+import { Avatar, Skeleton } from "antd"
 import React from "react"
+import { useGetUserDataQuery } from "@/services/auth.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { UserOutlined } from "@ant-design/icons"
 
 export const Profile = () => {
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetUserDataQuery({
+    authToken: token as string,
+  })
   return (
     <div>
       <H3 className="mb-[2rem]">My Profile</H3>
       <div className="rounded-[27px] border-[1px] md:p-[24px] p-[16px] flex md:flex-row flex-col justify-between md:items-center mb-[2rem] gap-3">
-        <div className="flex gap-[17px] items-center">
-          <Avatar src="/avatar.png" size={118} />
-          <div>
-            <H2>Olivia Carter</H2>
-            <Text className="text-grey-500">Super Admin</Text>
-            <Text className="text-grey-500 font-semibold">
-              Nigeria,Edo State
-            </Text>
+        {isLoading ? (
+          <Skeleton active />
+        ) : (
+          <div className="flex gap-[17px] items-center">
+            <Avatar
+              src={data?.profile_picture}
+              size={118}
+              icon={<UserOutlined />}
+            />
+            <div>
+              <H2 className="capitalize">
+                {data?.firstname} {data?.lastname}
+              </H2>
+              <Text className="text-grey-500 capitalize">{data?.role}</Text>
+              <Text className="text-grey-500 font-semibold">
+                Nigeria, Lagos
+              </Text>
+            </div>
           </div>
-        </div>
+        )}
         <Button
           className="font-bold capitalize"
           variant="outlined"
@@ -47,13 +64,13 @@ export const Profile = () => {
             <div>
               <Text className="text-grey-500">First Name</Text>
               <Text className="text-gret-500 font-bold capitalize mb-[1rem]">
-                Olivia
+                {data?.firstname}
               </Text>
             </div>
             <div>
               <Text className="text-grey-500">Email Address</Text>
-              <Text className="text-gret-500 font-bold capitalize">
-                Olivia@mail.com
+              <Text className="text-gret-500 font-bold lowercase">
+                {data?.email}
               </Text>
             </div>
           </div>
@@ -62,13 +79,13 @@ export const Profile = () => {
             <div>
               <Text className="text-grey-500">Last Name</Text>
               <Text className="text-gret-500 font-bold capitalize mb-[1rem]">
-                Carter
+                {data?.lastname}
               </Text>
             </div>
             <div>
               <Text className="text-grey-500">Phone</Text>
               <Text className="text-gret-500 font-bold capitalize">
-                +23458583928393
+                {data?.phone_number}
               </Text>
             </div>
           </div>
