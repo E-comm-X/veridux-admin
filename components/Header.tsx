@@ -4,7 +4,7 @@ import { Menu } from "./Menu"
 import { MobileMenu } from "./MobileMenu"
 import { NavTab } from "./NavTab"
 import { Logo } from "./Logo"
-import { Avatar, Badge, Button, Drawer, Input } from "antd"
+import { Avatar, Badge, Button, Drawer, Input, Skeleton } from "antd"
 import {
   Close,
   ExpandMore,
@@ -14,9 +14,18 @@ import {
 } from "@mui/icons-material"
 import { PersonSupportBlueIcon } from "@/icons"
 import { IconButton } from "@mui/material"
+import { useGetUserDataQuery } from "@/services/auth.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { UserOutlined } from "@ant-design/icons"
+import Link from "next/link"
 
 export const Header = () => {
   const [open, setOpen] = React.useState(false)
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetUserDataQuery({
+    authToken: token as string,
+  })
+  console.log(data)
   return (
     <div>
       <NavTab />
@@ -34,25 +43,37 @@ export const Header = () => {
           </div>
         </div>
         <div className="flex items-center gap-[12px] cursor-pointer">
-          <Badge>
-            <div className="px-[10px] py-[10px] bg-[#006FCF33] rounded-[9px] md:block hidden">
-              <PersonSupportBlueIcon />
-            </div>
-          </Badge>
+          <Link href="/users">
+            <Badge>
+              <div className="px-[10px] py-[10px] bg-[#006FCF33] rounded-[9px] md:block hidden">
+                <PersonSupportBlueIcon />
+              </div>
+            </Badge>
+          </Link>
           <Badge dot color="#5A4BDA" className="md:block hidden">
             <div className="px-[10px] py-[10px] bg-[#006FCF33] rounded-[9px]">
               <Notifications color="primary" />
             </div>
           </Badge>
-          <div className="flex items-center gap-[12px] cursor-pointer px-[10px] md:py-[8px]">
-            <Avatar
-              className="rounded-[9px]"
-              style={{ width: "46px", height: "46px" }}
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            />
-            <p>Samuel N.</p>
-            <ExpandMore />
-          </div>
+          {isLoading ? (
+            <Skeleton.Avatar active />
+          ) : (
+            <Link
+              href={"/account"}
+              className="flex items-center gap-[12px] cursor-pointer px-[10px] md:py-[8px]"
+            >
+              <Avatar
+                className="rounded-[9px]"
+                src={data?.profile_picture}
+                icon={<UserOutlined />}
+                size={44}
+              />
+              <p className="capitalize">
+                {data?.firstname} {data?.lastname.slice(0, 1)}.
+              </p>
+              <ExpandMore />
+            </Link>
+          )}
         </div>
         <div className="md:hidden">
           <IconButton className="rounded-full" onClick={() => setOpen(true)}>
