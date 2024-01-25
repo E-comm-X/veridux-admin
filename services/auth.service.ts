@@ -1,3 +1,4 @@
+import { UserDataI, UserResponseI } from "@/interfaces/User"
 import { SignInRequest, SignInResponse } from "@/interfaces/auth"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -16,7 +17,7 @@ export const authApi = createApi({
         }
       },
     }),
-    getUserData: builder.query<any, { authToken: string }>({
+    getUserData: builder.query<UserDataI, { authToken: string }>({
       query({ authToken }) {
         return {
           url: "/loggedinuser",
@@ -25,6 +26,9 @@ export const authApi = createApi({
             authorization: `Bearer ${authToken}`,
           },
         }
+      },
+      transformResponse: (response: UserResponseI) => {
+        return response.data.user
       },
     }),
   }),
