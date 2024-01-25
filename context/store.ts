@@ -2,6 +2,7 @@ import { authApi } from "@/services/auth.service"
 import { categoryApi } from "@/services/category.service"
 import { documentsApi } from "@/services/documents.service"
 import { productApi } from "@/services/product.service"
+import { profileApi } from "@/services/profile.service"
 import { storeApi } from "@/services/store.service"
 import { userGroupApi } from "@/services/usergroup.service"
 import { configureStore } from "@reduxjs/toolkit"
@@ -14,6 +15,7 @@ export const store = configureStore({
     [storeApi.reducerPath]: storeApi.reducer,
     [userGroupApi.reducerPath]: userGroupApi.reducer,
     [documentsApi.reducerPath]: documentsApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -22,7 +24,8 @@ export const store = configureStore({
       categoryApi.middleware,
       storeApi.middleware,
       userGroupApi.middleware,
-      documentsApi.middleware
+      documentsApi.middleware,
+      productApi.middleware
     ),
 })
 

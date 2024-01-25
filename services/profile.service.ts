@@ -10,7 +10,7 @@ export const profileApi = createApi({
       updateProfile: builder.mutation({
         query({ authToken }) {
           return {
-            url: "/",
+            url: "/enduser/update",
             method: "PATCH",
             headers: {
               authorization: `Bearer ${authToken}`,
@@ -21,3 +21,5 @@ export const profileApi = createApi({
     }
   },
 })
+
+export const { useUpdateProfileMutation } = profileApi
