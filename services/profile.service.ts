@@ -7,17 +7,17 @@ export const profileApi = createApi({
   }),
   endpoints(builder) {
     return {
-      // getUserData: builder.query({
-      //   query({ authToken }) {
-      //     return {
-      //       url: "/",
-      //       method: "GET",
-      //       headers: {
-      //         authorization: `Bearer ${authToken}`,
-      //       },
-      //     }
-      //   },
-      // }),
+      updateProfile: builder.mutation({
+        query({ authToken }) {
+          return {
+            url: "/",
+            method: "PATCH",
+            headers: {
+              authorization: `Bearer ${authToken}`,
+            },
+          }
+        },
+      }),
     }
   },
 })

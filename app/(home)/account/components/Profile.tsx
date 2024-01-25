@@ -1,18 +1,39 @@
 "use client"
 import { H2, H3, H5, Text } from "@/components/Typography"
-import { Edit } from "@mui/icons-material"
+import { Edit, Save } from "@mui/icons-material"
 import { Button } from "@mui/material"
-import { Avatar, Skeleton } from "antd"
-import React from "react"
+import { Avatar, Skeleton, Input } from "antd"
+import React, { useEffect } from "react"
 import { useGetUserDataQuery } from "@/services/auth.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { UserOutlined } from "@ant-design/icons"
+import { UserOutlined, CloudUploadOutlined } from "@ant-design/icons"
+import { UserDataI } from "@/interfaces/User"
 
 export const Profile = () => {
   const { token } = useAuthToken()
   const { data, isLoading } = useGetUserDataQuery({
     authToken: token as string,
   })
+  const [img, setImg] = React.useState<string>("")
+  const [userData, setUserData] = React.useState<UserDataI>(data as UserDataI)
+  const [file, setFile] = React.useState<File | null>(null)
+  const [editImg, setEditImg] = React.useState<boolean>(false)
+  useEffect(() => {
+    if (data) {
+      setUserData({ ...data })
+    }
+  }, [data])
+  const changeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (editImg) {
+      if (e.target.files) {
+        setFile(e.target.files[0])
+        setUserData((prev) => ({
+          ...prev,
+          profile_picture: URL.createObjectURL(e.target.files![0]),
+        }))
+      }
+    }
+  }
   return (
     <div>
       <H3 className="mb-[2rem]">My Profile</H3>
@@ -20,16 +41,61 @@ export const Profile = () => {
         {isLoading ? (
           <Skeleton active />
         ) : (
-          <div className="flex gap-[17px] items-center">
-            <Avatar
-              src={data?.profile_picture}
-              size={118}
-              icon={<UserOutlined />}
-            />
+          <div className="flex gap-[17px] items-center ">
+            <div className="relative">
+              {editImg && (
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  onChange={changeImage}
+                  className="hidden"
+                  accept=".jpg,.jpeg,.png, .svg"
+                />
+              )}
+              <label htmlFor="image">
+                <Avatar
+                  src={userData?.profile_picture}
+                  size={118}
+                  icon={<UserOutlined />}
+                  className={
+                    editImg ? "cursor-pointer hover:bg-[rgba(0,0,0,0.4)]" : ""
+                  }
+                />
+              </label>
+              {editImg && (
+                <CloudUploadOutlined className="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] text-primary cursor-pointer" />
+              )}
+            </div>
             <div>
-              <H2 className="capitalize">
-                {data?.firstname} {data?.lastname}
-              </H2>
+              {editImg ? (
+                <div className="flex gap-3 mb-2">
+                  <Input
+                    placeholder="first name"
+                    value={userData?.firstname}
+                    onChange={(e) =>
+                      setUserData((prev) => ({
+                        ...prev,
+                        firstname: e.target.value,
+                      }))
+                    }
+                  />
+                  <Input
+                    placeholder="last name"
+                    value={userData?.lastname}
+                    onChange={(e) =>
+                      setUserData((prev) => ({
+                        ...prev,
+                        lastname: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+              ) : (
+                <H2 className="capitalize">
+                  {userData?.firstname} {userData?.lastname}
+                </H2>
+              )}
               <Text className="text-grey-500 capitalize">{data?.role}</Text>
               <Text className="text-grey-500 font-semibold">
                 Nigeria, Lagos
@@ -40,10 +106,17 @@ export const Profile = () => {
         <Button
           className="font-bold capitalize"
           variant="outlined"
-          endIcon={<Edit />}
+          endIcon={editImg ? <Save /> : <Edit />}
           size="large"
+          onClick={() => {
+            if (editImg) {
+              setEditImg(false)
+            } else {
+              setEditImg(true)
+            }
+          }}
         >
-          Edit
+          {editImg ? "Save" : "Edit"}
         </Button>
       </div>
 
