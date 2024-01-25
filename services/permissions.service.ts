@@ -1,11 +1,11 @@
-import { PermissionGroupI } from "@/interfaces/permissions"
+import { PermissionGroupI, privilege } from "@/interfaces/permissions"
 import { userGroupI, userI, userResponseI } from "@/interfaces/userGroup"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const permissionsApi = createApi({
   reducerPath: "permissionsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/rbac/permissiongroup`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/rbac`,
   }),
   endpoints: (builder) => ({
     getPermissionGroups: builder.query<
@@ -14,7 +14,7 @@ export const permissionsApi = createApi({
     >({
       query: ({ authToken }) => {
         return {
-          url: "/all/get",
+          url: "/permissiongroup/all/get",
           method: "GET",
           headers: {
             authorization: `Bearer ${authToken}`,
@@ -25,6 +25,21 @@ export const permissionsApi = createApi({
         data: { permission_groups: PermissionGroupI[] }
       }) => {
         return response.data.permission_groups
+      },
+    }),
+
+    getPrivileges: builder.query<privilege[], { authToken: string }>({
+      query: ({ authToken }) => {
+        return {
+          url: "/priviledge/all/get",
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (response: { data: { priviledges: privilege[] } }) => {
+        return response.data.priviledges
       },
     }),
 
@@ -122,6 +137,7 @@ export const permissionsApi = createApi({
 
 export const {
   useGetPermissionGroupsQuery,
+  useGetPrivilegesQuery,
   useCreatePermissionGroupMutation,
   useUpdatePermissionGroupMutation,
   useGetPermissionQuery,

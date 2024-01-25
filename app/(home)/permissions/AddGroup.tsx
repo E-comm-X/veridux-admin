@@ -1,18 +1,42 @@
 "use client"
-import { Button, Form, Input, Modal, message } from "antd"
-import React, { useState } from "react"
+import { Button, Form, Input, Modal, Select, message } from "antd"
+import React, { useEffect, useState } from "react"
 import {
   useCreateUserGroupMutation,
   useGetUserGroupsQuery,
 } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
+import {
+  useGetPermissionGroupsQuery,
+  useGetPrivilegesQuery,
+} from "@/services/permissions.service"
+import { privilege } from "@/interfaces/permissions"
+
+const transformData = (data: privilege[]) => {
+  const newData =
+    data &&
+    data?.map((data) => ({
+      label: `${data.name}`.toUpperCase(),
+      value: data._id,
+    }))
+  return newData
+}
 
 export const AddGroup = () => {
   const [open, setOpen] = useState(false)
   const [group_name, setGroup_name] = useState("")
   const { token } = useAuthToken()
-  const { refetch } = useGetUserGroupsQuery({ authToken: token as string })
+  const { refetch } = useGetPermissionGroupsQuery({
+    authToken: token as string,
+  })
+  const { data: privileges_, isLoading: loadingPrivileges } =
+    useGetPrivilegesQuery({
+      authToken: token as string,
+    })
+
+  const privilegeOptions = transformData(privileges_ as privilege[])
+  const [privilege, setPrivilege] = useState<string>("")
   const [mutate, { isLoading }] = useCreateUserGroupMutation()
   const create = async () => {
     try {
@@ -22,7 +46,7 @@ export const AddGroup = () => {
       }).unwrap()
       console.log(res)
       await refetch()
-      message.success("User Group Created Successfully")
+      message.success("Permission Group Created Successfully")
       setOpen(false)
     } catch (error: any) {
       message.error(error.data.message)
@@ -43,7 +67,7 @@ export const AddGroup = () => {
         open={open}
         onCancel={() => setOpen(false)}
         footer={false}
-        title={"Add new User Group"}
+        title={"Add New Permission Group"}
       >
         <Form className="mt-5" onFinish={create}>
           <Form.Item>
@@ -52,17 +76,30 @@ export const AddGroup = () => {
               onChange={(e) => setGroup_name(e.target.value)}
               required
               className="w-full"
-              placeholder="User Group Name"
+              placeholder="Permission Group Name"
             />
+          </Form.Item>
+          <Form.Item>
+            {loadingPrivileges ? (
+              <LoadingOutlined />
+            ) : (
+              <Select
+                options={privilegeOptions}
+                placeholder={"Previlege"}
+                size="large"
+                value={privilege}
+                onChange={(value) => setPrivilege(value as string)}
+              />
+            )}
           </Form.Item>
           <Button
             type="primary"
             className="bg-primary w-full"
             size="large"
             htmlType="submit"
-            disabled={/^\s*$/.test(group_name) || isLoading}
+            disabled={/^\s*$/.test(group_name) || isLoading || !privilege}
           >
-            {isLoading ? <LoadingOutlined /> : "Create User Group"}
+            {isLoading ? <LoadingOutlined /> : "Create Permission Group"}
           </Button>
         </Form>
       </Modal>
