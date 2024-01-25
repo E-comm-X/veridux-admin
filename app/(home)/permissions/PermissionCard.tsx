@@ -23,10 +23,6 @@ export const PermissionCard: React.FC<{ group: PermissionGroupI }> = ({
 }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
   const { token } = useAuthToken()
-  // const { data, isLoading } = useGetUsersInGroupQuery({
-  //   group_id: group._id,
-  //   authToken: token as string,
-  // })
   const disabled =
     group.name.toLowerCase() === "enduser" ||
     group.name.toLowerCase() === "vendor"
@@ -63,29 +59,14 @@ export const PermissionCard: React.FC<{ group: PermissionGroupI }> = ({
         <p>
           Permission group for <b className="text-primary">{group.name}`</b>
         </p>
-        {/* <div className="mt-5">
-          {isLoading ? (
-            <LoadingOutlined />
-          ) : (
-            <Avatar.Group
-              maxCount={10}
-              maxStyle={{
-                color: "#f56a00",
-                backgroundColor: "#fde3cf",
-              }}
-            >
-              {data?.data.users.map((user) => (
-                <Tooltip title={user.firstname} key={user._id}>
-                  <Avatar
-                    size="default"
-                    src={user.profile_picture}
-                    icon={<UserOutlined />}
-                  />
-                </Tooltip>
-              ))}
-            </Avatar.Group>
-          )}
-        </div> */}
+        <div className="mt-5">
+          <p className="text-primary text-md font-semibold">
+            Allowed Privileges: {group.allowed_priviledges.length}
+          </p>
+          <p className="text-error-700 text-md font-semibold">
+            Restricted Privileges: {group.restricted_priviledges.length}
+          </p>
+        </div>
       </div>
     </Card>
   )

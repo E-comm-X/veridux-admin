@@ -73,16 +73,30 @@ export const permissionsApi = createApi({
     }),
     createPermissionGroup: builder.mutation<
       { data: { message: string } },
-      { authToken: string; group_name: string }
+      {
+        authToken: string
+        name: string
+        allowed_priviledges: string[]
+        restricted_priviledges?: string[]
+      }
     >({
-      query: ({ authToken, group_name }) => {
+      query: ({
+        authToken,
+        name,
+        allowed_priviledges,
+        restricted_priviledges,
+      }) => {
         return {
-          url: "/new",
+          url: "/permissiongroup/new",
           method: "POST",
           headers: {
             authorization: `Bearer ${authToken}`,
           },
-          body: { group_name },
+          body: {
+            name,
+            allowed_priviledges: allowed_priviledges || [],
+            restricted_priviledges: restricted_priviledges || [],
+          },
         }
       },
     }),

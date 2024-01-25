@@ -8,6 +8,7 @@ import {
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
 import {
+  useCreatePermissionGroupMutation,
   useGetPermissionGroupsQuery,
   useGetPrivilegesQuery,
 } from "@/services/permissions.service"
@@ -36,13 +37,14 @@ export const AddGroup = () => {
     })
 
   const privilegeOptions = transformData(privileges_ as privilege[])
-  const [privilege, setPrivilege] = useState<string>("")
-  const [mutate, { isLoading }] = useCreateUserGroupMutation()
+  const [privileges, setPrivileges] = useState<string[]>([])
+  const [mutate, { isLoading }] = useCreatePermissionGroupMutation()
   const create = async () => {
     try {
       const res = await mutate({
         authToken: token as string,
-        group_name,
+        name: group_name,
+        allowed_priviledges: privileges,
       }).unwrap()
       console.log(res)
       await refetch()
@@ -87,8 +89,9 @@ export const AddGroup = () => {
                 options={privilegeOptions}
                 placeholder={"Previlege"}
                 size="large"
-                value={privilege}
-                onChange={(value) => setPrivilege(value as string)}
+                value={privileges}
+                onChange={(value) => setPrivileges(value)}
+                mode="multiple"
               />
             )}
           </Form.Item>
@@ -97,7 +100,9 @@ export const AddGroup = () => {
             className="bg-primary w-full"
             size="large"
             htmlType="submit"
-            disabled={/^\s*$/.test(group_name) || isLoading || !privilege}
+            disabled={
+              /^\s*$/.test(group_name) || isLoading || privileges.length === 0
+            }
           >
             {isLoading ? <LoadingOutlined /> : "Create Permission Group"}
           </Button>
