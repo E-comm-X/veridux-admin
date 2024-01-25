@@ -1,6 +1,7 @@
 import { authApi } from "@/services/auth.service"
 import { categoryApi } from "@/services/category.service"
 import { documentsApi } from "@/services/documents.service"
+import { permissionsApi } from "@/services/permissions.service"
 import { productApi } from "@/services/product.service"
 import { profileApi } from "@/services/profile.service"
 import { storeApi } from "@/services/store.service"
@@ -16,6 +17,7 @@ export const store = configureStore({
     [userGroupApi.reducerPath]: userGroupApi.reducer,
     [documentsApi.reducerPath]: documentsApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [permissionsApi.reducerPath]: permissionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -25,7 +27,8 @@ export const store = configureStore({
       storeApi.middleware,
       userGroupApi.middleware,
       documentsApi.middleware,
-      profileApi.middleware
+      profileApi.middleware,
+      permissionsApi.middleware
     ),
 })
 

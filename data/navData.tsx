@@ -61,12 +61,12 @@ export const navItems = [
     children: [],
   },
 
-  {
-    name: "Payment history",
-    url: "/payment-history",
-    icon: <Receipt color="primary" />,
-    children: [],
-  },
+  // {
+  //   name: "Payment history",
+  //   url: "/payment-history",
+  //   icon: <Receipt color="primary" />,
+  //   children: [],
+  // },
   // {
   //   name: "Deliveries",
   //   url: "/deliveries",
@@ -96,33 +96,33 @@ export const navItems = [
   //     // },
   //   ],
   // },
-  {
-    name: "Settings",
-    url: "",
-    icon: <Settings color="primary" />,
-    children: [
-      {
-        name: "General",
-        url: "/settings",
-      },
-      {
-        name: "Security",
-        url: "/settings/security",
-      },
-      {
-        name: "Administrator",
-        url: "/settings/administrator",
-      },
-      {
-        name: "Fintech Services",
-        url: "/settings/fintech-services",
-      },
-      {
-        name: "Permissions Groups",
-        url: "/settings/permissions-groups",
-      },
-    ],
-  },
+  // {
+  //   name: "Settings",
+  //   url: "",
+  //   icon: <Settings color="primary" />,
+  //   children: [
+  //     {
+  //       name: "General",
+  //       url: "/settings",
+  //     },
+  //     {
+  //       name: "Security",
+  //       url: "/settings/security",
+  //     },
+  //     {
+  //       name: "Administrator",
+  //       url: "/settings/administrator",
+  //     },
+  //     {
+  //       name: "Fintech Services",
+  //       url: "/settings/fintech-services",
+  //     },
+  //     {
+  //       name: "Permissions Groups",
+  //       url: "/settings/permissions-groups",
+  //     },
+  //   ],
+  // },
   {
     name: "Account",
     url: "/account",
