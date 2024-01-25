@@ -16,33 +16,33 @@ import { userGroupI } from "@/interfaces/userGroup"
 import { UpdatePermissionGroup } from "./UpdatePermissionGroup"
 import { useGetUsersInGroupQuery } from "@/services/usergroup.service"
 import { PermissionGroup } from "./PermissionGroup"
+import { PermissionGroupI } from "@/interfaces/permissions"
 
-export const PermissionCard: React.FC<{ group: userGroupI }> = ({ group }) => {
+export const PermissionCard: React.FC<{ group: PermissionGroupI }> = ({
+  group,
+}) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetUsersInGroupQuery({
-    group_id: group._id,
-    authToken: token as string,
-  })
+  // const { data, isLoading } = useGetUsersInGroupQuery({
+  //   group_id: group._id,
+  //   authToken: token as string,
+  // })
   const disabled =
-    group.group_name.toLowerCase() === "enduser" ||
-    group.group_name.toLowerCase() === "vendor"
+    group.name.toLowerCase() === "enduser" ||
+    group.name.toLowerCase() === "vendor"
   return (
     <Card className="w-full" key={group._id}>
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
-          <H4 className="mb-2">{group.group_name}</H4>
+          <H4 className="mb-2">{group.name}</H4>
           <Popover
             trigger={"hover"}
             open={openPopover}
             onOpenChange={(visible) => setOpenPopover(!openPopover)}
             content={
               <div className="flex flex-col gap-2">
-                <PermissionGroup name={group.group_name} id={group._id} />
-                <UpdatePermissionGroup
-                  group_id={group._id}
-                  name={group.group_name}
-                />
+                <PermissionGroup name={group.name} id={group._id} />
+                <UpdatePermissionGroup group_id={group._id} name={group.name} />
                 <Button
                   type="text"
                   danger
@@ -61,10 +61,9 @@ export const PermissionCard: React.FC<{ group: userGroupI }> = ({ group }) => {
           </Popover>
         </div>
         <p>
-          Permission group for{" "}
-          <b className="text-primary">{group.group_name}`</b>
+          Permission group for <b className="text-primary">{group.name}`</b>
         </p>
-        <div className="mt-5">
+        {/* <div className="mt-5">
           {isLoading ? (
             <LoadingOutlined />
           ) : (
@@ -86,7 +85,7 @@ export const PermissionCard: React.FC<{ group: userGroupI }> = ({ group }) => {
               ))}
             </Avatar.Group>
           )}
-        </div>
+        </div> */}
       </div>
     </Card>
   )

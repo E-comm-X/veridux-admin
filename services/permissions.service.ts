@@ -1,3 +1,4 @@
+import { PermissionGroupI } from "@/interfaces/permissions"
 import { userGroupI, userI, userResponseI } from "@/interfaces/userGroup"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -8,7 +9,7 @@ export const permissionsApi = createApi({
   }),
   endpoints: (builder) => ({
     getPermissionGroups: builder.query<
-      { data: { user_group: userGroupI[] } },
+      PermissionGroupI[],
       { authToken: string }
     >({
       query: ({ authToken }) => {
@@ -20,7 +21,13 @@ export const permissionsApi = createApi({
           },
         }
       },
+      transformResponse: (response: {
+        data: { permission_groups: PermissionGroupI[] }
+      }) => {
+        return response.data.permission_groups
+      },
     }),
+
     getPermission: builder.query<
       { data: userResponseI },
       { authToken: string; user_id: string }
