@@ -1,24 +1,21 @@
 "use client"
 import React from "react"
-import { Avatar, Button, Popover, Space, Table, Tag, message } from "antd"
+import { Button, Popover, Table, Tooltip, message } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
-import { ProductI } from "@/interfaces/product"
-import { userI } from "@/interfaces/userGroup"
-import { UserOutlined } from "@ant-design/icons"
+
 import {
   useGetUsersInGroupQuery,
   useRemoveUserFromGroupMutation,
 } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { More } from "@mui/icons-material"
+import { PermissionGroupI, privilege } from "@/interfaces/permissions"
 
-const MoreAction: React.FC<{ text: any; record: userI; group_id: string }> = ({
-  text,
-  record,
-  group_id,
-}) => {
+const MoreAction: React.FC<{
+  text: any
+  record: privilege
+  group_id: string
+}> = ({ text, record, group_id }) => {
   const [open, setOpen] = React.useState<boolean>(false)
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
@@ -37,7 +34,7 @@ const MoreAction: React.FC<{ text: any; record: userI; group_id: string }> = ({
         group_id,
         authToken: token as string,
       }).unwrap()
-      message.success(`${record.firstname} removed from group`)
+      message.success(`${record.name} removed from group`)
       setOpen(false)
       await refetch()
     } catch (error: any) {
@@ -67,7 +64,7 @@ const MoreAction: React.FC<{ text: any; record: userI; group_id: string }> = ({
                     })
                   }
                 >
-                  Remove User from Group
+                  Remove Privilege from Group
                 </Button>
               </div>
             </div>
@@ -80,53 +77,58 @@ const MoreAction: React.FC<{ text: any; record: userI; group_id: string }> = ({
   )
 }
 
-export const PermissionsTable: React.FC<{ group_id: string }> = ({
-  group_id,
-}) => {
-  const columns: ColumnsType<userI> = [
+export const PermissionsTable: React.FC<{
+  group_id: string
+  group: PermissionGroupI
+}> = ({ group_id, group }) => {
+  const columns: ColumnsType<privilege> = [
     {
-      title: "Full Name",
-      dataIndex: "first_name",
-      key: "first_name",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (text, record) => (
         <div className="flex items-center gap-3">
-          <Avatar
-            size={"large"}
-            src={record.profile_picture}
-            icon={<UserOutlined />}
-          />
-          <p className="capitalize">
-            {record.firstname} {record.lastname}
-          </p>
+          <p className="capitalize">{record.name}</p>
         </div>
       ),
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Route",
+      dataIndex: "route",
+      key: "route",
       render: (text) => <p>{text}</p>,
     },
     {
-      title: "Account Reference",
-      dataIndex: "account_reference",
-      key: "account_reference",
+      title: "Method",
+      dataIndex: "method",
+      key: "method",
+      render: (text, record) => (
+        <p className="font-semibold uppercase">
+          {record.method.toUpperCase() === "GET" ? (
+            <span className="text-[#CCFFCB]">{text}</span>
+          ) : record.method.toUpperCase() === "POST" ? (
+            <span className="text-[#FAA613]">{text}</span>
+          ) : record.method.toUpperCase() === "DELETE" ? (
+            <span className="text-error-700">{text}</span>
+          ) : record.method.toUpperCase() === "PATCH" ? (
+            <span className="text-[#9D44B5]">{text}</span>
+          ) : (
+            record.method
+          )}
+        </p>
+      ),
     },
     {
-      title: "Phone Number",
-      dataIndex: "phone_number",
-      key: "phone_number",
-      render: (text) => <p>-</p>,
-    },
-
-    {
-      title: "Member Since",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (text) => {
-        const date = new Date(text).toDateString()
-        return <p>{date}</p>
-      },
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      render: (text, record) => (
+        <>
+          <Tooltip title={text}>
+            <p>{record.description.slice(0, 100)}...</p>
+          </Tooltip>
+        </>
+      ),
     },
 
     {
@@ -138,25 +140,17 @@ export const PermissionsTable: React.FC<{ group_id: string }> = ({
     },
   ]
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetUsersInGroupQuery({
-    group_id,
-    authToken: token as string,
-  })
 
   return (
     <>
-      {isLoading ? (
-        <LoadingOutlined />
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={data?.data.users.slice(0).reverse()}
-          rowSelection={{}}
-          pagination={{
-            pageSizeOptions: ["20", "30", "50"],
-          }}
-        />
-      )}
+      <Table
+        columns={columns}
+        dataSource={group.allowed_priviledges.slice(0).reverse()}
+        rowSelection={{}}
+        pagination={{
+          pageSizeOptions: ["20", "30", "50"],
+        }}
+      />
     </>
   )
 }

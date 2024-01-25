@@ -37,7 +37,11 @@ export const PermissionCard: React.FC<{ group: PermissionGroupI }> = ({
             onOpenChange={(visible) => setOpenPopover(!openPopover)}
             content={
               <div className="flex flex-col gap-2">
-                <PermissionGroup name={group.name} id={group._id} />
+                <PermissionGroup
+                  name={group.name}
+                  id={group._id}
+                  group={group}
+                />
                 <UpdatePermissionGroup group_id={group._id} name={group.name} />
                 <Button
                   type="text"

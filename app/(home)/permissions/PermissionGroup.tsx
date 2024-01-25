@@ -9,6 +9,7 @@ import {
 } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { userI } from "@/interfaces/userGroup"
+import { PermissionGroupI, privilege } from "@/interfaces/permissions"
 
 const transformData = (
   data: { firstname: string; lastname: string; _id: string }[]
@@ -23,7 +24,15 @@ const transformData = (
   return newData
 }
 
-export const PermissionGroup = ({ name, id }: { name: string; id: string }) => {
+export const PermissionGroup = ({
+  name,
+  id,
+  group,
+}: {
+  name: string
+  id: string
+  group: PermissionGroupI
+}) => {
   const [open, setOpen] = React.useState<boolean>(false)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
   const { token } = useAuthToken()
@@ -77,7 +86,7 @@ export const PermissionGroup = ({ name, id }: { name: string; id: string }) => {
             </Button>
           )}
         </div>
-        <PermissionsTable group_id={id} />
+        <PermissionsTable group_id={id} group={group} />
       </Drawer>
       <Modal
         open={openModal}
