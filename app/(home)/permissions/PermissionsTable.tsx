@@ -1,8 +1,9 @@
 "use client"
 import React from "react"
-import { Button, Popover, Table, Tooltip, message } from "antd"
+import { Button, Popover, Table, Tooltip, message, Tabs } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
+import type { TabsProps } from "antd"
 
 import {
   useGetUsersInGroupQuery,
@@ -132,7 +133,7 @@ export const PermissionsTable: React.FC<{
     },
 
     {
-      title: "",
+      title: "Actions",
       key: "action",
       render: (text, record) => (
         <MoreAction text={text} record={record} group_id={group_id} />
@@ -141,16 +142,40 @@ export const PermissionsTable: React.FC<{
   ]
   const { token } = useAuthToken()
 
+  const tabItems: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Allowed Privileges",
+      children: (
+        <Table
+          columns={columns}
+          dataSource={group.allowed_priviledges.slice(0).reverse()}
+          rowSelection={{}}
+          pagination={{
+            pageSizeOptions: ["20", "30", "50"],
+          }}
+        />
+      ),
+    },
+    {
+      key: "2",
+      label: "Restricted Privileges",
+      children: (
+        <Table
+          columns={columns}
+          dataSource={group.restricted_priviledges.slice(0).reverse()}
+          rowSelection={{}}
+          pagination={{
+            pageSizeOptions: ["20", "30", "50"],
+          }}
+        />
+      ),
+    },
+  ]
+
   return (
     <>
-      <Table
-        columns={columns}
-        dataSource={group.allowed_priviledges.slice(0).reverse()}
-        rowSelection={{}}
-        pagination={{
-          pageSizeOptions: ["20", "30", "50"],
-        }}
-      />
+      <Tabs items={tabItems} />
     </>
   )
 }
