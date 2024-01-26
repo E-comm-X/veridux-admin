@@ -1,10 +1,6 @@
 "use client"
 import { Button, Form, Input, Modal, Select, message } from "antd"
-import React, { useEffect, useState } from "react"
-import {
-  useCreateUserGroupMutation,
-  useGetUserGroupsQuery,
-} from "@/services/usergroup.service"
+import React, { useState } from "react"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
 import {
