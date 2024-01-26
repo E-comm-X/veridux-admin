@@ -18,6 +18,15 @@ export interface privilege {
   permitted_groups: permittedGroupI[]
 }
 
+export interface privilegeQuery {
+  name: string
+  route: string
+  method: string
+  description: string
+  permitted_groups: string[]
+  authToken: string
+}
+
 export interface permittedGroupI {
   _id: string
   name: string

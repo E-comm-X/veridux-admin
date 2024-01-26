@@ -1,4 +1,8 @@
-import { PermissionGroupI, privilege } from "@/interfaces/permissions"
+import {
+  PermissionGroupI,
+  privilege,
+  privilegeQuery,
+} from "@/interfaces/permissions"
 import { userGroupI, userI, userResponseI } from "@/interfaces/userGroup"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -101,6 +105,22 @@ export const permissionsApi = createApi({
       },
     }),
 
+    createPrivilege: builder.mutation<
+      { data: { message: string } },
+      privilegeQuery
+    >({
+      query: ({ authToken, ...data }) => {
+        return {
+          url: "/priviledge/new",
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          body: data,
+        }
+      },
+    }),
+
     updatePermissionGroup: builder.mutation<
       { data: { message: string } },
       { authToken: string; group_name: string; group_id: string }
@@ -153,6 +173,7 @@ export const {
   useGetPermissionGroupsQuery,
   useGetPrivilegesQuery,
   useCreatePermissionGroupMutation,
+  useCreatePrivilegeMutation,
   useUpdatePermissionGroupMutation,
   useGetPermissionQuery,
   useGetPrevilegesInGroupQuery,
