@@ -4,13 +4,12 @@ import { Button, Popover, Table, Tooltip, message, Tabs } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import type { TabsProps } from "antd"
-
-import {
-  useGetUsersInGroupQuery,
-  useRemoveUserFromGroupMutation,
-} from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { PermissionGroupI, privilege } from "@/interfaces/permissions"
+import {
+  useGetPermissionGroupsQuery,
+  useUpdatePermissionGroupMutation,
+} from "@/services/permissions.service"
 
 const MoreAction: React.FC<{
   text: any
@@ -22,26 +21,28 @@ const MoreAction: React.FC<{
     setOpen(newOpen)
   }
   const { token } = useAuthToken()
-  const [mutate, { isLoading }] = useRemoveUserFromGroupMutation()
-  const { refetch, isLoading: removingUser } = useGetUsersInGroupQuery({
-    group_id,
+  const [mutate, { isLoading }] = useUpdatePermissionGroupMutation()
+  const { refetch } = useGetPermissionGroupsQuery({
     authToken: token as string,
   })
 
-  const removeUser = async ({ user_id }: { user_id: string }) => {
+  const updateGroup = async () => {
     try {
       const response = await mutate({
-        user_id,
-        group_id,
         authToken: token as string,
+        action: "remove",
+        permission_group_id: group_id,
+        priviledge_id: record.id,
+        route: "allowedpriviledges",
       }).unwrap()
-      message.success(`${record.name} removed from group`)
-      setOpen(false)
       await refetch()
+      message.success(`Privilege removed group`)
+      setOpen(false)
     } catch (error: any) {
       message.error(error.data.message)
     }
   }
+
   return (
     <Popover
       placement="bottom"
@@ -59,11 +60,7 @@ const MoreAction: React.FC<{
                   type="primary"
                   className="w-full text-xs"
                   danger
-                  onClick={async () =>
-                    await removeUser({
-                      user_id: record._id,
-                    })
-                  }
+                  onClick={updateGroup}
                 >
                   Remove Privilege from Group
                 </Button>
