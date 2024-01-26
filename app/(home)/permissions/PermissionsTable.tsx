@@ -106,7 +106,7 @@ export const PermissionsTable: React.FC<{
       render: (text, record) => (
         <p className="font-semibold uppercase">
           {record.method.toUpperCase() === "GET" ? (
-            <span className="text-[#CCFFCB]">{text}</span>
+            <span className="text-[#7AE582]">{text}</span>
           ) : record.method.toUpperCase() === "POST" ? (
             <span className="text-[#FAA613]">{text}</span>
           ) : record.method.toUpperCase() === "DELETE" ? (
