@@ -1,6 +1,6 @@
 "use client"
 import { Button, Form, Input, Modal, Select, message } from "antd"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
 import {
@@ -32,8 +32,15 @@ export const AddGroup = () => {
       authToken: token as string,
     })
 
-  const privilegeOptions = transformData(privileges_ as privilege[])
+  const [privilegeOptions, setPrivilegeOptions] = useState(
+    transformData(privileges_ as privilege[])
+  )
+  const [restrictedOptions, setRestrictionedOptions] = useState(
+    transformData(privileges_ as privilege[])
+  )
+
   const [privileges, setPrivileges] = useState<string[]>([])
+  const [restrictions, setRestrictions] = useState<string[]>([])
   const [mutate, { isLoading }] = useCreatePermissionGroupMutation()
   const create = async () => {
     try {
@@ -41,6 +48,7 @@ export const AddGroup = () => {
         authToken: token as string,
         name: group_name,
         allowed_priviledges: privileges,
+        restricted_priviledges: restrictions,
       }).unwrap()
       console.log(res)
       await refetch()
@@ -50,6 +58,20 @@ export const AddGroup = () => {
       message.error(error.data.message)
     }
   }
+
+  useEffect(() => {
+    if (privileges_) {
+      const newPrivilegeOptions = restrictedOptions.filter(
+        (option) => !restrictions.includes(option.value)
+      )
+      setPrivilegeOptions(newPrivilegeOptions)
+      const newRestrictedOptions = privilegeOptions.filter(
+        (option) => !privileges.includes(option.value)
+      )
+      setRestrictionedOptions(newRestrictedOptions)
+      console.log("options changed")
+    }
+  }, [privileges, restrictions])
 
   return (
     <div>
@@ -83,10 +105,24 @@ export const AddGroup = () => {
             ) : (
               <Select
                 options={privilegeOptions}
-                placeholder={"Previlege"}
+                placeholder={"Allowed Previlege"}
                 size="large"
                 value={privileges}
                 onChange={(value) => setPrivileges(value)}
+                mode="multiple"
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
+            {loadingPrivileges ? (
+              <LoadingOutlined />
+            ) : (
+              <Select
+                options={restrictedOptions}
+                placeholder={"Restricted Previlege"}
+                size="large"
+                value={restrictions}
+                onChange={(value) => setRestrictions(value)}
                 mode="multiple"
               />
             )}

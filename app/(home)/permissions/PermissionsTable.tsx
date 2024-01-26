@@ -82,6 +82,7 @@ export const PermissionsTable: React.FC<{
   group_id: string
   group: PermissionGroupI
 }> = ({ group_id, group }) => {
+  console.log(group)
   const columns: ColumnsType<privilege> = [
     {
       title: "Name",
