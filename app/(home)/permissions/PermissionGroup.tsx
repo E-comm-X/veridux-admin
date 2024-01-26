@@ -3,24 +3,21 @@ import React from "react"
 import { Button, Drawer, Modal, Select, message } from "antd"
 import { PermissionsTable } from "./PermissionsTable"
 import { EyeOutlined } from "@ant-design/icons"
-import {
-  useAddUserToGroupMutation,
-  useGetUsersInGroupQuery,
-} from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { userI } from "@/interfaces/userGroup"
 import { PermissionGroupI, privilege } from "@/interfaces/permissions"
+import {
+  useGetPermissionGroupsQuery,
+  useGetPrivilegesQuery,
+  useUpdatePermissionGroupMutation,
+} from "@/services/permissions.service"
 
-const transformData = (
-  data: { firstname: string; lastname: string; _id: string }[]
-) => {
+const transformData = (data: privilege[]) => {
   const newData =
     data &&
     data?.map((data) => ({
-      label: `${data.firstname} ${data.lastname}`.toUpperCase(),
+      label: `${data.name}`.toUpperCase(),
       value: data._id,
     }))
-  console.log(data)
   return newData
 }
 
@@ -36,28 +33,28 @@ export const PermissionGroup = ({
   const [open, setOpen] = React.useState<boolean>(false)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
   const { token } = useAuthToken()
-  const [mutate, { isLoading }] = useAddUserToGroupMutation()
-  const { refetch, isLoading: gettingUsers } = useGetUsersInGroupQuery({
-    group_id: id,
+  const [mutate, { isLoading }] = useUpdatePermissionGroupMutation()
+  const { refetch } = useGetPermissionGroupsQuery({
     authToken: token as string,
   })
-  const { data, isLoading: gettingEndUsers } = useGetUsersInGroupQuery({
-    group_id: "64b073e736f2c0f252254ae8",
+  const { data, isLoading: gettingPrivileges } = useGetPrivilegesQuery({
     authToken: token as string,
   })
-  const endusers = transformData(data?.data.users as [])
-  const [user_id, setUser_id] = React.useState<string>("")
+  const privilegesOption = transformData(data as privilege[])
+  const [privilege_id, setPrivilege_id] = React.useState<string>("")
 
-  const addUser = async () => {
+  const updateGroup = async () => {
     try {
       const response = await mutate({
-        user_id,
-        group_id: id,
         authToken: token as string,
+        action: "add",
+        permission_group_id: id,
+        priviledge_id: privilege_id,
+        route: "allowedpriviledges",
       }).unwrap()
-      message.success(`User added to group`)
-      setOpen(false)
       await refetch()
+      message.success(`Privilege added to group`)
+      setOpenModal(false)
     } catch (error: any) {
       message.error(error.data.message)
     }
@@ -75,43 +72,44 @@ export const PermissionGroup = ({
         width={"100%"}
         title={name}
       >
-        <div className="mb-5">
-          {name.toLowerCase() !== "enduser" && (
-            <Button
-              className="bg-primary"
-              type="primary"
-              onClick={() => setOpenModal(true)}
-            >
-              Add Member
-            </Button>
-          )}
+        <div className="mb-5 flex gap-3">
+          <Button
+            className="bg-primary"
+            type="primary"
+            onClick={() => setOpenModal(true)}
+          >
+            Add Privilege to Group
+          </Button>
+          <Button onClick={() => setOpenModal(true)}>
+            Add Restricted Privilege to Group
+          </Button>
         </div>
         <PermissionsTable group_id={id} group={group} />
       </Drawer>
       <Modal
         open={openModal}
         onCancel={() => setOpenModal(false)}
-        title={`Add New User to ${name}`}
+        title={`Add New Privilege to ${name}`}
         footer={null}
       >
         <div className="mt-5 flex flex-col gap-3">
           <Select
-            options={endusers}
-            loading={gettingEndUsers}
+            options={privilegesOption}
+            loading={gettingPrivileges}
             className="w-full"
             showSearch
-            placeholder="Select a User"
+            placeholder="Select Privilege"
             size="large"
-            onChange={(value) => setUser_id(value as string)}
+            onChange={(value) => setPrivilege_id(value as string)}
           />
           <Button
             type="primary"
             className="w-full bg-primary"
             size="large"
-            disabled={isLoading || user_id === ""}
-            onClick={addUser}
+            disabled={isLoading || privilege_id === ""}
+            onClick={updateGroup}
           >
-            {isLoading ? "Adding User..." : "Add User"}
+            {isLoading ? "Adding Privilege..." : "Add Privilege"}
           </Button>
         </div>
       </Modal>

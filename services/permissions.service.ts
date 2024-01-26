@@ -123,16 +123,28 @@ export const permissionsApi = createApi({
 
     updatePermissionGroup: builder.mutation<
       { data: { message: string } },
-      { authToken: string; group_name: string; group_id: string }
+      {
+        authToken: string
+        action: "add" | "remove"
+        priviledge_id: string
+        route: "allowedpriviledges" | "restrictedpriviledges"
+        permission_group_id: string
+      }
     >({
-      query: ({ authToken, group_name, group_id }) => {
+      query: ({
+        authToken,
+        action,
+        priviledge_id,
+        permission_group_id,
+        route,
+      }) => {
         return {
-          url: "/update",
+          url: `/permissiongroup/${route}/update/?permission_group_id=${permission_group_id}`,
           method: "PATCH",
           headers: {
             authorization: `Bearer ${authToken}`,
           },
-          body: { group_name, group_id },
+          body: { action, priviledge_id },
         }
       },
     }),

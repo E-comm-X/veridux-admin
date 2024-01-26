@@ -111,7 +111,7 @@ export const PermissionsTable: React.FC<{
           ) : record.method.toUpperCase() === "POST" ? (
             <span className="text-[#FAA613]">{text}</span>
           ) : record.method.toUpperCase() === "DELETE" ? (
-            <span className="text-error-700">{text}</span>
+            <span className="text-[#FF002B]">{text}</span>
           ) : record.method.toUpperCase() === "PATCH" ? (
             <span className="text-[#9D44B5]">{text}</span>
           ) : (
