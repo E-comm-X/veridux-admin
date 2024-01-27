@@ -1,7 +1,11 @@
+"use client"
 import React from "react"
 import Image from "next/image"
-
-import { sumDetails } from "@/data/sumData"
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt"
+import LoopIcon from "@mui/icons-material/Loop"
+import SupportAgentIcon from "@mui/icons-material/SupportAgent"
+import { useGetAllStoresQuery } from "@/services/store.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
 
 interface SummaryProps {
   icon?: React.ReactNode
@@ -29,7 +33,7 @@ const Summary = ({
       </div>
       <div className="flex flex-col gap-2">
         <h3 className="font-bold text-lg">{title}</h3>
-        <p className="text-xs font-normal text-[#0000005C]">{date}</p>
+        {/* <p className="text-xs font-normal text-[#0000005C]">{date}</p> */}
         <h4 className="text-xl font-semibold ">{value}</h4>
         {percentage && prev && (
           <p className="text-[#0000005c]">
@@ -41,13 +45,46 @@ const Summary = ({
   )
 }
 function Summaries() {
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetAllStoresQuery({
+    authToken: token as string,
+  })
+  const sumDetails = [
+    {
+      id: 1,
+      icon: <PeopleAltIcon style={{ fill: "#006FCF" }} />,
+      title: "Total Vendor",
+      date: "",
+      value: isLoading ? "-" : data?.length,
+      percentage: 1.7,
+      prev: "last month",
+    },
+    {
+      id: 2,
+      icon: <LoopIcon style={{ fill: "#006FCF" }} />,
+      title: "Total Disbursement",
+      date: "",
+      value: "-",
+      percentage: 1.7,
+      prev: "last month",
+    },
+    {
+      id: 3,
+      icon: <SupportAgentIcon style={{ fill: "#006FCF" }} />,
+      title: "Orders shipped",
+      date: "",
+      value: "-",
+      // percentage: 1.7,
+      // prev: "last month"
+    },
+  ]
   return (
     <div className="grid md:grid-cols-3 gap-4">
       {sumDetails.map((item) => (
         <Summary
           key={item.id}
           icon={item.icon}
-          value={item.value}
+          value={item.value as number}
           date={item.date}
           title={item.title}
           percentage={item.percentage}

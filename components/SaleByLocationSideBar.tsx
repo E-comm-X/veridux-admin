@@ -2,7 +2,7 @@ import React from "react"
 import { locationData } from "@/data/locationData"
 import Image from "next/image"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import { Avatar } from "antd"
+import { Avatar, Empty } from "antd"
 export default function SaleByLocationSideBar() {
   function bg(sign: number) {
     return sign > 0
@@ -37,33 +37,36 @@ export default function SaleByLocationSideBar() {
           <MoreVertIcon />
         </div>
       </div>
-      <div className="flex gap-4 flex-col ">
-        {locationData.map((item) => (
-          <div key={item.id} className="flex gap-4 items-center">
-            <div className="imageContainer">
-              <Avatar
-                src={"item.image"}
-                alt=""
-                size={"large"}
-                className="rounded-[7px]"
-              />
-              {/* <Image src={item.image} width={37} height={37} alt="" /> */}
-            </div>
-            <div className="textContainer flex flex-col">
-              <h4 className="font-medium text-sm">{item.city}</h4>
-              <p className="font-normal text-xs text-[#667085]">
-                {item.noOfSales} Sales
-              </p>
-            </div>
-            <div className="amountContainer flex items-center  ml-auto gap-4">
-              <h4 className="font-medium text-sm">${item.amount}</h4>
-              <div className={bg(item.percentage)}>
-                <p className={text(item.percentage)}>{item.percentage} %</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Empty />
+      {/* Sales by location list */}
     </div>
   )
 }
+
+//  ;<div className="flex gap-4 flex-col ">
+//    {locationData.map((item) => (
+//      <div key={item.id} className="flex gap-4 items-center">
+//        <div className="imageContainer">
+//          <Avatar
+//            src={"item.image"}
+//            alt=""
+//            size={"large"}
+//            className="rounded-[7px]"
+//          />
+//          {/* <Image src={item.image} width={37} height={37} alt="" /> */}
+//        </div>
+//        <div className="textContainer flex flex-col">
+//          <h4 className="font-medium text-sm">{item.city}</h4>
+//          <p className="font-normal text-xs text-[#667085]">
+//            {item.noOfSales} Sales
+//          </p>
+//        </div>
+//        <div className="amountContainer flex items-center  ml-auto gap-4">
+//          <h4 className="font-medium text-sm">${item.amount}</h4>
+//          <div className={bg(item.percentage)}>
+//            <p className={text(item.percentage)}>{item.percentage} %</p>
+//          </div>
+//        </div>
+//      </div>
+//    ))}
+//  </div>

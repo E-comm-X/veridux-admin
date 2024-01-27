@@ -28,7 +28,7 @@ export const NavTab = () => {
       <div className=" px-[20px] pb-[20px] border-b-[1px] border-b-[#FFFFFF21]">
         <Logo />
       </div>
-      <div className="flex">
+      <div className="flex md:min-h-[85vh]">
         <div className="py-[1.5rem] border-r-[1px] border-r-[#FFFFFF21]">
           <div className="py-[1.5rem] border-b-[1px] border-b-[#FFFFFF21]">
             <Link

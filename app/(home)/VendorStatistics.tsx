@@ -12,11 +12,11 @@ export function VendorStatistics() {
       <div className="bg-white rounded-xl p-2 border-[1px]">
         <div className="flex items-center m-6 text-black">
           <h2 className="text-2xl font-semibold ">Vendors Statistic</h2>
-          <div className="ml-auto" onClick={() => setOpen(true)}>
+          {/* <div className="ml-auto" onClick={() => setOpen(true)}>
             <Button className="bg-primary" variant="contained">
               + Add Vendor
             </Button>
-          </div>
+          </div> */}
         </div>
         <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
         <h2 className="mb-3 px-5">Statistics</h2>
