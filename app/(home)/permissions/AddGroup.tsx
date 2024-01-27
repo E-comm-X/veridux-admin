@@ -61,17 +61,17 @@ export const AddGroup = () => {
 
   useEffect(() => {
     if (privileges_) {
-      const newPrivilegeOptions = restrictedOptions.filter(
+      const options = transformData(privileges_ as privilege[])
+      const newPrivilegeOptions = options.filter(
         (option) => !restrictions.includes(option.value)
       )
       setPrivilegeOptions(newPrivilegeOptions)
-      const newRestrictedOptions = privilegeOptions.filter(
+      const newRestrictedOptions = options.filter(
         (option) => !privileges.includes(option.value)
       )
       setRestrictionedOptions(newRestrictedOptions)
-      console.log("options changed")
     }
-  }, [privileges, restrictions])
+  }, [privileges, restrictions, privileges_])
 
   return (
     <div>
