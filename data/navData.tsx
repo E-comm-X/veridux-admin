@@ -56,9 +56,18 @@ export const navItems = [
   },
   {
     name: "Permissions",
-    url: "/permissions",
+    url: "",
     icon: <SecurityOutlined color="primary" />,
-    children: [],
+    children: [
+      {
+        name: "Permission Groups",
+        url: "/permissions",
+      },
+      {
+        name: "Privileges",
+        url: "/privileges",
+      },
+    ],
   },
 
   // {
