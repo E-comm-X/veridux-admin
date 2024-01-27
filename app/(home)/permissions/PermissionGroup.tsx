@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Drawer, Modal, Select, message } from "antd"
 import { PermissionsTable } from "./PermissionsTableTab"
 import { EyeOutlined } from "@ant-design/icons"
@@ -41,7 +41,12 @@ export const PermissionGroup = ({
   const { data, isLoading: gettingPrivileges } = useGetPrivilegesQuery({
     authToken: token as string,
   })
-  const privilegesOption = transformData(data as privilege[])
+  const [privilegesOption, setPrivilegeOption] = useState(
+    [] as { label: string; value: string }[]
+  )
+  const [restrictedOptions, setRestrictedOptions] = useState(
+    [] as { label: string; value: string }[]
+  )
   const [privilege_id, setPrivilege_id] = React.useState<string>("")
 
   const updateGroup = async (
@@ -63,6 +68,29 @@ export const PermissionGroup = ({
       message.error(error.data.message)
     }
   }
+
+  useEffect(() => {
+    if (data) {
+      const options = transformData(data as privilege[])
+      const restrictedOptions = transformData(group.restricted_priviledges)
+      const allowedOptions = transformData(group.allowed_priviledges)
+
+      setPrivilegeOption((prev) =>
+        options.filter((option) => {
+          const { value } = option
+          const values = restrictedOptions.map((option) => option.value)
+          if (!values.includes(value)) return option
+        })
+      )
+      setRestrictedOptions((prev) =>
+        options.filter((option) => {
+          const { value } = option
+          const values = allowedOptions.map((option) => option.value)
+          if (!values.includes(value)) return option
+        })
+      )
+    }
+  }, [data])
 
   return (
     <>
@@ -126,7 +154,7 @@ export const PermissionGroup = ({
       >
         <div className="mt-5 flex flex-col gap-3">
           <Select
-            options={privilegesOption}
+            options={restrictedOptions}
             loading={gettingPrivileges}
             className="w-full"
             showSearch

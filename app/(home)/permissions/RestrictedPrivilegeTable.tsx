@@ -61,7 +61,7 @@ const MoreAction: React.FC<{
                   danger
                   onClick={updateGroup}
                 >
-                  Remove Privilege from Group
+                  Remove Restricted Privilege from Group
                 </Button>
               </div>
             </div>
