@@ -17,7 +17,7 @@ export const RestrictedPages = ({
       const currentDate = new Date()
       const currentTime = currentDate.getTime()
       if (!token) {
-        router.replace("/auth-signin")
+        router.replace("/auth")
       }
       if (currentTime > (expiryTime as number) * 10) {
         setToken("")
