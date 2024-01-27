@@ -150,7 +150,7 @@ export const permissionsApi = createApi({
     }),
 
     deletePermissionGroup: builder.mutation<
-      { data: { message: string } },
+      { message: string },
       { authToken: string; permission_group_id: string }
     >({
       query: ({ authToken, permission_group_id }) => {

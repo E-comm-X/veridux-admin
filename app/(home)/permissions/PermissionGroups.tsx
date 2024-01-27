@@ -1,29 +1,18 @@
 "use client"
-import { H4 } from "@/components/Typography"
-import { Avatar, Button, Card, Tooltip, Popover, Empty } from "antd"
+import { Empty } from "antd"
 import React from "react"
-import {
-  LoadingOutlined,
-  MoreOutlined,
-  AntDesignOutlined,
-  UserOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons"
-import { IconButton } from "@mui/material"
-import { useGetUserGroupsQuery } from "@/services/usergroup.service"
+import { LoadingOutlined } from "@ant-design/icons"
+
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { PermissionCard } from "./PermissionCard"
 import { useGetPermissionGroupsQuery } from "@/services/permissions.service"
 import { Security } from "@mui/icons-material"
 
 export const PermissionGroups = () => {
-  const [openPopover, setOpenPopover] = React.useState<boolean>(false)
   const { token } = useAuthToken()
   const { data, isLoading } = useGetPermissionGroupsQuery({
     authToken: token as string,
   })
-  console.log(data)
   return (
     <>
       {isLoading ? (

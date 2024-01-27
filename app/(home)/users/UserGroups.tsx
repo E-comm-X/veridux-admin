@@ -1,22 +1,11 @@
 "use client"
-import { H4 } from "@/components/Typography"
-import { Avatar, Button, Card, Tooltip, Popover } from "antd"
 import React from "react"
-import {
-  LoadingOutlined,
-  MoreOutlined,
-  AntDesignOutlined,
-  UserOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons"
-import { IconButton } from "@mui/material"
+import { LoadingOutlined } from "@ant-design/icons"
 import { useGetUserGroupsQuery } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { UsersCard } from "./UsersCard"
 
 export const UserGroups = () => {
-  const [openPopover, setOpenPopover] = React.useState<boolean>(false)
   const { token } = useAuthToken()
   const { data, isLoading } = useGetUserGroupsQuery({
     authToken: token as string,

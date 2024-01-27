@@ -16,6 +16,7 @@ import { userGroupI } from "@/interfaces/userGroup"
 import { UpdateUserGroup } from "./UpdateUserGroup"
 import { useGetUsersInGroupQuery } from "@/services/usergroup.service"
 import { UserGroup } from "./UserGroup"
+import { Group } from "@mui/icons-material"
 
 export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
@@ -31,7 +32,10 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
     <Card className="w-full" key={group._id}>
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
-          <H4 className="mb-2">{group.group_name}</H4>
+          <div className="flex items-center gap-2 mb-2">
+            <Group color="success" />
+            <H4>{group.group_name}</H4>
+          </div>
           <Popover
             trigger={"hover"}
             open={openPopover}
