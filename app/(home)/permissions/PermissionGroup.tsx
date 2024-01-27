@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { Button, Drawer, Modal, Select, message } from "antd"
-import { PermissionsTable } from "./PermissionsTable"
+import { PermissionsTable } from "./PermissionsTableTab"
 import { EyeOutlined } from "@ant-design/icons"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { PermissionGroupI, privilege } from "@/interfaces/permissions"

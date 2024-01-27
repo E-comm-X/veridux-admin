@@ -1,9 +1,8 @@
 "use client"
 import React from "react"
-import { Button, Popover, Table, Tooltip, message, Tabs } from "antd"
+import { Button, Popover, Table, Tooltip, message } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
-import type { TabsProps } from "antd"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { PermissionGroupI, privilege } from "@/interfaces/permissions"
 import {
@@ -33,10 +32,10 @@ const MoreAction: React.FC<{
         action: "remove",
         permission_group_id: group_id,
         priviledge_id: record.id,
-        route: "allowedpriviledges",
+        route: "restrictedpriviledges",
       }).unwrap()
       await refetch()
-      message.success(`Privilege removed group`)
+      message.success(`Restricted Privilege removed group`)
       setOpen(false)
     } catch (error: any) {
       message.error(error.data.message)
@@ -75,11 +74,10 @@ const MoreAction: React.FC<{
   )
 }
 
-export const PermissionsTable: React.FC<{
+export const RestrictedPrivilegeTable: React.FC<{
   group_id: string
   group: PermissionGroupI
 }> = ({ group_id, group }) => {
-  console.log(group)
   const columns: ColumnsType<privilege> = [
     {
       title: "Name",
@@ -140,40 +138,15 @@ export const PermissionsTable: React.FC<{
   ]
   const { token } = useAuthToken()
 
-  const tabItems: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Allowed Privileges",
-      children: (
-        <Table
-          columns={columns}
-          dataSource={group.allowed_priviledges.slice(0).reverse()}
-          rowSelection={{}}
-          pagination={{
-            pageSizeOptions: ["20", "30", "50"],
-          }}
-        />
-      ),
-    },
-    {
-      key: "2",
-      label: "Restricted Privileges",
-      children: (
-        <Table
-          columns={columns}
-          dataSource={group.restricted_priviledges.slice(0).reverse()}
-          rowSelection={{}}
-          pagination={{
-            pageSizeOptions: ["20", "30", "50"],
-          }}
-        />
-      ),
-    },
-  ]
-
   return (
     <>
-      <Tabs items={tabItems} />
+      <Table
+        columns={columns}
+        dataSource={group.restricted_priviledges.slice(0).reverse()}
+        pagination={{
+          pageSizeOptions: ["20", "30", "50"],
+        }}
+      />
     </>
   )
 }
