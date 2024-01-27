@@ -32,6 +32,7 @@ export const PermissionGroup = ({
 }) => {
   const [open, setOpen] = React.useState<boolean>(false)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
+  const [openModal2, setOpenModal2] = React.useState<boolean>(false)
   const { token } = useAuthToken()
   const [mutate, { isLoading }] = useUpdatePermissionGroupMutation()
   const { refetch } = useGetPermissionGroupsQuery({
@@ -43,18 +44,21 @@ export const PermissionGroup = ({
   const privilegesOption = transformData(data as privilege[])
   const [privilege_id, setPrivilege_id] = React.useState<string>("")
 
-  const updateGroup = async () => {
+  const updateGroup = async (
+    route: "allowedpriviledges" | "restrictedpriviledges"
+  ) => {
     try {
       const response = await mutate({
         authToken: token as string,
         action: "add",
         permission_group_id: id,
         priviledge_id: privilege_id,
-        route: "allowedpriviledges",
+        route,
       }).unwrap()
       await refetch()
       message.success(`Privilege added to group`)
       setOpenModal(false)
+      setOpenModal2(false)
     } catch (error: any) {
       message.error(error.data.message)
     }
@@ -80,7 +84,7 @@ export const PermissionGroup = ({
           >
             Add Privilege to Group
           </Button>
-          <Button onClick={() => setOpenModal(true)}>
+          <Button onClick={() => setOpenModal2(true)}>
             Add Restricted Privilege to Group
           </Button>
         </div>
@@ -107,9 +111,39 @@ export const PermissionGroup = ({
             className="w-full bg-primary"
             size="large"
             disabled={isLoading || privilege_id === ""}
-            onClick={updateGroup}
+            onClick={async () => updateGroup("allowedpriviledges")}
           >
             {isLoading ? "Adding Privilege..." : "Add Privilege"}
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        open={openModal2}
+        onCancel={() => setOpenModal2(false)}
+        title={`Add Restricted Privilege to ${name}`}
+        footer={null}
+      >
+        <div className="mt-5 flex flex-col gap-3">
+          <Select
+            options={privilegesOption}
+            loading={gettingPrivileges}
+            className="w-full"
+            showSearch
+            placeholder="Select Privilege"
+            size="large"
+            onChange={(value) => setPrivilege_id(value as string)}
+          />
+          <Button
+            type="primary"
+            className="w-full bg-primary"
+            size="large"
+            disabled={isLoading || privilege_id === ""}
+            onClick={async () => updateGroup("restrictedpriviledges")}
+          >
+            {isLoading
+              ? "Adding Restricted Privilege..."
+              : "Add Restricted Privilege"}
           </Button>
         </div>
       </Modal>
