@@ -4,14 +4,24 @@ import React from "react"
 import { Menu } from "./Menu"
 import { PersonSupportIcon } from "@/icons"
 import { Logo } from "./Logo"
+import { useLogout } from "@/hooks/useLogout"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const items = [
-  { icon: <Home />, item: <Menu />, name: "nav" },
-  { icon: <PersonSupportIcon />, item: <Menu />, name: "support" },
+  { icon: <Home />, item: <Menu />, name: "nav", link: "/" },
+  {
+    icon: <PersonSupportIcon />,
+    item: <Menu />,
+    name: "support",
+    link: "/users",
+  },
 ]
 
 export const NavTab = () => {
-  const [active, setActive] = React.useState("nav")
+  const pathname = usePathname()
+  const { logout } = useLogout()
+  const [active, setActive] = React.useState("/")
   const [index, setIndex] = React.useState(0)
   return (
     <div className="hidden md:block w-[420px] h-[100vh] overflow-y-auto pt-[40px] fixed top-0 left-0 z-[2] bg-[#00101E] text-white">
@@ -21,25 +31,32 @@ export const NavTab = () => {
       <div className="flex">
         <div className="py-[1.5rem] border-r-[1px] border-r-[#FFFFFF21]">
           <div className="py-[1.5rem] border-b-[1px] border-b-[#FFFFFF21]">
-            {items.map((item, index) => (
-              <div
-                key={index}
-                onClick={() => {
-                  setActive(item.name)
-                  setIndex(index)
-                }}
-                className={`p-[1rem] mx-[1rem] cursor-pointer ${
-                  active === item.name
-                    ? "border-l-[6px] border-l-[#006FCF]"
-                    : "border-l-[6px] border-l-[#ffffff00]"
-                }`}
-              >
-                {item.icon}
-              </div>
-            ))}
+            <Link
+              href={items[0].link}
+              className={`p-[1rem] mx-[1rem] cursor-pointer block ${
+                pathname !== "/users"
+                  ? "border-l-[6px] border-l-[#006FCF]"
+                  : "border-l-[6px] border-l-[#ffffff00]"
+              }`}
+            >
+              {items[0].icon}
+            </Link>
+            <Link
+              href={items[1].link}
+              className={`p-[1rem] mx-[1rem] cursor-pointer block ${
+                pathname === "/users"
+                  ? "border-l-[6px] border-l-[#006FCF]"
+                  : "border-l-[6px] border-l-[#ffffff00]"
+              }`}
+            >
+              {items[1].icon}
+            </Link>
           </div>
-          <div className="py-[1.5rem] px-[2.3rem] cursor-pointer hover:text-[#FF3C3C]">
-            <Logout />
+          <div
+            className="py-[1.5rem] px-[2.3rem] cursor-pointer hover:text-[#FF3C3C]"
+            onClick={logout}
+          >
+            <Logout color="error" />
           </div>
         </div>
 

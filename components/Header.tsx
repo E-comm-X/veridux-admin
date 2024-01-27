@@ -31,16 +31,18 @@ export const Header = () => {
       <NavTab />
       <div className="md:ml-[420px] md:p-[21px] p-[18px] border-b-[1px] flex justify-between items-center bg-[#fff]">
         <div className="flex items-center gap-[12px]">
-          <div className="md:hidden">
-            <Logo />
-          </div>
-          <div className="hidden md:block w-[488px]">
+          <Link href="/">
+            <div className="md:hidden">
+              <Logo />
+            </div>
+          </Link>
+          {/* <div className="hidden md:block w-[488px]">
             <Input
               placeholder={"Search"}
               prefix={<Search className="text-[#00000073]" />}
               style={{ padding: "0.5rem" }}
             />
-          </div>
+          </div> */}
         </div>
         <div className="flex items-center gap-[12px] cursor-pointer">
           <Link href="/users">
@@ -50,11 +52,11 @@ export const Header = () => {
               </div>
             </Badge>
           </Link>
-          <Badge dot color="#5A4BDA" className="md:block hidden">
+          {/* <Badge dot color="#5A4BDA" className="md:block hidden">
             <div className="px-[10px] py-[10px] bg-[#006FCF33] rounded-[9px]">
               <Notifications color="primary" />
             </div>
-          </Badge>
+          </Badge> */}
           {isLoading ? (
             <Skeleton.Avatar active />
           ) : (
