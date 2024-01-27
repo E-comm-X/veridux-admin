@@ -64,7 +64,12 @@ export const AddPrivilege = () => {
 
   return (
     <div>
-      <Button size="large" onClick={() => setOpen(true)}>
+      <Button
+        size="large"
+        type="primary"
+        className="bg-primary"
+        onClick={() => setOpen(true)}
+      >
         Create Privilege
       </Button>
       <Modal
