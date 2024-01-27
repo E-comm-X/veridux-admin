@@ -18,7 +18,7 @@ export const useLogin = ({ phone_number, email, password }: SignInRequest) => {
       }).unwrap()
       setToken(response.data.access_token)
       message.success(response.message)
-      router.push("/")
+      router.replace("/")
 
       return response
     } catch (error: any) {
