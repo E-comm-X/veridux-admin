@@ -163,6 +163,20 @@ export const permissionsApi = createApi({
         }
       },
     }),
+    deletePrivilege: builder.mutation<
+      { message: string },
+      { authToken: string; privilege_id: string }
+    >({
+      query: ({ authToken, privilege_id }) => {
+        return {
+          url: `/priviledge/delete/?priviledge_id=${privilege_id}`,
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
     addPrivilegeToGroup: builder.mutation<
       { message: string },
       { authToken: string; user_id: string; group_id: string }
@@ -207,4 +221,5 @@ export const {
   useAddPrivilegeToGroupMutation,
   useRemovePrivilegeFromGroupMutation,
   useDeletePermissionGroupMutation,
+  useDeletePrivilegeMutation,
 } = permissionsApi
