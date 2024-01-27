@@ -21,10 +21,10 @@ export const RestrictedPages = ({
       }
       if (currentTime > (expiryTime as number) * 10) {
         setToken("")
-        router.replace("/auth-signin")
+        router.replace("/auth")
       }
     } catch (error) {
-      router.replace("/auth-signin")
+      router.replace("/auth")
     }
   }, [token])
   return <React.Fragment>{children}</React.Fragment>
