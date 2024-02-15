@@ -6,6 +6,7 @@ import LoopIcon from "@mui/icons-material/Loop"
 import SupportAgentIcon from "@mui/icons-material/SupportAgent"
 import { useGetAllStoresQuery } from "@/services/store.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
+import { FaMoneyBill, FaProductHunt, FaStore } from "react-icons/fa"
 
 interface SummaryProps {
   icon?: React.ReactNode
@@ -52,8 +53,8 @@ function Summaries() {
   const sumDetails = [
     {
       id: 1,
-      icon: <PeopleAltIcon style={{ fill: "#006FCF" }} />,
-      title: "Total Vendor",
+      icon: <FaMoneyBill style={{ fill: "#006FCF" }} />,
+      title: "Commissions",
       date: "",
       value: isLoading ? "-" : data?.length,
       percentage: 1.7,
@@ -61,8 +62,8 @@ function Summaries() {
     },
     {
       id: 2,
-      icon: <LoopIcon style={{ fill: "#006FCF" }} />,
-      title: "Total Disbursement",
+      icon: <PeopleAltIcon style={{ fill: "#006FCF" }} />,
+      title: "End Users Funds",
       date: "",
       value: "-",
       percentage: 1.7,
@@ -70,16 +71,25 @@ function Summaries() {
     },
     {
       id: 3,
-      icon: <SupportAgentIcon style={{ fill: "#006FCF" }} />,
-      title: "Orders shipped",
+      icon: <FaStore style={{ fill: "#006FCF" }} />,
+      title: "Vendors Funds",
       date: "",
       value: "-",
-      // percentage: 1.7,
-      // prev: "last month"
+      percentage: 1.7,
+      prev: "last month",
+    },
+    {
+      id: 3,
+      icon: <FaProductHunt style={{ fill: "#006FCF" }} />,
+      title: "Purchased Products Funds",
+      date: "",
+      value: "-",
+      percentage: 1.7,
+      prev: "last month",
     },
   ]
   return (
-    <div className="grid md:grid-cols-3 gap-4">
+    <div className="grid md:grid-cols-4 gap-4">
       {sumDetails.map((item) => (
         <Summary
           key={item.id}

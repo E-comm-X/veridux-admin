@@ -5,6 +5,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import { VendorStatistics } from "./VendorStatistics"
 import { Button } from "@mui/material"
 import { OverviewTab } from "./OverviewTab"
+import moment from "moment"
 
 export default function Home() {
   return (
@@ -12,7 +13,9 @@ export default function Home() {
       <div className="md:flex justify-between align-center text-black">
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl text-black font-bold">Overview</h2>
-          <p className="font-normal text-base text-[#0000006E]">Today</p>
+          <p className="font-normal text-base text-[#0000006E]">
+            {moment().format("LL")}
+          </p>
         </div>
         {/* <div className="mt-2">
           <Button
@@ -27,14 +30,14 @@ export default function Home() {
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       <div>
-        <div className="flex flex-col lg:flex-row gap-4 justify-items-stretch">
-          <div className="flex flex-col gap-4 md:basis-[70%]">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <Summaries />
             <VendorStatistics />
           </div>
-          <div className="md:basis-[30%]">
+          {/* <div className="md:basis-[30%]">
             <SaleByLocationSideBar />
-          </div>
+          </div> */}
         </div>
         {/* <div className="bg-white my-5 p-[24px]">
           <OverviewTab />
