@@ -23,3 +23,9 @@ export interface TransactionsResponse {
   message: string
   status: string
 }
+
+export interface TransactionInfoResponse {
+  data: { transactions: TransactionI }
+  message: string
+  status: string
+}

@@ -25,7 +25,6 @@ export const Header = () => {
   const { data, isLoading } = useGetUserDataQuery({
     authToken: token as string,
   })
-  console.log(data)
   return (
     <div>
       <NavTab />

@@ -1,4 +1,8 @@
-import { TransactionsResponse, TransactionI } from "@/interfaces/transactions"
+import {
+  TransactionsResponse,
+  TransactionI,
+  TransactionInfoResponse,
+} from "@/interfaces/transactions"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const transactionApi = createApi({
@@ -20,7 +24,25 @@ export const transactionApi = createApi({
         return response.data.transactions
       },
     }),
+    getTransactionInfo: builder.query<
+      TransactionI,
+      { authToken: string; transaction_id: string }
+    >({
+      query: ({ authToken, transaction_id }) => {
+        return {
+          url: "/info",
+          params: { transaction_id },
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (response: TransactionInfoResponse) => {
+        return response.data.transactions
+      },
+    }),
   }),
 })
 
-export const { useGetTransactionsQuery } = transactionApi
+export const { useGetTransactionsQuery, useGetTransactionInfoQuery } =
+  transactionApi
