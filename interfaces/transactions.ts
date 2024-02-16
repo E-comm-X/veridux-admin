@@ -19,9 +19,9 @@ export interface TransactionI {
   id: string
   kind: "debit" | "credit"
   extra_info: {
-    parent_transaction: string
-    payment_from: string
-    referral_bonus: string | number
+    parent_transaction: "65a48f6f5cdc86c7b4378de2"
+    payment_from: "EndUser"
+    referral_bonus: 5
   }
 }
 

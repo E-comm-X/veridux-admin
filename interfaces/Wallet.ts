@@ -1,3 +1,5 @@
+import { UserDataI } from "./User"
+
 export interface WalletI {
   _id: string
   enduser: string
@@ -28,7 +30,7 @@ export interface walletInfoResponse {
 
 export interface TransactionI {
   _id: string
-  user: string
+  user: UserDataI
   type: string
   payment_provider: string
   payment_method: string
@@ -44,4 +46,9 @@ export interface TransactionI {
   __v: number
   id: string
   kind: "debit" | "credit"
+  extra_info: {
+    parent_transaction: "65a48f6f5cdc86c7b4378de2"
+    payment_from: "EndUser"
+    referral_bonus: 5
+  }
 }
