@@ -18,7 +18,6 @@ export default function Home() {
   const { data, isLoading } = useGetTransactionsQuery({
     authToken: token as string,
   })
-  console.log(data, "Hey")
   return (
     <main className="min-h-[82vh]">
       <div className="md:flex justify-between align-center text-black">
