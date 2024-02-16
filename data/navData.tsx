@@ -27,15 +27,15 @@ export const navItems = [
     children: [
       {
         name: "Commissions",
-        url: "/wallet/commisions",
+        url: "/wallet/commissions",
       },
       {
         name: "End Users Funds",
-        url: "/wallet/end_users_funds",
+        url: "/wallet/endusers_funds",
       },
       {
         name: "Vendor Funds",
-        url: "/wallet/vendor_funds",
+        url: "/wallet/vendors_funds",
       },
       {
         name: "Purchased Products Funds",
