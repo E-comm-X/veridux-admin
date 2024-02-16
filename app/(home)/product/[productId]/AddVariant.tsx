@@ -28,9 +28,7 @@ export const AddVariant: FC<{ product_id: string }> = ({ product_id }) => {
         <Form.Item label="Total Quantity">
           <Input className="w-full" size="large" type="number" />
         </Form.Item>
-        <Form.Item label="Color">
-          <Input className="w-full" size="large" />
-        </Form.Item>
+
         <div className="p-4 mb-5 rounded-lg border-[1px] border-[#E0E2E7] ">
           <h3 className="font-medium text-base mb-4">Variant Image</h3>
           <UploadImage setProductPreviewImage={setFormData as any} />

@@ -26,12 +26,12 @@ export const transactionApi = createApi({
     }),
     getTransactionInfo: builder.query<
       TransactionI,
-      { authToken: string; transaction_id: string }
+      { authToken: string; transaction_id?: string; reference?: string }
     >({
-      query: ({ authToken, transaction_id }) => {
+      query: ({ authToken, transaction_id, reference }) => {
         return {
           url: "/info",
-          params: { transaction_id },
+          params: { transaction_id, reference },
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

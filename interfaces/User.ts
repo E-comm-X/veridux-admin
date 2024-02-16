@@ -34,4 +34,5 @@ export interface UserDataI {
   iat: number
   exp: number
   profile_picture: string
+  account_reference: string
 }

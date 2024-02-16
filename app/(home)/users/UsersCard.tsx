@@ -29,7 +29,7 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
     group.group_name.toLowerCase() === "enduser" ||
     group.group_name.toLowerCase() === "vendor"
   return (
-    <Card className="w-full" key={group._id}>
+    <Card className="w-full hover:shadow-md" key={group._id}>
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 mb-2">

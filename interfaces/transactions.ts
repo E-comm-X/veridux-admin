@@ -1,6 +1,8 @@
+import { UserDataI } from "./User"
+
 export interface TransactionI {
   _id: string
-  user: string
+  user: UserDataI
   type: string
   payment_provider: string
   payment_method: string
@@ -16,6 +18,11 @@ export interface TransactionI {
   __v: number
   id: string
   kind: "debit" | "credit"
+  extra_info: {
+    parent_transaction: string
+    payment_from: string
+    referral_bonus: string | number
+  }
 }
 
 export interface TransactionsResponse {

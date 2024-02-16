@@ -29,7 +29,7 @@ export const TransactionsTable: React.FC<{
     {
       title: "Transaction ID",
       dataIndex: "_id",
-      render: (text) => (
+      render: (text, record) => (
         <Link href={`/transactions/${text}`} className="text-primary underline">
           {text}
         </Link>

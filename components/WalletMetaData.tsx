@@ -6,7 +6,7 @@ import React from "react"
 export const WalletMetaData = ({ data }: { data: WalletI }) => {
   return (
     <div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid md:grid-cols-3 gap-3">
         <div className="rounded-lg block  bg-white px-2 py-4 pr-4 text-black border-[1px] border-[#00000026]">
           <div className="flex gap-4">
             <div className="rounded-md bg-[#006FCF21] h-15 w-15 self-start flex align-center justify-center p-2">
