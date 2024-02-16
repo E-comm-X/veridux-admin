@@ -1,5 +1,4 @@
 "use client"
-import Summaries from "@/components/Summaries"
 import moment from "moment"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { TransactionsTable } from "@/components/TransactionsTable"
@@ -8,7 +7,6 @@ import { LoadingOutlined } from "@ant-design/icons"
 import { H2 } from "@/components/Typography"
 import { useGetWalletInfoQuery } from "@/services/wallet.service"
 import { usePathname } from "next/navigation"
-import { Wallet } from "@mui/icons-material"
 import { WalletMetaData } from "@/components/WalletMetaData"
 import { WalletI } from "@/interfaces/Wallet"
 

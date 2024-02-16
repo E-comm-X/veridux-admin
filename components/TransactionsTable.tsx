@@ -101,7 +101,7 @@ export const TransactionsTable: React.FC<{
       render: (text, record) => (
         <Tag
           className="uppercase "
-          color={record.kind === "credit" ? "error" : "success"}
+          color={record.kind === "credit" ? "success" : "error"}
         >
           {record.kind}
         </Tag>
