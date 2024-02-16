@@ -21,7 +21,7 @@ export const navItems = [
     children: [],
   },
   {
-    name: "Wallet",
+    name: "Wallets",
     url: "",
     icon: <WalletOutlined color="primary" />,
     children: [

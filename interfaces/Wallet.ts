@@ -11,6 +11,12 @@ export interface WalletI {
   id: string
 }
 
+export interface walletsResponse {
+  data: { company_wallets: WalletI[] }
+  message: string
+  status: string
+}
+
 export interface TransactionI {
   _id: string
   user: string

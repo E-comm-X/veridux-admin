@@ -1,11 +1,26 @@
+import { WalletI, walletsResponse } from "@/interfaces/Wallet"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const walletApi = createApi({
   reducerPath: "walletApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/wallet`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/wallet/cmp`,
   }),
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    getWalletss: builder.query<WalletI[], { authToken: string }>({
+      query: ({ authToken }) => {
+        return {
+          url: "/",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (response: walletsResponse) => {
+        return response.data.company_wallets
+      },
+    }),
+  }),
 })
 
-export const {} = walletApi
+export const { useGetWalletssQuery } = walletApi
