@@ -9,6 +9,9 @@ export interface WalletI {
   updatedAt: string
   __v: number
   id: string
+  purpose: string
+  pending_debit: number
+  pending_credit: number
 }
 
 export interface walletsResponse {

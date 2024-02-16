@@ -7,7 +7,7 @@ export const walletApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/wallet/cmp`,
   }),
   endpoints: (builder) => ({
-    getWalletss: builder.query<WalletI[], { authToken: string }>({
+    getCompanyWallets: builder.query<WalletI[], { authToken: string }>({
       query: ({ authToken }) => {
         return {
           url: "/",
@@ -23,4 +23,4 @@ export const walletApi = createApi({
   }),
 })
 
-export const { useGetWalletssQuery } = walletApi
+export const { useGetCompanyWalletsQuery } = walletApi

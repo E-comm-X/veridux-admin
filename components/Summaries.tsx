@@ -7,6 +7,11 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent"
 import { useGetAllStoresQuery } from "@/services/store.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { FaMoneyBill, FaProductHunt, FaStore } from "react-icons/fa"
+import { useGetCompanyWalletsQuery } from "@/services/wallet.service"
+import { LoadingOutlined } from "@ant-design/icons"
+import { Wallet } from "@mui/icons-material"
+import Link from "next/link"
+import moment from "moment"
 
 interface SummaryProps {
   icon?: React.ReactNode
@@ -16,6 +21,8 @@ interface SummaryProps {
   value?: number
   percentage?: number
   prev?: string
+  purpose: string
+  updatedAt: string
 }
 
 const Summary = ({
@@ -25,82 +32,67 @@ const Summary = ({
   date,
   value,
   percentage,
-  prev,
+  purpose,
+  updatedAt,
 }: SummaryProps) => {
   return (
-    <div className="  rounded-lg gap-4 bg-white px-2 py-4 pr-4 flex  text-black border-2 border-[#00000026]">
-      <div className="rounded-md bg-[#006FCF21] h-15 w-15 self-start flex align-center justify-center p-2">
-        {icon}
+    <Link
+      href={`/wallet/${purpose}`}
+      className="rounded-lg block  bg-white px-2 py-4 pr-4 text-black border-[1px] border-[#00000026] hover:border-primary hover:shadow-md"
+    >
+      <div className="flex gap-4">
+        <div className="rounded-md bg-[#006FCF21] h-15 w-15 self-start flex align-center justify-center p-2">
+          {icon}
+        </div>
+        <div className="flex flex-col gap-2">
+          <h3 className="font-bold text-lg capitalize">
+            {title?.replaceAll("_", " ")}
+          </h3>
+          {/* <p className="text-xs font-normal text-[#0000005C]">{date}</p> */}
+          <h4 className="text-xl font-semibold ">
+            {Intl.NumberFormat("en-US", {
+              currency: "NGN",
+              style: "currency",
+            }).format(value as number)}
+          </h4>
+        </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="font-bold text-lg">{title}</h3>
-        {/* <p className="text-xs font-normal text-[#0000005C]">{date}</p> */}
-        <h4 className="text-xl font-semibold ">{value}</h4>
-        {percentage && prev && (
-          <p className="text-[#0000005c]">
-            <span className="text-[#36CF00]">{percentage}%</span> vs {prev}
-          </p>
-        )}
-      </div>
-    </div>
+      {percentage && (
+        <p className="text-[#0000005c] flex justify-between px-3 mt-3">
+          <span className="text-[#36CF00]">{percentage}%</span>{" "}
+          <span>{moment(updatedAt).fromNow()}</span>
+        </p>
+      )}
+    </Link>
   )
 }
 function Summaries() {
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetAllStoresQuery({
+
+  const { data, isLoading } = useGetCompanyWalletsQuery({
     authToken: token as string,
   })
-  const sumDetails = [
-    {
-      id: 1,
-      icon: <FaMoneyBill style={{ fill: "#006FCF" }} />,
-      title: "Commissions",
-      date: "",
-      value: isLoading ? "-" : data?.length,
-      percentage: 1.7,
-      prev: "last month",
-    },
-    {
-      id: 2,
-      icon: <PeopleAltIcon style={{ fill: "#006FCF" }} />,
-      title: "End Users Funds",
-      date: "",
-      value: "-",
-      percentage: 1.7,
-      prev: "last month",
-    },
-    {
-      id: 3,
-      icon: <FaStore style={{ fill: "#006FCF" }} />,
-      title: "Vendors Funds",
-      date: "",
-      value: "-",
-      percentage: 1.7,
-      prev: "last month",
-    },
-    {
-      id: 3,
-      icon: <FaProductHunt style={{ fill: "#006FCF" }} />,
-      title: "Purchased Products Funds",
-      date: "",
-      value: "-",
-      percentage: 1.7,
-      prev: "last month",
-    },
-  ]
+
   return (
     <div className="grid md:grid-cols-4 gap-4">
-      {sumDetails.map((item) => (
-        <Summary
-          key={item.id}
-          icon={item.icon}
-          value={item.value as number}
-          date={item.date}
-          title={item.title}
-          percentage={item.percentage}
-          prev={item.prev}
-        />
-      ))}
+      {isLoading ? (
+        <>...</>
+      ) : (
+        <>
+          {data?.map((wallet) => (
+            <Summary
+              purpose={wallet.purpose}
+              key={wallet.id}
+              icon={<Wallet style={{ fill: "#006FCF" }} />}
+              title={wallet.purpose}
+              date={wallet.createdAt}
+              value={wallet.balance}
+              percentage={1.7}
+              updatedAt={wallet.updatedAt}
+            />
+          ))}
+        </>
+      )}
     </div>
   )
 }
