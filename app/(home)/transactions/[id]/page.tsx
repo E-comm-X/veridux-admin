@@ -166,11 +166,12 @@ const Page = () => {
                     </p>
                     <p className="flex justify-between items-center">
                       <strong>Referral Bonus:</strong>{" "}
-                      {Intl.NumberFormat("en-US", {
-                        currency: "NGN",
-                        style: "currency",
-                      }).format(data?.extra_info?.referral_bonus as number) ||
-                        "N/A"}
+                      {data.extra_info.referral_bonus
+                        ? Intl.NumberFormat("en-US", {
+                            currency: "NGN",
+                            style: "currency",
+                          }).format(data?.extra_info?.referral_bonus as number)
+                        : "N/A"}
                     </p>
                   </>
                 )}

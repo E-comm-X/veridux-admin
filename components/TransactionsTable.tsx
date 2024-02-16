@@ -8,7 +8,7 @@ import moment from "moment"
 
 const getFilters = (transactions: TransactionI[], key: string) => {
   const filters: { text: string; value: string }[] = []
-  transactions.forEach((transaction) => {
+  transactions?.forEach((transaction) => {
     if (
       !filters.some((filter) => filter.value === transaction[key as "type"])
     ) {
@@ -18,7 +18,7 @@ const getFilters = (transactions: TransactionI[], key: string) => {
       })
     }
   })
-  return filters
+  return filters || []
 }
 
 export const TransactionsTable: React.FC<{
