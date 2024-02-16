@@ -10,6 +10,7 @@ import {
   Sell,
   Settings,
   Storefront,
+  WalletOutlined,
 } from "@mui/icons-material"
 
 export const navItems = [
@@ -18,6 +19,29 @@ export const navItems = [
     url: "/",
     icon: <OverviewIcon color="primary" />,
     children: [],
+  },
+  {
+    name: "Wallet",
+    url: "",
+    icon: <WalletOutlined color="primary" />,
+    children: [
+      {
+        name: "Commissions",
+        url: "/wallet/commisions",
+      },
+      {
+        name: "End Users Funds",
+        url: "/wallet/end_users_funds",
+      },
+      {
+        name: "Vendor Funds",
+        url: "/wallet/vendor_funds",
+      },
+      {
+        name: "Purchased Products Funds",
+        url: "/wallet/purchased_products_funds",
+      },
+    ],
   },
   {
     name: "Users",
