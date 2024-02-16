@@ -1,3 +1,4 @@
+import { TransactionI } from "@/interfaces/Wallet"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const transactionApi = createApi({
@@ -5,7 +6,18 @@ export const transactionApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/transaction`,
   }),
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    getTransactions: builder.query<TransactionI[], { authToken: string }>({
+      query: ({ authToken }) => {
+        return {
+          url: "/records",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
+  }),
 })
 
-export const {} = transactionApi
+export const { useGetTransactionsQuery } = transactionApi
