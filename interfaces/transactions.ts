@@ -15,6 +15,7 @@ export interface TransactionI {
   updatedAt: string
   __v: number
   id: string
+  kind: "debit" | "credit"
 }
 
 export interface TransactionsResponse {
