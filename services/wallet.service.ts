@@ -1,4 +1,8 @@
-import { WalletI, walletsResponse } from "@/interfaces/Wallet"
+import {
+  WalletI,
+  walletInfoResponse,
+  walletsResponse,
+} from "@/interfaces/Wallet"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const walletApi = createApi({
@@ -20,7 +24,24 @@ export const walletApi = createApi({
         return response.data.company_wallets
       },
     }),
+    getWalletInfo: builder.query<
+      WalletI,
+      { authToken: string; purpose: string }
+    >({
+      query: ({ authToken, purpose }) => {
+        return {
+          url: "/",
+          params: { purpose },
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (response: walletInfoResponse) => {
+        return response.data.company_wallet
+      },
+    }),
   }),
 })
 
-export const { useGetCompanyWalletsQuery } = walletApi
+export const { useGetCompanyWalletsQuery, useGetWalletInfoQuery } = walletApi

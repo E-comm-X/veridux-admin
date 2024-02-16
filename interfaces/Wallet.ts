@@ -20,6 +20,12 @@ export interface walletsResponse {
   status: string
 }
 
+export interface walletInfoResponse {
+  data: { company_wallet: WalletI }
+  message: string
+  status: string
+}
+
 export interface TransactionI {
   _id: string
   user: string
