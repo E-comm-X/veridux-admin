@@ -1,17 +1,24 @@
 "use client"
 import Summaries from "@/components/Summaries"
 import moment from "moment"
-import { useGetTransactionsQuery } from "@/services/transactions.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { TransactionsTable } from "@/components/TransactionsTable"
 import { TransactionI } from "@/interfaces/transactions"
 import { LoadingOutlined } from "@ant-design/icons"
 import { H2 } from "@/components/Typography"
+import { useGetWalletInfoQuery } from "@/services/wallet.service"
+import { usePathname } from "next/navigation"
+import { Wallet } from "@mui/icons-material"
+import { WalletMetaData } from "@/components/WalletMetaData"
+import { WalletI } from "@/interfaces/Wallet"
 
 export default function Home() {
+  const pathname = usePathname()
+  const purpose = pathname.split("/")[pathname.split("/").length - 1]
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetTransactionsQuery({
+  const { data, isLoading } = useGetWalletInfoQuery({
     authToken: token as string,
+    purpose,
   })
   return (
     <main className="min-h-[82vh]">
@@ -25,16 +32,14 @@ export default function Home() {
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       <div>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4">{/* <Summaries /> */}</div>
-        </div>
+        {isLoading ? "..." : <WalletMetaData data={data as WalletI} />}
 
         <H2 className="mt-10 mb-5">Transactions</H2>
         {isLoading ? (
           <LoadingOutlined />
         ) : (
           <TransactionsTable
-            data={data as TransactionI[]}
+            data={data?.transactions as TransactionI[]}
             isLoading={isLoading}
           />
         )}

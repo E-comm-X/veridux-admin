@@ -108,5 +108,11 @@ export const TransactionsTable: React.FC<{
       ),
     },
   ]
-  return <Table columns={columns} dataSource={data} loading={isLoading} />
+  return (
+    <Table
+      columns={columns}
+      dataSource={data.slice().reverse()}
+      loading={isLoading}
+    />
+  )
 }

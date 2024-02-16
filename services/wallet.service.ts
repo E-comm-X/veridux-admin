@@ -30,7 +30,7 @@ export const walletApi = createApi({
     >({
       query: ({ authToken, purpose }) => {
         return {
-          url: "/",
+          url: "/info",
           params: { purpose },
           headers: {
             Authorization: `Bearer ${authToken}`,
