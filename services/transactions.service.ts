@@ -1,4 +1,4 @@
-import { TransactionI } from "@/interfaces/Wallet"
+import { TransactionsResponse, TransactionI } from "@/interfaces/transactions"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const transactionApi = createApi({
@@ -15,6 +15,9 @@ export const transactionApi = createApi({
             Authorization: `Bearer ${authToken}`,
           },
         }
+      },
+      transformResponse: (response: TransactionsResponse) => {
+        return response.data.transactions
       },
     }),
   }),

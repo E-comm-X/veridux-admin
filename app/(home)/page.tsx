@@ -6,8 +6,19 @@ import { VendorStatistics } from "./VendorStatistics"
 import { Button } from "@mui/material"
 import { OverviewTab } from "./OverviewTab"
 import moment from "moment"
+import { useGetTransactionsQuery } from "@/services/transactions.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { TransactionsTable } from "@/components/TransactionsTable"
+import { TransactionI } from "@/interfaces/transactions"
+import { LoadingOutlined } from "@ant-design/icons"
+import { H2 } from "@/components/Typography"
 
 export default function Home() {
+  const { token } = useAuthToken()
+  const { data, isLoading } = useGetTransactionsQuery({
+    authToken: token as string,
+  })
+  console.log(data, "Hey")
   return (
     <main className="min-h-[82vh]">
       <div className="md:flex justify-between align-center text-black">
@@ -33,7 +44,7 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
             <Summaries />
-            <VendorStatistics />
+            {/* <VendorStatistics /> */}
           </div>
           {/* <div className="md:basis-[30%]">
             <SaleByLocationSideBar />
@@ -42,6 +53,16 @@ export default function Home() {
         {/* <div className="bg-white my-5 p-[24px]">
           <OverviewTab />
         </div> */}
+
+        <H2 className="mt-10 mb-5">Transactions</H2>
+        {isLoading ? (
+          <LoadingOutlined />
+        ) : (
+          <TransactionsTable
+            data={data as TransactionI[]}
+            isLoading={isLoading}
+          />
+        )}
       </div>
     </main>
   )
