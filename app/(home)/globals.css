@@ -14,3 +14,7 @@ body {
 .ant-select-selector {
   border-color: #006fcf !important;
 }
+
+.ant-table-filter-dropdown-btns button.ant-btn-primary {
+  background-color: #006fcf !important;
+}
