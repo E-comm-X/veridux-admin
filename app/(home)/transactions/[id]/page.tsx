@@ -23,7 +23,9 @@ const Page = () => {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <ArrowBack />
+        <div onClick={router.back} className="cursor-pointer">
+          <ArrowBack />
+        </div>
         <div>
           <H3>Transaction Details</H3>
           <small>
@@ -34,7 +36,7 @@ const Page = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-3">
         {isLoading ? (
-          "..."
+          <LoadingOutlined />
         ) : (
           <>
             <Card
