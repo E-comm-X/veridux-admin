@@ -147,4 +147,5 @@ export const {
   useUpdateProductMutation,
   useHideProductMutation,
   useShowProductMutation,
+  useAddProductVariantMutation,
 } = productApi
