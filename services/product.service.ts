@@ -35,6 +35,34 @@ export const productApi = createApi({
         }
       },
     }),
+
+    addProductVariant: builder.mutation<
+      ProductI,
+      {
+        product_id: string
+        color: string
+        preview_image: Blob | null
+        total_quantity: string
+        authToken: string
+      }
+    >({
+      query: (data) => {
+        const formdata = new FormData()
+        formdata.append("product_id", data.product_id)
+        formdata.append("preview_image", data.preview_image as Blob, "test")
+        formdata.append("color", data.color as string)
+        formdata.append("total_quantity", data.total_quantity as string)
+        return {
+          url: "/variant/new",
+          method: "POST",
+          body: formdata,
+          maxBodyLength: Infinity,
+          headers: {
+            authorization: `Bearer ${data.authToken}`,
+          },
+        }
+      },
+    }),
     updateProduct: builder.mutation<ProductI, ProductUpdateRequestI>({
       query: (data) => {
         return {
@@ -119,4 +147,5 @@ export const {
   useUpdateProductMutation,
   useHideProductMutation,
   useShowProductMutation,
+  useAddProductVariantMutation,
 } = productApi
