@@ -1,8 +1,5 @@
 "use client"
 import React from "react"
-import ButtonUI from "@/components/ButtonUI"
-import FilterAltIcon from "@mui/icons-material/FilterAlt"
-import AddIcon from "@mui/icons-material/Add"
 import { ProductsTable } from "./ProductsTable"
 import Link from "next/link"
 import { Button } from "antd"
