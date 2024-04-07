@@ -45,9 +45,18 @@ export const navItems = [
   },
   {
     name: "Users",
-    url: "/users",
+    url: "",
     icon: <PeopleAlt color="primary" />,
-    children: [],
+    children: [
+      {
+        name: "Users",
+        url: "/users",
+      },
+      {
+        name: "User Group",
+        url: "/users/groups",
+      },
+    ],
   },
 
   {

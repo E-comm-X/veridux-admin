@@ -77,6 +77,7 @@ export const TransactionsTable: React.FC<{
       dataIndex: "createdAt",
       sorter: (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
       render: (text) => <p>{moment(text).format("LL")}</p>,
+      defaultSortOrder: "descend",
     },
     {
       title: "Time",
