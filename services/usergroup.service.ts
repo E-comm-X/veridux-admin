@@ -9,12 +9,13 @@ export const userGroupApi = createApi({
   endpoints: (builder) => ({
     getUserGroups: builder.query<
       { data: { user_group: userGroupI[] } },
-      { authToken: string }
+      { authToken: string; group_id?: string; role?: string }
     >({
-      query: ({ authToken }) => {
+      query: ({ authToken, group_id, role }) => {
         return {
           url: "/",
           method: "GET",
+          params: { group_id, role },
           headers: {
             authorization: `Bearer ${authToken}`,
           },

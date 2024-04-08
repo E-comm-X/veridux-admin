@@ -1,15 +1,6 @@
 "use client"
-import React, { useEffect, useState } from "react"
-import {
-  Avatar,
-  Button,
-  Input,
-  Popover,
-  Space,
-  Table,
-  Tag,
-  message,
-} from "antd"
+import React from "react"
+import { Avatar, Button, Popover, Space, Table, Tag, message } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
@@ -21,8 +12,7 @@ import {
   useRemoveUserFromGroupMutation,
 } from "@/services/usergroup.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { ArrowOutwardOutlined, More, Search } from "@mui/icons-material"
-import Link from "next/link"
+import { More } from "@mui/icons-material"
 
 const MoreAction: React.FC<{ text: any; record: userI; group_id: string }> = ({
   text,
@@ -101,12 +91,8 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
           <Avatar
             size={"large"}
             src={record.profile_picture}
-            // icon={<UserOutlined />}
-            className="bg-primary uppercase"
-          >
-            {record?.firstname[0] || "N"}
-            {record?.lastname[0] || "/A"}
-          </Avatar>
+            icon={<UserOutlined />}
+          />
           <p className="capitalize">
             {record.firstname} {record.lastname}
           </p>
@@ -119,33 +105,16 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
       key: "email",
       render: (text) => <p>{text}</p>,
     },
-    // {
-    //   title: "Account Reference",
-    //   dataIndex: "account_reference",
-    //   key: "account_reference",
-    // },
+    {
+      title: "Account Reference",
+      dataIndex: "account_reference",
+      key: "account_reference",
+    },
     {
       title: "Phone Number",
       dataIndex: "phone_number",
       key: "phone_number",
-      render: (text) => <p>{text || "-"}</p>,
-    },
-
-    {
-      title: "Wallet",
-      dataIndex: "id",
-      key: "id",
-      render: (text) => (
-        <div>
-          <Link
-            href={`/users/wallet?user_id=${text}`}
-            className="text-primary underline"
-          >
-            <span>View wallet</span>
-            <ArrowOutwardOutlined className="inline text-sm text-primary" />
-          </Link>
-        </div>
-      ),
+      render: (text) => <p>-</p>,
     },
 
     {
@@ -159,7 +128,7 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
     },
 
     {
-      title: "Actions",
+      title: "",
       key: "action",
       render: (text, record) => (
         <MoreAction text={text} record={record} group_id={group_id} />
@@ -171,49 +140,20 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
     group_id,
     authToken: token as string,
   })
-  const [dataState, setDataState] = useState<userI[]>([])
-
-  useEffect(() => {
-    if (data) {
-      setDataState(data.data.users)
-    }
-  }, [data])
-
-  const searchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toLowerCase()
-    const oldData = data?.data?.users
-    const newData = oldData?.filter((user) => {
-      const name = `${user.firstname} ${user.lastname}`.toLowerCase()
-      const email = user.email.toLowerCase()
-      return name.includes(value) || email.includes(value)
-    })
-    setDataState(newData as userI[])
-  }
 
   return (
     <>
       {isLoading ? (
         <LoadingOutlined />
       ) : (
-        <>
-          <div className="w-full mb-4">
-            <Input
-              className="md:w-[350px] lg:w-[450px] w-full md:h-[3rem]"
-              size="large"
-              placeholder="Search user with name or email"
-              prefix={<Search />}
-              onChange={searchUser}
-            />
-          </div>
-          <Table
-            columns={columns}
-            dataSource={dataState.slice(0).reverse()}
-            pagination={{
-              pageSizeOptions: ["20", "30", "50"],
-              pageSize: 20,
-            }}
-          />
-        </>
+        <Table
+          columns={columns}
+          dataSource={data?.data.users.slice(0).reverse()}
+          rowSelection={{}}
+          pagination={{
+            pageSizeOptions: ["20", "30", "50"],
+          }}
+        />
       )}
     </>
   )

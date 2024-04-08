@@ -48,10 +48,10 @@ export const navItems = [
     url: "",
     icon: <PeopleAlt color="primary" />,
     children: [
-      {
-        name: "Users",
-        url: "/users",
-      },
+      // {
+      //   name: "Users",
+      //   url: "/users",
+      // },
       {
         name: "User Group",
         url: "/users/groups",

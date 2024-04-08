@@ -9,6 +9,7 @@ import {
   UserOutlined,
   EditOutlined,
   DeleteOutlined,
+  EyeOutlined,
 } from "@ant-design/icons"
 import { IconButton } from "@mui/material"
 import { useAuthToken } from "@/hooks/useAuthToken"
@@ -17,6 +18,7 @@ import { UpdateUserGroup } from "./UpdateUserGroup"
 import { useGetUsersInGroupQuery } from "@/services/usergroup.service"
 import { UserGroup } from "./UserGroup"
 import { Group } from "@mui/icons-material"
+import Link from "next/link"
 
 export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
   const [openPopover, setOpenPopover] = React.useState<boolean>(false)
@@ -42,7 +44,12 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
             onOpenChange={(visible) => setOpenPopover(!openPopover)}
             content={
               <div className="flex flex-col gap-2">
-                <UserGroup name={group.group_name} id={group._id} />
+                {/* <UserGroup name={group.group_name} id={group._id} /> */}
+                <Link href={`/users/groups/${group._id}`}>
+                  <Button type="text" icon={<EyeOutlined />}>
+                    View Users In Group
+                  </Button>
+                </Link>
                 <UpdateUserGroup group_id={group._id} name={group.group_name} />
                 <Button
                   type="text"
