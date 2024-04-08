@@ -22,7 +22,6 @@ const transformData = (
       label: `${data.firstname} ${data.lastname}`.toUpperCase(),
       value: data._id,
     }))
-  console.log(data)
   return newData
 }
 
