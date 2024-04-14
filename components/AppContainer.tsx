@@ -5,13 +5,16 @@ import { MainBody } from "./MainBody"
 import { Provider } from "react-redux"
 import { store } from "@/context/store"
 import { usePathname } from "next/navigation"
+import { RestrictedPages } from "./RestrictedPages"
 
 export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname()
   return (
     <Provider store={store}>
-      <Header />
-      <MainBody>{children}</MainBody>
+      <RestrictedPages>
+        <Header />
+        <MainBody>{children}</MainBody>
+      </RestrictedPages>
     </Provider>
   )
 }
