@@ -20,7 +20,7 @@ export const useLogin = ({ phone_number, email, password }: SignInRequest) => {
       if (response.data.user.role === "SuperAdmin") {
         setToken(response.data.access_token)
         message.success(response.message)
-        router.replace("/")
+        router.push("/")
       } else {
         message.error("You are not authorized to login as an admin", 5)
       }

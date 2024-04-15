@@ -33,9 +33,12 @@ export default function PhoneLogin() {
             Log into your account to proceed
           </p>
 
-          <Form
+          <form
             className="flex flex-col w-full space-y-6 justify-center"
-            onFinish={login}
+            onSubmit={async (e) => {
+              e.preventDefault()
+              await login()
+            }}
           >
             <div className="w-full">
               <label htmlFor="">Phone</label>
@@ -62,7 +65,7 @@ export default function PhoneLogin() {
             >
               {isLoading ? <LoadingOutlined /> : "Log In"}
             </Button>
-          </Form>
+          </form>
         </div>
 
         <div className="flex w-full items-start text-base500 text-[14px] justify-between md:text-[16px] md:items-center">
