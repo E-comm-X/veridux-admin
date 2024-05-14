@@ -5,6 +5,7 @@ import type { TableColumnsType, TableProps } from "antd"
 import { TransactionI } from "@/interfaces/transactions"
 import Link from "next/link"
 import moment from "moment"
+import ArrangePickup from "./arrange-pickup/ArrangePickup"
 import { FaSearch } from "react-icons/fa"
 
 const getFilters = (transactions: TransactionI[], key: string) => {
@@ -22,7 +23,7 @@ const getFilters = (transactions: TransactionI[], key: string) => {
   return filters || []
 }
 
-export const TransactionsTable: React.FC<{
+export const PurchasedProductsTable: React.FC<{
   data: TransactionI[]
   isLoading: boolean
 }> = ({ isLoading, data }) => {
@@ -46,19 +47,7 @@ export const TransactionsTable: React.FC<{
         <p className="capitalize ">{record.type.replaceAll("_", " ")}</p>
       ),
     },
-    {
-      title: "Transaction Method",
-      dataIndex: "payment_method",
-      filters: getFilters(data as TransactionI[], "payment_method"),
-      filterSearch: true,
-      onFilter: (value, record) =>
-        record.payment_method.startsWith(value as any),
-      render: (text, record) => (
-        <p className="capitalize ">
-          {record.payment_method.replaceAll("_", " ")}
-        </p>
-      ),
-    },
+
     {
       title: "Amount",
       dataIndex: "amount_payable",
@@ -86,28 +75,10 @@ export const TransactionsTable: React.FC<{
       render: (text) => <p>{moment(text).format("LT")}</p>,
     },
     {
-      title: "Inflow Type",
-      dataIndex: "kind",
-      filters: [
-        {
-          text: "Credit",
-          value: "credit",
-        },
-        {
-          text: "Debit",
-          value: "debit",
-        },
-      ],
-      onFilter: (value, record) => record.kind.startsWith(value as any),
-      filterSearch: true,
-      render: (text, record) => (
-        <Tag
-          className="uppercase "
-          color={record.kind === "credit" ? "success" : "error"}
-        >
-          {record.kind}
-        </Tag>
-      ),
+      title: "Arrange Pickup",
+      dataIndex: "_id",
+
+      render: (text, record) => <ArrangePickup />,
     },
   ]
   const [txState, setTxState] = useState(data)

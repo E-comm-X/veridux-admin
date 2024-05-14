@@ -12,6 +12,7 @@ import { LocalShipping } from "@mui/icons-material"
 import { useGetShipmentsQuery } from "@/services/deliveries.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
+import ArrangePickup from "./arrange-pickup/ArrangePickup"
 
 export default function Page() {
   const { token: authToken } = useAuthToken() as { token: string }
@@ -106,7 +107,7 @@ export default function Page() {
           <p className="font-normal text-base text-[#0000006E]">Today</p>
         </div>
         <div className="md:ml-auto flex gap-4">
-          <div>
+          <Link href={"/deliveries/arrange-pickup"}>
             <Button
               className="bg-primary"
               type="primary"
@@ -115,14 +116,14 @@ export default function Page() {
             >
               Arrange Pickup and Delivery
             </Button>
-          </div>
+          </Link>
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       {isLoading ? (
         <LoadingOutlined />
       ) : (
-        <Tabs defaultActiveKey="1" items={items} size="large" />
+        <Tabs defaultActiveKey="1" items={items} size="large" type="card" />
       )}
     </main>
   )

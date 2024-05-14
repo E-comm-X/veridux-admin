@@ -6,7 +6,7 @@ interface props {
 
 export const MainBody: FC<props> = ({ ...props }) => {
   return (
-    <div className="md:ml-[420px] md:px-[1.5rem] md:pr-[24px] px-[1rem] md:py-[1.5rem] py-[1.5rem] bg-[#F0F0F0]">
+    <div className="md:ml-[420px] md:px-[1.5rem] md:pr-[24px] px-[1rem] md:py-[1.5rem] py-[1.5rem] bg-[#F0F0F0] min-h-[85vh]">
       {props.children}
     </div>
   )
