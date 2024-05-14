@@ -34,7 +34,7 @@ export const AddVariant: FC<{ product_id: string }> = ({ product_id }) => {
     }
   }
   return (
-    <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] my-10">
+    <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] mb-10 mt-3">
       <h3 className="text-lg font-semibold mb-5">Add Product Variant</h3>
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item label="Color">

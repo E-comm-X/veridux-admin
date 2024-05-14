@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from "react"
-import { Button, Input, Select, message } from "antd"
+import { Button, Image, Input, Select, message } from "antd"
 import { UploadImage } from "@/components/UploadImage"
 import {
   useGetAllProductsQuery,
@@ -13,6 +13,9 @@ import { useGetAllCategoriesQuery } from "@/services/category.service"
 import { LoadingOutlined } from "@ant-design/icons"
 import { useParams } from "next/navigation"
 import { AddVariant } from "./AddVariant"
+import { GoBack } from "@/components/GoBack"
+import Link from "next/link"
+import { CgArrowTopRight } from "react-icons/cg"
 
 const reqData: ProductUpdateRequestI = {
   product_name: "",
@@ -101,8 +104,12 @@ export default function UpdateProduct() {
   }
   return (
     <>
+      <GoBack />
       {loadingProduct ? (
-        <LoadingOutlined />
+        <div className="pt-3">
+          <LoadingOutlined />
+          <span className="pl-2">Loading... </span>
+        </div>
       ) : (
         <main>
           {/* headeding */}
@@ -118,6 +125,31 @@ export default function UpdateProduct() {
           <div className="parent bg-white rounded-lg py-10 px-8 mt-6">
             <div className="grid md:grid-cols-2 grid-cols-1 gap-10">
               <div className="right px-4 py-8   lg:basis-[489px] rounded-lg border-[1px] border-[#E0E2E7] flex flex-col ">
+                <div className="mb-4">
+                  <Image.PreviewGroup preview={{}}>
+                    <div className="grid grid-cols-3">
+                      <Image
+                        src={product?.preview_image as string}
+                        width={"100%"}
+                        height={"10rem"}
+                        className="object-cover rounded-lg"
+                        alt=""
+                      />
+                      {[...(product?.sub_images as string[])].map(
+                        (imgSrc, index) => (
+                          <Image
+                            key={index}
+                            src={imgSrc}
+                            width={"100%"}
+                            height={"10rem"}
+                            className="object-cover rounded-lg"
+                            alt=""
+                          />
+                        )
+                      )}
+                    </div>
+                  </Image.PreviewGroup>
+                </div>
                 <div className="mb-5">
                   <label
                     htmlFor="productname"
@@ -217,28 +249,15 @@ export default function UpdateProduct() {
                   <h3 className="font-medium text-base mb-4">Product Image</h3>
                   <UploadImage setProductPreviewImage={setFormData} />
                 </div> */}
+                <Link href={"/"}>
+                  <Button type="link">
+                    View variants{" "}
+                    <span>
+                      <CgArrowTopRight />
+                    </span>
+                  </Button>
+                </Link>
 
-                <div className="grid grid-cols-2 gap-[10px]">
-                  {/* Update Product */}
-                  <Button
-                    onClick={updateProduct}
-                    size="large"
-                    className="mt-5 bg-primary block"
-                    type="primary"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? <LoadingOutlined /> : "Update Product"}
-                  </Button>
-                  {/* Hide Product */}
-                  <Button
-                    size="large"
-                    className="mt-5 block"
-                    danger
-                    disabled={isLoading}
-                  >
-                    {isLoading ? <LoadingOutlined /> : "Hide Product"}
-                  </Button>
-                </div>
                 <AddVariant product_id={productId as string} />
               </div>
             </div>
@@ -320,7 +339,7 @@ export default function UpdateProduct() {
                     />
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <h3 className="font-medium text-lg">Discount</h3>
                   <div className="flex items-center gap-4 border-[#C1C1C1] rounded border-[1px] mt-5  pr-10">
                     <div className="signContainer h-[50px] w-[50px] bg-[#A1A1A15E] rounded relative">
@@ -334,7 +353,28 @@ export default function UpdateProduct() {
                       placeholder=""
                     />
                   </div>
-                </div>
+                </div> */}
+              </div>
+              <div className="grid grid-cols-2 gap-[10px]">
+                {/* Update Product */}
+                <Button
+                  onClick={updateProduct}
+                  size="large"
+                  className="mt-5 bg-primary block"
+                  type="primary"
+                  disabled={isLoading}
+                >
+                  {isLoading ? <LoadingOutlined /> : "Update Product"}
+                </Button>
+                {/* Hide Product */}
+                <Button
+                  size="large"
+                  className="mt-5 block"
+                  danger
+                  disabled={isLoading}
+                >
+                  {isLoading ? <LoadingOutlined /> : "Hide Product"}
+                </Button>
               </div>
             </div>
           </div>

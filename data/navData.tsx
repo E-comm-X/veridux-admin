@@ -109,12 +109,12 @@ export const navItems = [
   //   icon: <Receipt color="primary" />,
   //   children: [],
   // },
-  // {
-  //   name: "Deliveries",
-  //   url: "/deliveries",
-  //   icon: <LocalShipping color="primary" />,
-  //   children: [],
-  // },
+  {
+    name: "Deliveries",
+    url: "/deliveries",
+    icon: <LocalShipping color="primary" />,
+    children: [],
+  },
   // {
   //   name: "Marketing",
   //   url: "",
