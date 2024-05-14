@@ -54,3 +54,18 @@ export interface ShipmentI {
   __v: 0
   id: string
 }
+
+export interface VehicleI {
+  vehicle_id: number
+  user_id: number
+  weight: number
+  size: number
+  name: string
+  vehicle_icon: string
+  is_deleted: number
+  dimension: string
+  time_fare: number
+  distance_fare: number
+  waiting_fare: number
+  base_fare: number
+}

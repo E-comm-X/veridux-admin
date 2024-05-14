@@ -78,7 +78,7 @@ export const PurchasedProductsTable: React.FC<{
       title: "Arrange Pickup",
       dataIndex: "_id",
 
-      render: (text, record) => <ArrangePickup />,
+      render: (text, record) => <ArrangePickup record={record} />,
     },
   ]
   const [txState, setTxState] = useState(data)
