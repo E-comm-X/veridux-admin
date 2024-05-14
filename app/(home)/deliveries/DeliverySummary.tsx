@@ -2,14 +2,17 @@ import Image from "next/image"
 import PauseIcon from "@mui/icons-material/Pause"
 import MessageIcon from "@mui/icons-material/Message"
 import CallIcon from "@mui/icons-material/Call"
+import { ShipmentI } from "@/interfaces/shipment"
+import moment from "moment"
+import { Phone } from "@mui/icons-material"
 
 function shippingStatus(status: any) {
-  return status === "incoming"
+  return status === "draft"
     ? "bg-[#FF9900] border-[1px] border-[#8C5400] px-4  py-2 text-white rounded text-center"
-    : status === "Shipped"
-    ? "bg-[#3EC2003B] border-[1px] border-[#3EC2006E] px-4 py-2 text-[#3EC2006E] rounded text-center"
-    : status === "Cancelled"
-    ? "bg-[#C200003B] border-[1px] border-[#C200006E] px-4  py-2 text-[#C200006E] rounded text-center"
+    : status === "picked_up"
+    ? "bg-[#3EC2003B] border-[1px] border-[#3EC2006E] px-4 py-2 text-[#0008] rounded text-center"
+    : status === "booked"
+    ? "bg-primary border-[1px] border-primary px-4  py-2 text-white rounded text-center"
     : null
 }
 
@@ -23,21 +26,9 @@ function text(sign: number) {
     : ""
 }
 
-export default function DeliverySummary({
-  departure,
-  arrival,
-  customerName,
-  weight,
-  price,
-  status,
-  image,
-  productName,
-  shippingAddress,
-  vendorName,
-  vendorImage,
-}: any) {
+export default function DeliverySummary({ ...shipment }: ShipmentI) {
   return (
-    <div className="bg-white rounded-lg border-[2px] border-[#00000014] p-6 md:basis-[31%] basis-full ">
+    <div className="bg-white rounded-lg border-[2px] border-[#00000014] p-6 w-full">
       <div className="flex top ">
         <div className="top-right bais-[80%] flex flex-col">
           <div className="top-right-top flex items-center gap-4">
@@ -46,7 +37,9 @@ export default function DeliverySummary({
               <p className="text-[#00000066] text-sm font-normal">
                 Departure Date
               </p>
-              <h5 className="text-base font-normal">{departure}</h5>
+              <h5 className="text-base font-normal">
+                {moment(shipment.createdAt).format("LL")}
+              </h5>
             </div>
           </div>
           <div className="top-right-bottom flex items-center gap-4 mt-4 ">
@@ -55,31 +48,39 @@ export default function DeliverySummary({
               <p className="text-[#00000066] text-sm font-normal">
                 Arrival Date
               </p>
-              <h5 className="text-base font-normal">{arrival}</h5>
+              <h5 className="text-base font-normal">
+                {moment(shipment.pickup_date).format("LL")}
+              </h5>
             </div>
           </div>
         </div>
         <div className="top-left basis-[20%] ml-auto h-[40px]">
-          <button className={shippingStatus(status) as any}>{status}</button>
+          <button className={shippingStatus(shipment.status) as string}>
+            {shipment.status}
+          </button>
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
       <div className="flex gap-4">
         <div className="flex flex-col">
           <h2 className="font-bold text-base">Customer</h2>
-          <p className="font-normal text-sm text-[#00000078]">{customerName}</p>
+          <p className="font-normal text-sm text-[#00000078]">
+            {shipment.receivers_info?.name || "N/A"}
+          </p>
         </div>
+
         <div className="flex flex-col">
-          <h2 className="font-bold text-base">Total Weight</h2>
-          <p className="font-normal text-sm text-[#00000078]">{weight}lb</p>
-        </div>
-        <div className="flex flex-col">
-          <h2 className="font-bold text-base">Total Price</h2>
-          <p className="font-normal text-sm text-[#00000078]">${price}</p>
+          <h2 className="font-bold text-base">Shipping Cost</h2>
+          <p className="font-normal text-sm text-[#00000078]">
+            {Intl.NumberFormat("en-NG", {
+              currency: "NGN",
+              style: "currency",
+            }).format(shipment.incurred_cost)}
+          </p>
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-      <div className="flex">
+      {/* <div className="flex">
         <div className="imageContainer rounded w-[47px] h-[47px] relative">
           <Image alt="image" src={image} fill={true} className="absolute" />
         </div>
@@ -89,21 +90,45 @@ export default function DeliverySummary({
             {productName}
           </p>
         </div>
-      </div>
-      <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
+      </div> */}
+      {/* <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " /> */}
       <div className="flex">
         <div>
           <h4 className="font-semibold text-base">Shipping Address</h4>
           <p className="font-semibold text-sm text-[#0000006E]">
-            {shippingAddress}
+            {shipment.dropoff_location.name}
+          </p>
+
+          <p className="font-semibold text-sm text-[#0000006E] mt-1">
+            <span>
+              <Phone className="text-[16px]" />
+            </span>{" "}
+            {shipment.receivers_info.phone}
           </p>
         </div>
         <p className="font-semibold text-sm text-[#0000006E] ml-auto">
-          {shippingAddress}
+          {shipment.dropoff_location.country}
         </p>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-      <div className="flex justify-evenly">
+      <div className="flex">
+        <div>
+          <h4 className="font-semibold text-base">Pickup Address</h4>
+          <p className="font-semibold text-sm text-[#0000006E]">
+            {shipment.pickup_location.name}
+          </p>
+          <p className="font-semibold text-sm text-[#0000006E] mt-1">
+            <span>
+              <Phone className="text-[16px]" />
+            </span>{" "}
+            {shipment.pickup_location.phone}
+          </p>
+        </div>
+        <p className="font-semibold text-sm text-[#0000006E] ml-auto">
+          {shipment.pickup_location.country}
+        </p>
+      </div>
+      {/* <div className="flex justify-evenly">
         <div className="imageContainer rounded w-[47px] h-[47px] relative">
           <Image
             alt="image"
@@ -127,7 +152,7 @@ export default function DeliverySummary({
             <CallIcon style={{ fill: "#006FCF" }} />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

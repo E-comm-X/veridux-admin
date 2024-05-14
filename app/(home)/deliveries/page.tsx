@@ -9,64 +9,103 @@ import DeliverySummary from "./DeliverySummary"
 import { Button, List, Tabs } from "antd"
 import type { TabsProps } from "antd"
 import { LocalShipping } from "@mui/icons-material"
+import { useGetShipmentsQuery } from "@/services/deliveries.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { LoadingOutlined } from "@ant-design/icons"
 
 export default function Page() {
+  const { token: authToken } = useAuthToken() as { token: string }
+  const { data, isLoading } = useGetShipmentsQuery({ authToken })
+  const drafts = data?.filter((shipment) => shipment?.status === "draft")
+  const booked = data?.filter((shipment) => shipment?.status === "booked")
+  const picked_up = data?.filter((shipment) => shipment?.status === "picked_up")
+
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: "Incoming orders",
+      label: "All",
       children: (
-        <div className="flex gap-8 flex-wrap">
+        <div className="">
           <List
-            dataSource={deliveriesData}
-            renderItem={(filterData, index) => (
+            loading={isLoading}
+            dataSource={data}
+            renderItem={(shipment, index) => (
               <List.Item>
-                <DeliverySummary
-                  departure={filterData.departure}
-                  arrival={filterData.arrival}
-                  customerName={filterData.customerName}
-                  weight={filterData.weight}
-                  price={filterData.price}
-                  status={filterData.status}
-                  productName={filterData.productName}
-                  shippingAddress={filterData.shippingAddress}
-                  vendorName={filterData.vendorName}
-                  vendorImage={filterData.vendorImage}
-                  key={index}
-                  image={filterData.image}
-                />
+                <DeliverySummary {...shipment} />
               </List.Item>
             )}
             pagination={{ pageSize: 6, size: "small", align: "start" }}
             grid={{ column: 3, md: 2, sm: 1, xs: 1, gutter: [12, 0] }}
           />
-          <div className="text-center">
-            <button className="bg-white  text-black text-base  font-semibold self-center px-4 py-6 border-[#0000002B] rounded-lg border-2">
-              Load More
-            </button>
-          </div>
         </div>
       ),
     },
     {
       key: "2",
-      label: "Shipped",
-      children: "Content of Tab Pane 2",
+      label: "Drafts",
+      children: (
+        <div className="">
+          <List
+            loading={isLoading}
+            dataSource={drafts}
+            renderItem={(shipment, index) => (
+              <List.Item>
+                <DeliverySummary {...shipment} />
+              </List.Item>
+            )}
+            pagination={{ pageSize: 6, size: "small", align: "start" }}
+            grid={{ column: 3, md: 2, sm: 1, xs: 1, gutter: [12, 0] }}
+          />
+        </div>
+      ),
     },
     {
       key: "3",
-      label: "Cancelled",
-      children: "Content of Tab Pane 3",
+      label: "Booked",
+      children: (
+        <div className="">
+          <List
+            loading={isLoading}
+            dataSource={booked}
+            renderItem={(shipment, index) => (
+              <List.Item>
+                <DeliverySummary {...shipment} />
+              </List.Item>
+            )}
+            pagination={{ pageSize: 6, size: "small", align: "start" }}
+            grid={{ column: 3, md: 2, sm: 1, xs: 1, gutter: [12, 0] }}
+          />
+        </div>
+      ),
+    },
+    {
+      key: "4",
+      label: "Picked Up",
+      children: (
+        <div className="">
+          <List
+            loading={isLoading}
+            dataSource={picked_up}
+            renderItem={(shipment, index) => (
+              <List.Item>
+                <DeliverySummary {...shipment} />
+              </List.Item>
+            )}
+            pagination={{ pageSize: 6, size: "small", align: "start" }}
+            grid={{ column: 3, md: 2, sm: 1, xs: 1, gutter: [12, 0] }}
+          />
+        </div>
+      ),
     },
   ]
   return (
     <main>
-      <div className="flex items-center">
+      <div className="flex gap-3 md:flex-row flex-col md:items-center">
         <div className="flex flex-col">
           <h2 className="text-2xl text-black font-bold">Delivery</h2>
           <p className="font-normal text-base text-[#0000006E]">Today</p>
         </div>
-        <div className="ml-auto flex gap-4">
+        <div className="md:ml-auto flex gap-4">
           <div>
             <Button
               className="bg-primary"
@@ -80,7 +119,11 @@ export default function Page() {
         </div>
       </div>
       <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
-      <Tabs defaultActiveKey="1" items={items} size="large" />
+      {isLoading ? (
+        <LoadingOutlined />
+      ) : (
+        <Tabs defaultActiveKey="1" items={items} size="large" />
+      )}
     </main>
   )
 }

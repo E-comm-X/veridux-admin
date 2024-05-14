@@ -31,12 +31,12 @@ export interface ShipmentI {
     updatedAt: string
     __v: 0
   }
-  sendersInfo: {
+  senders_info: {
     name: string
     phone: string
     email: string
   }
-  receiversInfo: {
+  receivers_info: {
     name: string
     phone: string
     email: string
