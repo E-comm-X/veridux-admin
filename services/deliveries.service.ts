@@ -24,7 +24,7 @@ export const deliveryApi = createApi({
     getVehicles: builder.query<VehicleI[], { authToken: string }>({
       query: ({ authToken }) => {
         return {
-          url: "/delivery/vehicles?size=bike,small,medium,big",
+          url: "/delivery/vehicles",
           method: "GET",
           headers: {
             authorization: `Bearer ${authToken}`,
