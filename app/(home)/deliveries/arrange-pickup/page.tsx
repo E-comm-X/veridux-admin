@@ -12,7 +12,10 @@ const ArrangePickupPage = () => {
     authToken: token as string,
   })
   const purchases = data?.filter(
-    (product) => product?.type === "product_purchase"
+    (product) =>
+      product?.type === "product_purchase" &&
+      product?.kind === "debit" &&
+      product?.payment_method === "wallet"
   )
   return (
     <main>

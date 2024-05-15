@@ -48,7 +48,7 @@ export const deliveryApi = createApi({
         res.data.addresses.slice().reverse(),
     }),
     arrangeDelivery: builder.mutation<
-      any,
+      ShipmentI,
       {
         authToken: string
         reqData: {
@@ -68,6 +68,75 @@ export const deliveryApi = createApi({
           },
         }
       },
+      transformResponse: (res: { data: { shipment: ShipmentI } }) =>
+        res.data.shipment,
+    }),
+    confirmArrangement: builder.mutation<
+      ShipmentI,
+      {
+        authToken: string
+        reqData: {
+          shipment_id: string
+        }
+      }
+    >({
+      query: ({ authToken, reqData }) => {
+        return {
+          url: "/delivery/pickup/confirm",
+          method: "POST",
+          body: { ...reqData },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (res: { data: { shipment: ShipmentI } }) =>
+        res.data.shipment,
+    }),
+    rescheduleDelivery: builder.mutation<
+      ShipmentI,
+      {
+        authToken: string
+        reqData: {
+          shipment_id: string
+          pickup_date: string
+        }
+      }
+    >({
+      query: ({ authToken, reqData }) => {
+        return {
+          url: "/delivery/pickup/reschedule",
+          method: "POST",
+          body: { ...reqData },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (res: { data: { shipment: ShipmentI } }) =>
+        res.data.shipment,
+    }),
+    updatePickup: builder.mutation<
+      ShipmentI,
+      {
+        authToken: string
+        reqData: {
+          shipment_id: string
+        }
+      }
+    >({
+      query: ({ authToken, reqData }) => {
+        return {
+          url: "/delivery/pickup/update",
+          method: "PATCH",
+          body: { ...reqData },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (res: { data: { shipment: ShipmentI } }) =>
+        res.data.shipment,
     }),
   }),
 })
@@ -77,4 +146,7 @@ export const {
   useGetVehiclesQuery,
   useGetAddressesQuery,
   useArrangeDeliveryMutation,
+  useConfirmArrangementMutation,
+  useRescheduleDeliveryMutation,
+  useUpdatePickupMutation,
 } = deliveryApi

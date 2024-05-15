@@ -20,10 +20,13 @@ import {
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
 import { AddressI } from "@/interfaces/address"
-import { VehicleI } from "@/interfaces/shipment"
+import { ShipmentI, VehicleI } from "@/interfaces/shipment"
+import DeliverySummary from "../DeliverySummary"
 
 const ArrangePickup = ({ record }: { record: TransactionI }) => {
   const [open, setOpen] = useState(false)
+  const [openSummary, setOpenSummary] = useState(false)
+
   const initData = {
     transaction_id: record?._id,
     pickup_address_id: "", // Company address for pickup
@@ -38,8 +41,13 @@ const ArrangePickup = ({ record }: { record: TransactionI }) => {
   const [arrange, { data, isLoading }] = useArrangeDeliveryMutation()
   const arrangePickup = async () => {
     try {
-      await arrange({ authToken, reqData }).unwrap()
+      await arrange({
+        authToken,
+        reqData: { ...reqData, transaction_id: record._id },
+      }).unwrap()
       message.success("Arrangement Saved as Draft")
+      setOpen(false)
+      setOpenSummary(true)
     } catch (error: any) {
       message.error(
         error?.message || error?.data?.message || "An Error Occured"
@@ -123,6 +131,15 @@ const ArrangePickup = ({ record }: { record: TransactionI }) => {
             </Button>
           </Form>
         )}
+      </Modal>
+      <Modal
+        open={openSummary}
+        onCancel={() => setOpenSummary(false)}
+        title={"Pickup Summary"}
+        footer={null}
+        closeIcon={<CgCloseO className="text-primary" />}
+      >
+        <DeliverySummary {...(data as ShipmentI)} />
       </Modal>
     </div>
   )
