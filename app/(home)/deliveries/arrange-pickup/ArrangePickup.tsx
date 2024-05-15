@@ -1,7 +1,16 @@
 "use client"
 import { TransactionI } from "@/interfaces/transactions"
 import { LocalShipping } from "@mui/icons-material"
-import { Button, DatePicker, Divider, Form, Input, Modal, Select } from "antd"
+import {
+  Button,
+  DatePicker,
+  Divider,
+  Form,
+  Input,
+  Modal,
+  Select,
+  message,
+} from "antd"
 import React, { useState } from "react"
 import { CgCloseO } from "react-icons/cg"
 import {
@@ -26,7 +35,17 @@ const ArrangePickup = ({ record }: { record: TransactionI }) => {
   const { data: addresses, isLoading: loadingAddresses } = useGetAddressesQuery(
     { authToken }
   )
-
+  const [arrange, { data, isLoading }] = useArrangeDeliveryMutation()
+  const arrangePickup = async () => {
+    try {
+      await arrange({ authToken, reqData }).unwrap()
+      message.success("Arrangement Saved as Draft")
+    } catch (error: any) {
+      message.error(
+        error?.message || error?.data?.message || "An Error Occured"
+      )
+    }
+  }
   return (
     <div>
       <Button
@@ -52,7 +71,11 @@ const ArrangePickup = ({ record }: { record: TransactionI }) => {
             <span className="ml-3">Getting Pickup Addresses...</span>
           </div>
         ) : (
-          <Form layout="vertical" initialValues={initData}>
+          <Form
+            layout="vertical"
+            initialValues={initData}
+            onFinish={arrangePickup}
+          >
             <Form.Item
               required
               label="Pick up Address"
@@ -93,8 +116,10 @@ const ArrangePickup = ({ record }: { record: TransactionI }) => {
               size="large"
               type="primary"
               icon={<LocalShipping className="text-[16px]" />}
+              disabled={isLoading}
+              htmlType="submit"
             >
-              Arrange Delivery
+              {isLoading ? <LoadingOutlined /> : "Arrange Delivery"}
             </Button>
           </Form>
         )}

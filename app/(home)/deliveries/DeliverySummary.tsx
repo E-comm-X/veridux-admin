@@ -5,6 +5,8 @@ import CallIcon from "@mui/icons-material/Call"
 import { ShipmentI } from "@/interfaces/shipment"
 import moment from "moment"
 import { Phone } from "@mui/icons-material"
+import { MutateDelivery } from "./MutateDelivery"
+import { Divider } from "antd"
 
 function shippingStatus(status: any) {
   return status === "draft"
@@ -28,7 +30,7 @@ function text(sign: number) {
 
 export default function DeliverySummary({ ...shipment }: ShipmentI) {
   return (
-    <div className="bg-white rounded-lg border-[2px] border-[#00000014] p-6 w-full">
+    <div className="bg-white rounded-lg border-[2px] border-[#00000014] p-6 w-full min-h-[535px]">
       <div className="flex top ">
         <div className="top-right bais-[80%] flex flex-col">
           <div className="top-right-top flex items-center gap-4">
@@ -153,6 +155,8 @@ export default function DeliverySummary({ ...shipment }: ShipmentI) {
           </div>
         </div>
       </div> */}
+      <Divider />
+      <MutateDelivery record={shipment} />
     </div>
   )
 }

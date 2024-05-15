@@ -53,7 +53,6 @@ export const deliveryApi = createApi({
         authToken: string
         reqData: {
           transaction_id: string
-          vehicle_id: string
           pickup_address_id: string
           pickup_date: string
         }
