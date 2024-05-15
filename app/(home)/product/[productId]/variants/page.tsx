@@ -1,6 +1,8 @@
 "use client"
 import React from "react"
 
-export const VariantPage = () => {
+const VariantPage = () => {
   return <div>VariantPage</div>
 }
+
+export default VariantPage
