@@ -249,7 +249,7 @@ export default function UpdateProduct() {
                   <h3 className="font-medium text-base mb-4">Product Image</h3>
                   <UploadImage setProductPreviewImage={setFormData} />
                 </div> */}
-                <Link href={"/"}>
+                <Link href={`/product/${productId as string}/variants`}>
                   <Button type="link">
                     View variants{" "}
                     <span>

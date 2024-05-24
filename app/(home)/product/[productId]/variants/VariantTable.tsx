@@ -1,147 +1,243 @@
 "use client"
-import React from "react"
-import { Avatar, Button, Popover, Space, Table, Tag, message } from "antd"
+import React, { useState } from "react"
+import {
+  Avatar,
+  Button,
+  Form,
+  Image,
+  Input,
+  Modal,
+  Popover,
+  Space,
+  Table,
+  Tag,
+  message,
+} from "antd"
 import type { ColumnsType } from "antd/es/table"
-import { useGetAllProductsQuery } from "@/services/product.service"
+import {
+  useUpdateProductVariantMutation,
+  useGetProductQuery,
+} from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
-import { ProductI } from "@/interfaces/product"
+import { ProductI, VariantI } from "@/interfaces/product"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 import Link from "next/link"
-import { useHideProductMutation } from "@/services/product.service"
+import { useHideProductVariantMutation } from "@/services/product.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { useParams } from "next/navigation"
+import moment from "moment"
+import { CloseRounded } from "@mui/icons-material"
 
-const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
-  text,
-  record,
-}) => {
+const MoreAction: React.FC<{
+  text: any
+  record: VariantI
+  refetch: () => void
+}> = ({ text, record, refetch }) => {
   const [open, setOpen] = React.useState<boolean>(false)
+  const [openModal, setOpenModal] = React.useState<boolean>(false)
+  const toggleModal = () => setOpenModal(!openModal)
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
   }
-  const { token } = useAuthToken()
-  const [hideProductMutation, { isLoading: isHiding }] =
-    useHideProductMutation()
-  const hideProduct = async () => {
-    try {
-      console.log(record._id)
-      const data = await hideProductMutation({
-        id: record._id as string,
-        authToken: token as string,
-      }).unwrap()
-      message.success(data.message)
-    } catch (error: any) {
-      console.log(error)
+  const { token } = useAuthToken() as { token: string }
+  const [hideVariantMutation, { isLoading: isHiding }] =
+    useHideProductVariantMutation()
+  const [updateMutation, { isLoading: updating }] =
+    useUpdateProductVariantMutation()
 
-      message.error(error.data.message)
+  const hideVariant = async () => {
+    try {
+      const data = await hideVariantMutation({
+        id: record._id as string,
+        authToken: token,
+      }).unwrap()
+      message.success(data?.message)
+    } catch (error: any) {
+      const errMsg =
+        error?.data?.message || error?.message || "An Error Occured"
+      message.error(errMsg)
     }
   }
+  const updateVariant = async () => {
+    try {
+      const data = await updateMutation({
+        product_variant_id: record._id as string,
+        authToken: token,
+        color: variantState.color,
+        total_quantity: variantState.total_quantity,
+      }).unwrap()
+      await refetch()
+      setOpenModal(false)
+      message.success("Variant Updated Succesfully")
+    } catch (error: any) {
+      const errMsg =
+        error?.data?.message || error?.message || "An Error Occured"
+      message.error(errMsg)
+    }
+  }
+  const [variantState, setVariantState] = useState(record)
   return (
-    <Popover
-      placement="bottom"
-      trigger="click"
-      open={open}
-      onOpenChange={handleOpenChange}
-      content={
-        <div className="flex flex-col p-0 m-0 gap-2">
-          <Link href={`/product/${record._id}`}>
+    <>
+      <Popover
+        placement="bottom"
+        trigger="click"
+        open={open}
+        onOpenChange={handleOpenChange}
+        content={
+          <div className="flex flex-col p-0 m-0 gap-2">
             <Button
               type="primary"
               className="bg-primary"
               icon={<EditOutlined />}
+              onClick={toggleModal}
             >
-              Update
+              Update variant
             </Button>
-          </Link>
-          <Button
-            type="default"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={hideProduct}
-          >
-            {isHiding ? <LoadingOutlined /> : "Hide"}
-          </Button>
-        </div>
-      }
-    >
-      <MoreOutlined />
-    </Popover>
+            {/* <Button
+              type="default"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={hideVariant}
+            >
+              {isHiding ? <LoadingOutlined /> : "Hide variant"}
+            </Button> */}
+          </div>
+        }
+      >
+        <MoreOutlined />
+      </Popover>
+      <Modal
+        open={openModal}
+        onCancel={toggleModal}
+        okText={updating ? <LoadingOutlined /> : "Update"}
+        okButtonProps={{ className: "bg-primary", disabled: updating }}
+        cancelButtonProps={{ disabled: updating }}
+        title="Update Variant"
+        closeIcon={<CloseRounded />}
+        onOk={updateVariant}
+        closable={!updating}
+      >
+        <Form layout="vertical" initialValues={record}>
+          <Form.Item name={"color"} label="Colour" required>
+            <Input
+              className="w-full"
+              placeholder="colour"
+              size="large"
+              value={variantState.color}
+              onChange={(e) =>
+                setVariantState({ ...variantState, color: e.target.value })
+              }
+              prefix={
+                <div
+                  className={`w-[2rem] h-[2rem] rounded-md mr-1`}
+                  style={{ backgroundColor: variantState.color }}
+                />
+              }
+            />
+          </Form.Item>
+          <Form.Item name={"total_quantity"} label="Quantity" required>
+            <Input
+              className="w-full"
+              placeholder="quantity"
+              size="large"
+              type="number"
+              value={variantState.total_quantity}
+              onChange={(e) =>
+                setVariantState({
+                  ...variantState,
+                  total_quantity: Number(e.target.value),
+                })
+              }
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   )
 }
 
-const columns: ColumnsType<ProductI> = [
-  {
-    title: "Product Name",
-    dataIndex: "name",
-    key: "name",
-    render: (text, record) => (
-      <div className="flex items-center gap-3">
-        <Avatar
-          className="rounded-[8px]"
-          size={"large"}
-          src={record.preview_image}
-        />
-        <p>{text}</p>
-      </div>
-    ),
-  },
-  {
-    title: "Pricing",
-    dataIndex: "price",
-    key: "price",
-    render: (text) => <p>₦{Number(text).toFixed(2)}</p>,
-  },
-  {
-    title: "Brand",
-    dataIndex: "brand_name",
-    key: "brand_name",
-  },
-  {
-    title: "Purchased",
-    dataIndex: "purchased",
-    key: "purchased",
-    render: (text) => <p>-</p>,
-  },
-  {
-    title: "Vendor",
-    dataIndex: "store",
-    key: "store",
-    render: (text, record) => (
-      <p>{record.store?.name || <p className="ml-[2rem]">-</p>}</p>
-    ),
-  },
-  {
-    title: "Total Sale",
-    dataIndex: "Total_Sale",
-    key: "Total_Sale",
-    render: (text) => <p>-</p>,
-  },
-  {
-    title: "Rating",
-    dataIndex: "rating",
-    key: "rating",
-    render: (text) => <p>{Number(text).toFixed(1)}/5</p>,
-  },
-  {
-    title: "Date Created",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    render: (text) => {
-      const date = new Date(text).toDateString()
-      return <p>{date}</p>
-    },
-  },
-
-  {
-    title: "",
-    key: "action",
-    render: (text, record) => <MoreAction {...{ text, record }} />,
-  },
-]
-
-export const ProductsTable: React.FC = () => {
+export const ProductVariantsTable: React.FC = () => {
   const { productId } = useParams()
-  const { data, isLoading } = useGetAllProductsQuery(null)
+  const { data, isLoading, refetch } = useGetProductQuery({
+    id: productId as string,
+  })
+  const columns: ColumnsType<VariantI> = [
+    {
+      title: "Variant Image",
+      dataIndex: "preview_image",
+      key: "preview_image",
+      render: (text, record) => (
+        <div className="flex items-center gap-3 w-[2rem] h-[2rem] md:w-[4rem] md:h-[4rem]">
+          <Image
+            className="rounded-[8px] object-cover"
+            width={"100%"}
+            height={"100%"}
+            alt=""
+            src={record.preview_image}
+          />
+        </div>
+      ),
+    },
+
+    {
+      title: "Colour",
+      dataIndex: "color",
+      key: "color",
+      render(value, record, index) {
+        return (
+          <div className="flex items-center gap-3">
+            <div
+              className={`w-[2rem] h-[2rem] md:w-[3rem] md:h-[3rem] rounded-md`}
+              style={{ backgroundColor: value }}
+            />
+            <p>{value}</p>
+          </div>
+        )
+      },
+    },
+    {
+      title: "Quantity",
+      dataIndex: "total_quantity",
+      key: "total_quantity",
+    },
+
+    {
+      title: "Date Created",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => {
+        const date = moment(text).format("LL")
+        const time = moment(text).format("LT")
+        return (
+          <div>
+            <p>{date}</p>
+            <p className="md:block hidden">{time}</p>
+          </div>
+        )
+      },
+    },
+    {
+      title: "Date Updated",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (text) => {
+        const date = moment(text).format("LL")
+        const time = moment(text).format("LT")
+        return (
+          <div>
+            <p>{date}</p>
+            <p className="md:block hidden">{time}</p>
+          </div>
+        )
+      },
+    },
+
+    {
+      title: "",
+      key: "action",
+      render: (text, record) => <MoreAction {...{ text, record, refetch }} />,
+    },
+  ]
 
   return (
     <>
@@ -150,7 +246,7 @@ export const ProductsTable: React.FC = () => {
       ) : (
         <Table
           columns={columns}
-          dataSource={data?.slice(0).reverse()}
+          dataSource={data?.variants?.slice(0).reverse()}
           rowSelection={{}}
         />
       )}

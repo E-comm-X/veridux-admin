@@ -101,3 +101,16 @@ export interface ProductUpdateRequestI {
   authToken: string
   product_id: string
 }
+
+export interface VariantI {
+  _id: string
+  product: string
+  color: string
+  hidden: boolean
+  total_quantity: number
+  preview_image: string
+  createdAt: string
+  updatedAt: string
+  __v: 0
+  id: string
+}

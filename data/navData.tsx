@@ -60,7 +60,7 @@ export const navItems = [
   },
 
   {
-    name: "Vendors",
+    name: "Stores",
     url: "",
     icon: <Storefront color="primary" />,
     children: [

@@ -23,7 +23,6 @@ const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
     useHideProductMutation()
   const hideProduct = async () => {
     try {
-      console.log(record._id)
       const data = await hideProductMutation({
         id: record._id as string,
         authToken: token as string,
@@ -49,7 +48,7 @@ const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
               className="bg-primary"
               icon={<EditOutlined />}
             >
-              Update
+              View/Update
             </Button>
           </Link>
           <Button
