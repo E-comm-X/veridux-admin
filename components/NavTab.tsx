@@ -14,7 +14,7 @@ const items = [
     icon: <PersonSupportIcon />,
     item: <Menu />,
     name: "support",
-    link: "/users",
+    link: "/users/groups",
   },
 ]
 
@@ -34,7 +34,7 @@ export const NavTab = () => {
             <Link
               href={items[0].link}
               className={`p-[1rem] mx-[1rem] cursor-pointer block ${
-                pathname !== "/users"
+                pathname !== "/users/groups"
                   ? "border-l-[6px] border-l-[#006FCF]"
                   : "border-l-[6px] border-l-[#ffffff00]"
               }`}
@@ -44,7 +44,7 @@ export const NavTab = () => {
             <Link
               href={items[1].link}
               className={`p-[1rem] mx-[1rem] cursor-pointer block ${
-                pathname === "/users"
+                pathname === "/users/groups"
                   ? "border-l-[6px] border-l-[#006FCF]"
                   : "border-l-[6px] border-l-[#ffffff00]"
               }`}
