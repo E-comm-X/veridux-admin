@@ -183,7 +183,7 @@ export const ProductsTable: React.FC = () => {
           <Table
             columns={columns}
             dataSource={dataState?.slice(0).reverse()}
-            rowSelection={{}}
+            // rowSelection={{}}
           />
         </div>
       )}
