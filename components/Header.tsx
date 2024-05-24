@@ -69,9 +69,12 @@ export const Header = () => {
                 icon={<UserOutlined />}
                 size={44}
               />
-              <p className="capitalize">
-                {data?.firstname} {data?.lastname.slice(0, 1)}.
-              </p>
+              <div>
+                <p className="capitalize">
+                  {data?.firstname} {data?.lastname.slice(0, 1)}.
+                </p>
+                <p className="text-[15px] hidden md:block">{data?.role}</p>
+              </div>
               <ExpandMore />
             </Link>
           )}

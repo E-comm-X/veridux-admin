@@ -34,11 +34,14 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-3">
-        {isLoading ? (
+      {isLoading ? (
+        <div className="my-2">
           <LoadingOutlined />
-        ) : (
-          <>
+          <span className="ml-1">Loading...</span>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mt-7 gap-3">
             <Card
               className="col-span-1"
               title={
@@ -177,9 +180,9 @@ const Page = () => {
                 )}
               </div>
             </Card>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
 
       {/* <div className="mt-7">
         {isLoading ? (
