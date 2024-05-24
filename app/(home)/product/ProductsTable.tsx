@@ -1,6 +1,15 @@
 "use client"
-import React from "react"
-import { Avatar, Button, Popover, Space, Table, Tag, message } from "antd"
+import React, { useEffect, useState } from "react"
+import {
+  Avatar,
+  Button,
+  Input,
+  Popover,
+  Space,
+  Table,
+  Tag,
+  message,
+} from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { useGetAllProductsQuery } from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
@@ -9,6 +18,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import { useHideProductMutation } from "@/services/product.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
+import { Search } from "@mui/icons-material"
 
 const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
   text,
@@ -139,17 +149,43 @@ const columns: ColumnsType<ProductI> = [
 
 export const ProductsTable: React.FC = () => {
   const { data, isLoading } = useGetAllProductsQuery(null)
-
+  const [dataState, setDataState] = useState<ProductI[]>([])
+  useEffect(() => {
+    if (data) {
+      setDataState(data)
+    }
+  }, [data])
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase()
+    const newData = data?.filter((product) => {
+      return (
+        product.name.toLowerCase().includes(value) ||
+        product._id.toLowerCase().includes(value)
+      )
+    })
+    setDataState(newData as ProductI[])
+  }
   return (
     <>
       {isLoading ? (
         <LoadingOutlined />
       ) : (
-        <Table
-          columns={columns}
-          dataSource={data?.slice(0).reverse()}
-          rowSelection={{}}
-        />
+        <div>
+          <div className="mb-5 w-full">
+            <Input
+              className="md:w-[450px] w-full"
+              placeholder="Product name or ID"
+              prefix={<Search />}
+              onChange={onSearch}
+              size="large"
+            />
+          </div>
+          <Table
+            columns={columns}
+            dataSource={dataState?.slice(0).reverse()}
+            rowSelection={{}}
+          />
+        </div>
       )}
     </>
   )

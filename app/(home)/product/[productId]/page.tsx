@@ -1,6 +1,14 @@
 "use client"
 import React, { useEffect, useState } from "react"
-import { Button, Image, Input, Select, message } from "antd"
+import {
+  Button,
+  Collapse,
+  CollapseProps,
+  Image,
+  Input,
+  Select,
+  message,
+} from "antd"
 import { UploadImage } from "@/components/UploadImage"
 import {
   useGetAllProductsQuery,
@@ -16,6 +24,7 @@ import { AddVariant } from "./AddVariant"
 import { GoBack } from "@/components/GoBack"
 import Link from "next/link"
 import { CgArrowTopRight } from "react-icons/cg"
+import { Reviews } from "./Reviews"
 
 const reqData: ProductUpdateRequestI = {
   product_name: "",
@@ -102,6 +111,22 @@ export default function UpdateProduct() {
       message.error(`Failed: ${error.data.message}`)
     }
   }
+  const items: CollapseProps["items"] = [
+    {
+      key: "1",
+      label: "Add Variant",
+      children: <AddVariant product_id={productId as string} />,
+    },
+    {
+      key: "2",
+      label: "Reviews",
+      children: (
+        <p>
+          <Reviews id={productId as string} />
+        </p>
+      ),
+    },
+  ]
   return (
     <>
       <GoBack />
@@ -258,7 +283,7 @@ export default function UpdateProduct() {
                   </Button>
                 </Link>
 
-                <AddVariant product_id={productId as string} />
+                <Collapse items={items} defaultActiveKey={["2"]} />
               </div>
             </div>
             <div className="middle w-full md:w-[48%] mt-6">

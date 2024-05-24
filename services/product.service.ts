@@ -6,6 +6,7 @@ import {
   ProductsResponseI,
   VariantI,
 } from "@/interfaces/product"
+import { ReviewI } from "@/interfaces/reviews"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const productApi = createApi({
@@ -202,6 +203,16 @@ export const productApi = createApi({
         }
       },
     }),
+    getProductReviews: builder.query<ReviewI[], { id: string }>({
+      query({ id }) {
+        return {
+          url: `/review?product_id=${id}`,
+          method: "GET",
+        }
+      },
+      transformResponse: (data: { data: { product_reviews: ReviewI[] } }) =>
+        data.data.product_reviews,
+    }),
   }),
 })
 
@@ -216,4 +227,5 @@ export const {
   useUpdateProductVariantMutation,
   useHideProductVariantMutation,
   useShowProductVariantMutation,
+  useGetProductReviewsQuery,
 } = productApi
