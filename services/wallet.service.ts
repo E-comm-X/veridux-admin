@@ -44,7 +44,7 @@ export const walletApi = createApi({
     }),
 
     getEndUserWalletInfo: builder.query<
-      EndUserWalletI,
+      WalletI,
       { authToken: string; enduser_id: string }
     >({
       query: ({ authToken, enduser_id }) => {

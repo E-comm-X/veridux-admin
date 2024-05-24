@@ -64,6 +64,8 @@ export interface EndUserWalletI {
   updatedAt: string
   __v: number
   id: string
+  pending_debit: number
+  pending_credit: number
 }
 
 export interface EndUserTransactionI {

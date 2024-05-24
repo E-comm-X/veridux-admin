@@ -138,7 +138,7 @@ export const UsersTable: React.FC<{ group_id: string }> = ({ group_id }) => {
       render: (text, record) => (
         <div>
           <Link
-            href={`/users/wallet/${record._id}`}
+            href={`/users/wallet/${record.enduser}/?user_id=${record._id}`}
             className="text-primary underline"
           >
             <span>View wallet</span>

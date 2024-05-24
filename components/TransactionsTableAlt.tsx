@@ -22,7 +22,7 @@ const getFilters = (transactions: TransactionI[], key: string) => {
   return filters || []
 }
 
-export const TransactionsTable: React.FC<{
+export const TransactionsTableAlt: React.FC<{
   data: TransactionI[]
   isLoading: boolean
 }> = ({ isLoading, data }) => {
@@ -46,19 +46,7 @@ export const TransactionsTable: React.FC<{
         <p className="capitalize ">{record?.type?.replaceAll("_", " ")}</p>
       ),
     },
-    {
-      title: "Transaction Method",
-      dataIndex: "payment_method",
-      filters: getFilters(data as TransactionI[], "payment_method"),
-      filterSearch: true,
-      onFilter: (value, record) =>
-        record?.payment_method?.startsWith(value as any),
-      render: (text, record) => (
-        <p className="capitalize ">
-          {record?.payment_method?.replaceAll("_", " ")}
-        </p>
-      ),
-    },
+
     {
       title: "Amount",
       dataIndex: "amount_payable",
