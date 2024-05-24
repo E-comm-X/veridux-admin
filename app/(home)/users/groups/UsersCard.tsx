@@ -95,6 +95,13 @@ export const UsersCard: React.FC<{ group: userGroupI }> = ({ group }) => {
           )}
         </div>
       </div>
+      <div className="mt-3">
+        <Link href={`/users/groups/${group._id}`}>
+          <Button type="primary" className="bg-primary" icon={<EyeOutlined />}>
+            View Users
+          </Button>
+        </Link>
+      </div>
     </Card>
   )
 }
