@@ -23,6 +23,7 @@ import { useAuthToken } from "@/hooks/useAuthToken"
 import { DeleteOutlined, EditOutlined, Search } from "@mui/icons-material"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { useGetUserDataQuery } from "@/services/auth.service"
 
 const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
   text,
@@ -219,10 +220,12 @@ const columns: ColumnsType<StoreI> = [
 
 export const StoresTable: React.FC = () => {
   const { token } = useAuthToken()
-  const { vendorId } = useParams() as { vendorId: string }
+  const { data: vendorData } = useGetUserDataQuery({
+    authToken: token as string,
+  })
   const { data, isLoading } = useGetAllStoresQuery({
     authToken: token as string,
-    vendor_id: vendorId,
+    vendor_id: vendorData?.profile?.user,
   })
   const [dataState, setDataState] = useState<StoreI[]>([])
   useEffect(() => {
