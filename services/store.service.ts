@@ -146,10 +146,14 @@ export const storeApi = createApi({
       },
     }),
 
-    getStoreCategories: builder.query<StoreCategory[], { authToken: string }>({
-      query: ({ authToken }) => {
+    getStoreCategories: builder.query<
+      StoreCategory[],
+      { authToken: string; withoutHidden?: boolean }
+    >({
+      query: ({ authToken, withoutHidden }) => {
+        const url = withoutHidden ? "/category/get" : "/category/gethidden"
         return {
-          url: "/category/gethidden",
+          url,
           method: "GET",
           headers: {
             authorization: `Bearer ${authToken}`,
