@@ -172,3 +172,36 @@ export const navItems = [
     children: [],
   },
 ]
+
+export const vendorNavs = [
+  {
+    name: "Overview",
+    url: "/",
+    icon: <OverviewIcon color="primary" />,
+    children: [],
+  },
+  {
+    name: "My Stores",
+    url: "/stores",
+    icon: <Storefront color="primary" />,
+    children: [],
+  },
+  {
+    name: "Product",
+    url: "/product",
+    icon: <Sell color="primary" />,
+    children: [],
+  },
+  {
+    name: "Deliveries",
+    url: "/deliveries",
+    icon: <LocalShipping color="primary" />,
+    children: [],
+  },
+  {
+    name: "Account",
+    url: "/account",
+    icon: <Person color="primary" />,
+    children: [],
+  },
+]

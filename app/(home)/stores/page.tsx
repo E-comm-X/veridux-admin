@@ -1,18 +1,16 @@
 "use client"
-import { StoresTable } from "../StoresTable"
 import { GoBack } from "@/components/GoBack"
 import { useSearchParams } from "next/navigation"
+import { StoresTable } from "./StoresTable"
 
-export default function VendorPage() {
-  const company_name = useSearchParams().get("name")
-
+export default function StoresPage() {
   return (
     <main>
       <GoBack />
       <div className="md:flex justify-between align-center text-black">
         <div className="flex flex-col gap-2">
           <h2 className="md:text-2xl text-lg text-black font-bold">
-            {company_name} - Stores
+            My Stores
           </h2>
           <p className="font-normal text-base text-[#0000006E]">Today</p>
         </div>

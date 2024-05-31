@@ -1,15 +1,20 @@
 "use client"
 import React, { useState } from "react"
-import { navItems } from "@/data/navData"
+import { navItems, vendorNavs } from "@/data/navData"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import { useRole } from "@/hooks/useRole"
 
 export const NavItems = () => {
   const pathname = usePathname()
+  const { role } = useRole()
+  const renderedNav = role?.toLowerCase().includes("admin")
+    ? navItems
+    : vendorNavs
   return (
     <div className="flex flex-col gap-[16px]">
-      {navItems.map((item, index) => {
+      {renderedNav.map((item, index) => {
         const active = pathname === item.url
         return (
           <div key={index} className="">

@@ -4,6 +4,7 @@ import React, { useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { jwtDecode } from "jwt-decode"
 import { useGetUserDataQuery } from "@/services/auth.service"
+import { useRole } from "@/hooks/useRole"
 
 export const RestrictedPages = ({
   children,
@@ -13,6 +14,7 @@ export const RestrictedPages = ({
   const router = useRouter()
   const pathname = usePathname()
   const { token, setToken } = useAuthToken()
+  const { setRole } = useRole()
   const { isError, refetch } = useGetUserDataQuery({
     authToken: token as string,
   })
@@ -27,6 +29,7 @@ export const RestrictedPages = ({
 
       if (currentTime > (expiryTime as number) * 10) {
         setToken("")
+        setRole("")
         return router.replace("/auth")
       }
     } catch (error) {
@@ -37,6 +40,7 @@ export const RestrictedPages = ({
   useEffect(() => {
     if (isError) {
       setToken("")
+      setRole("")
       return router.replace("/auth")
     }
   }, [isError])

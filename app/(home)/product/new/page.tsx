@@ -11,6 +11,7 @@ import { ProductRequestI } from "@/interfaces/product"
 import { useGetAllCategoriesQuery } from "@/services/category.service"
 import { useGetAllStoresQuery } from "@/services/store.service"
 import { LoadingOutlined } from "@ant-design/icons"
+import { GoBack } from "@/components/GoBack"
 
 const reqData: ProductRequestI = {
   preview_image: null,
@@ -72,6 +73,7 @@ export default function AddProduct() {
   }
   return (
     <main>
+      <GoBack />
       {/* headeding */}
       <div className="md:flex justify-between align-center text-black">
         <div className="flex flex-col gap-2">
