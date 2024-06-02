@@ -1,4 +1,10 @@
-import { StoreCategory, StoreI, StoresResponseI } from "@/interfaces/store"
+import { VendorI } from "@/interfaces/product"
+import {
+  StoreCategory,
+  StoreI,
+  StoresResponseI,
+  VendorsResponseI,
+} from "@/interfaces/store"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const storeApi = createApi({
@@ -7,7 +13,23 @@ export const storeApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/store`,
   }),
   endpoints: (builder) => ({
-    getAllStores: builder.query<StoreI[], { authToken: string }>({
+    getAllStores: builder.query<
+      StoreI[],
+      { authToken: string; vendor_id?: string }
+    >({
+      query: ({ authToken, vendor_id }) => {
+        return {
+          url: "/get",
+          method: "GET",
+          params: { vendor_id },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (data: StoresResponseI) => data.data.stores,
+    }),
+    getAllVendors: builder.query<VendorI[], { authToken: string }>({
       query: ({ authToken }) => {
         return {
           url: "/admin/get",
@@ -17,7 +39,17 @@ export const storeApi = createApi({
           },
         }
       },
-      transformResponse: (data: StoresResponseI) => data.data.stores,
+      transformResponse: (data: StoresResponseI) => {
+        const vendorMap: Record<string, VendorI> = {}
+        for (let store of data.data.stores) {
+          const vendor = store.vendor as VendorI
+          if (vendorMap[vendor._id] === undefined) {
+            vendorMap[vendor._id] = vendor
+          }
+        }
+        const vendors = Object.values(vendorMap)
+        return vendors
+      },
     }),
     toggleStoreStatus: builder.mutation<
       {
@@ -114,10 +146,14 @@ export const storeApi = createApi({
       },
     }),
 
-    getStoreCategories: builder.query<StoreCategory[], { authToken: string }>({
-      query: ({ authToken }) => {
+    getStoreCategories: builder.query<
+      StoreCategory[],
+      { authToken: string; withoutHidden?: boolean }
+    >({
+      query: ({ authToken, withoutHidden }) => {
+        const url = withoutHidden ? "/category/get" : "/category/gethidden"
         return {
-          url: "/category/gethidden",
+          url,
           method: "GET",
           headers: {
             authorization: `Bearer ${authToken}`,
@@ -163,4 +199,5 @@ export const {
   useToggleStoreCategoryStatusMutation,
   useCreateStoreCategoryMutation,
   useUpdateCategoryMutation,
+  useGetAllVendorsQuery,
 } = storeApi

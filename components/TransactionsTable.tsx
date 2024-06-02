@@ -1,10 +1,11 @@
 "use client"
-import React from "react"
-import { Table, Tag } from "antd"
+import React, { useEffect, useState } from "react"
+import { Input, Table, Tag } from "antd"
 import type { TableColumnsType, TableProps } from "antd"
 import { TransactionI } from "@/interfaces/transactions"
 import Link from "next/link"
 import moment from "moment"
+import { FaSearch } from "react-icons/fa"
 
 const getFilters = (transactions: TransactionI[], key: string) => {
   const filters: { text: string; value: string }[] = []
@@ -13,7 +14,7 @@ const getFilters = (transactions: TransactionI[], key: string) => {
       !filters.some((filter) => filter.value === transaction[key as "type"])
     ) {
       filters.push({
-        text: transaction[key as "type"].replaceAll("_", " "),
+        text: transaction[key as "type"]?.replaceAll("_", " "),
         value: transaction[key as "type"],
       })
     }
@@ -40,9 +41,9 @@ export const TransactionsTable: React.FC<{
       dataIndex: "type",
       filters: getFilters(data as TransactionI[], "type"),
       filterSearch: true,
-      onFilter: (value, record) => record.type.startsWith(value as any),
+      onFilter: (value, record) => record?.type?.startsWith(value as any),
       render: (text, record) => (
-        <p className="capitalize ">{record.type.replaceAll("_", " ")}</p>
+        <p className="capitalize ">{record?.type?.replaceAll("_", " ")}</p>
       ),
     },
     {
@@ -51,10 +52,10 @@ export const TransactionsTable: React.FC<{
       filters: getFilters(data as TransactionI[], "payment_method"),
       filterSearch: true,
       onFilter: (value, record) =>
-        record.payment_method.startsWith(value as any),
+        record?.payment_method?.startsWith(value as any),
       render: (text, record) => (
         <p className="capitalize ">
-          {record.payment_method.replaceAll("_", " ")}
+          {record?.payment_method?.replaceAll("_", " ")}
         </p>
       ),
     },
@@ -77,6 +78,7 @@ export const TransactionsTable: React.FC<{
       dataIndex: "createdAt",
       sorter: (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
       render: (text) => <p>{moment(text).format("LL")}</p>,
+      defaultSortOrder: "descend",
     },
     {
       title: "Time",
@@ -96,7 +98,7 @@ export const TransactionsTable: React.FC<{
           value: "debit",
         },
       ],
-      onFilter: (value, record) => record.kind.startsWith(value as any),
+      onFilter: (value, record) => record?.kind?.startsWith(value as any),
       filterSearch: true,
       render: (text, record) => (
         <Tag
@@ -108,11 +110,33 @@ export const TransactionsTable: React.FC<{
       ),
     },
   ]
+  const [txState, setTxState] = useState(data)
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    const newState = data?.filter((tx) => tx._id.toLowerCase().includes(value))
+    setTxState(newState)
+  }
+  useEffect(() => {
+    if (data) {
+      setTxState(data)
+    }
+  }, [data])
   return (
-    <Table
-      columns={columns}
-      dataSource={data.slice().reverse()}
-      loading={isLoading}
-    />
+    <div>
+      <div>
+        <Input
+          className="mb-3 md:w-[450px] w-full"
+          size="large"
+          placeholder="Search with Transaction Id"
+          prefix={<FaSearch />}
+          onChange={onSearch}
+        />
+      </div>
+      <Table
+        columns={columns}
+        dataSource={txState?.slice()?.reverse()}
+        loading={isLoading}
+      />
+    </div>
   )
 }

@@ -45,13 +45,22 @@ export const navItems = [
   },
   {
     name: "Users",
-    url: "/users",
+    url: "",
     icon: <PeopleAlt color="primary" />,
-    children: [],
+    children: [
+      // {
+      //   name: "Users",
+      //   url: "/users",
+      // },
+      {
+        name: "User Group",
+        url: "/users/groups",
+      },
+    ],
   },
 
   {
-    name: "Vendors",
+    name: "Stores",
     url: "",
     icon: <Storefront color="primary" />,
     children: [
@@ -100,12 +109,12 @@ export const navItems = [
   //   icon: <Receipt color="primary" />,
   //   children: [],
   // },
-  // {
-  //   name: "Deliveries",
-  //   url: "/deliveries",
-  //   icon: <LocalShipping color="primary" />,
-  //   children: [],
-  // },
+  {
+    name: "Deliveries",
+    url: "/deliveries",
+    icon: <LocalShipping color="primary" />,
+    children: [],
+  },
   // {
   //   name: "Marketing",
   //   url: "",
@@ -156,6 +165,39 @@ export const navItems = [
   //     },
   //   ],
   // },
+  {
+    name: "Account",
+    url: "/account",
+    icon: <Person color="primary" />,
+    children: [],
+  },
+]
+
+export const vendorNavs = [
+  {
+    name: "Overview",
+    url: "/",
+    icon: <OverviewIcon color="primary" />,
+    children: [],
+  },
+  {
+    name: "My Stores",
+    url: "/stores",
+    icon: <Storefront color="primary" />,
+    children: [],
+  },
+  {
+    name: "Product",
+    url: "/product",
+    icon: <Sell color="primary" />,
+    children: [],
+  },
+  {
+    name: "Deliveries",
+    url: "/deliveries",
+    icon: <LocalShipping color="primary" />,
+    children: [],
+  },
   {
     name: "Account",
     url: "/account",

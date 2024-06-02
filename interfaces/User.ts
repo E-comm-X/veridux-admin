@@ -35,4 +35,5 @@ export interface UserDataI {
   exp: number
   profile_picture: string
   account_reference: string
+  vendor?: string
 }

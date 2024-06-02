@@ -1,6 +1,7 @@
 import { UserDataI } from "./User"
 
 export interface TransactionI {
+  accounted_for: boolean
   _id: string
   user: UserDataI
   type: string

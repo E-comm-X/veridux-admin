@@ -4,9 +4,11 @@ import { ProductsTable } from "./ProductsTable"
 import Link from "next/link"
 import { Button } from "antd"
 import { AddCategory } from "./AddCategory"
+import { GoBack } from "@/components/GoBack"
 export default function Page() {
   return (
     <main>
+      <GoBack />
       <div className="md:flex justify-between align-center text-black">
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl text-black font-bold">All Products</h2>

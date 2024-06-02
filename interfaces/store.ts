@@ -37,7 +37,9 @@ export interface StoreI {
 export interface StoresResponseI {
   data: { stores: StoreI[] }
 }
-
+export interface VendorsResponseI {
+  data: { stores: VendorI[] }
+}
 export interface StoreCategory {
   children_categories: string[]
   _id: string

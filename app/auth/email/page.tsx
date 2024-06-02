@@ -59,9 +59,10 @@ export default function EmailLogin() {
             </div>
             <Button
               size="large"
-              className="w-full py-3 bg-primary"
+              className="w-full bg-primary"
               type="primary"
               htmlType="submit"
+              disabled={isLoading}
             >
               {isLoading ? <LoadingOutlined /> : "Log In"}
             </Button>

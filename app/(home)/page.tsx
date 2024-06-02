@@ -7,9 +7,11 @@ import { TransactionsTable } from "@/components/TransactionsTable"
 import { TransactionI } from "@/interfaces/transactions"
 import { LoadingOutlined } from "@ant-design/icons"
 import { H2 } from "@/components/Typography"
+import { useRole } from "@/hooks/useRole"
 
 export default function Home() {
   const { token } = useAuthToken()
+  const { role } = useRole()
   const { data, isLoading } = useGetTransactionsQuery({
     authToken: token as string,
   })
@@ -37,7 +39,7 @@ export default function Home() {
       <div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4">
-            <Summaries />
+            {role.toLowerCase().includes("admin") && <Summaries />}
             {/* <VendorStatistics /> */}
           </div>
           {/* <div className="md:basis-[30%]">

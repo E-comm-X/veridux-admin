@@ -1,8 +1,9 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Avatar,
   Button,
+  Input,
   Popover,
   Select,
   Space,
@@ -13,13 +14,14 @@ import {
 import type { ColumnsType } from "antd/es/table"
 import {
   useGetAllStoresQuery,
+  useGetAllVendorsQuery,
   useToggleStoreStatusMutation,
 } from "@/services/store.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { StoreI } from "@/interfaces/store"
 import { VendorI } from "@/interfaces/product"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { DeleteOutlined, EditOutlined } from "@mui/icons-material"
+import { DeleteOutlined, EditOutlined, Search } from "@mui/icons-material"
 import Link from "next/link"
 
 const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
@@ -112,47 +114,43 @@ const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
   )
 }
 
-const columns: ColumnsType<StoreI> = [
+const columns: ColumnsType<VendorI> = [
   {
     title: "Vendor",
-    dataIndex: "name",
-    key: "name",
-    render: (text, record) => (
-      <div className="flex items-center gap-3">
-        <Avatar className="rounded-[8px]" size={"large"} src={record.logo} />
-        <p>{text}</p>
-      </div>
-    ),
+    dataIndex: "company_name",
+    key: "company_name",
   },
   {
     title: "Address",
-    dataIndex: "address",
-    key: "address",
-    render: (text, record) => (
-      <div className="flex items-center gap-3">
-        <p>{text}</p>
-      </div>
+    dataIndex: "company_address",
+    key: "company_address",
+  },
+  {
+    title: "Email",
+    dataIndex: "company_email",
+    key: "company_email",
+    render: (text) => (
+      <Link className="underline text-primary" href={`mailto:${text}`}>
+        {text}
+      </Link>
     ),
   },
   {
-    title: "Total Sale",
-    dataIndex: "Total_Sale",
-    key: "Total_Sale",
-    render: (text) => <p>-</p>,
-  },
-
-  {
-    title: "Rating",
-    dataIndex: "rating",
-    key: "rating",
-    render: (text) => <p>{Number(text).toFixed(1)}/5</p>,
+    title: "Website",
+    dataIndex: "website",
+    key: "website",
+    render: (text) => (
+      <Link className="underline text-primary" href={text}>
+        {text}
+      </Link>
+    ),
   },
   {
     title: "Status",
-    dataIndex: "is_activated",
-    key: "is_activated",
+    dataIndex: "account_verified",
+    key: "account_verified",
     render: (text, record) => {
-      const status = record.is_activated ? (
+      const status = record.account_verified ? (
         <Tag color="success" className="px-3 py-1">
           Activated
         </Tag>
@@ -164,23 +162,7 @@ const columns: ColumnsType<StoreI> = [
       return <p>{status}</p>
     },
   },
-  {
-    title: "Opened",
-    dataIndex: "is_open",
-    key: "is_open",
-    render: (text, record) => {
-      const status = record.is_open ? (
-        <Tag color="success" className="px-3 py-1">
-          Open
-        </Tag>
-      ) : (
-        <Tag color="error" className="px-3 py-1">
-          Closed
-        </Tag>
-      )
-      return <p>{status}</p>
-    },
-  },
+
   {
     title: "Date Created",
     dataIndex: "createdAt",
@@ -190,47 +172,64 @@ const columns: ColumnsType<StoreI> = [
       return <p>{date}</p>
     },
   },
-  // {
-  //   title: "Action",
-  //   dataIndex: "action",
-  //   key: "action",
-  //   render: (text, record) => {
-  //     return (
-  //       <Select
-  //         className="w-full placeholder:text-primary"
-  //         placeholder="Action"
-  //         options={[
-  //           { label: "Activate", value: "activate" },
-  //           { label: "Deactivate", value: "deactivate" },
-  //         ]}
-  //       />
-  //     )
-  //   },
-  // },
 
   {
-    title: "Actions",
-    key: "more",
-    render: (text, record) => <MoreAction {...{ text, record }} />,
+    title: "Stores",
+    key: "id",
+    render: (text, record) => (
+      <Link
+        className="underline text-primary"
+        href={`/vendors/${record.user}/?name=${record.company_name}`}
+      >
+        View stores
+      </Link>
+    ),
   },
 ]
 
-export const VendorTable: React.FC = () => {
+export const VendorsTable: React.FC = () => {
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetAllStoresQuery({
+  const { data, isLoading } = useGetAllVendorsQuery({
     authToken: token as string,
   })
+  const [dataState, setDataState] = useState<VendorI[]>([])
+  useEffect(() => {
+    if (data) {
+      setDataState(data)
+    }
+  }, [data])
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase()
+    const newData = data?.filter((vendor) => {
+      return (
+        vendor.company_name.toLowerCase().includes(value) ||
+        vendor.company_email.toLowerCase().includes(value)
+      )
+    })
+    setDataState(newData as VendorI[])
+  }
 
   return (
     <>
       {isLoading ? (
         <LoadingOutlined />
       ) : (
-        <Table
-          columns={columns}
-          dataSource={data?.slice(0).reverse()}
-          // rowSelection={{}}
-        />
+        <div>
+          <div className="mb-5 w-full">
+            <Input
+              className="md:w-[450px] w-full"
+              placeholder="Vendor name or email"
+              prefix={<Search />}
+              onChange={onSearch}
+              size="large"
+            />
+          </div>
+          <Table
+            columns={columns}
+            dataSource={dataState?.slice(0).reverse()}
+            // rowSelection={{}}
+          />
+        </div>
       )}
     </>
   )

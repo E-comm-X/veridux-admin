@@ -4,7 +4,9 @@ import {
   ProductResponseI,
   ProductUpdateRequestI,
   ProductsResponseI,
+  VariantI,
 } from "@/interfaces/product"
+import { ReviewI } from "@/interfaces/reviews"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const productApi = createApi({
@@ -75,6 +77,26 @@ export const productApi = createApi({
         }
       },
     }),
+    updateProductVariant: builder.mutation<
+      VariantI,
+      {
+        color: string
+        total_quantity: number
+        authToken: string
+        product_variant_id: string
+      }
+    >({
+      query: (data) => {
+        return {
+          url: "/variant/update",
+          method: "PATCH",
+          body: data,
+          headers: {
+            authorization: `Bearer ${data.authToken}`,
+          },
+        }
+      },
+    }),
     getAllProducts: builder.query<ProductI[], null>({
       query() {
         return {
@@ -115,6 +137,28 @@ export const productApi = createApi({
         }
       },
     }),
+    hideProductVariant: builder.mutation<
+      {
+        success: boolean
+        message: string
+        data: null
+      },
+      { id: string; authToken: string }
+    >({
+      query({ id, authToken }) {
+        return {
+          url: `/variant/hide`,
+          method: "POST",
+          body: {
+            product_variant_id: id,
+          },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          redirect: "follow",
+        }
+      },
+    }),
     showProduct: builder.mutation<
       {
         success: boolean
@@ -137,6 +181,38 @@ export const productApi = createApi({
         }
       },
     }),
+    showProductVariant: builder.mutation<
+      {
+        success: boolean
+        message: string
+        data: null
+      },
+      { id: string; authToken: string }
+    >({
+      query({ id, authToken }) {
+        return {
+          url: `/variant/show`,
+          method: "POST",
+          body: {
+            product_variant_id: id,
+          },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+          redirect: "follow",
+        }
+      },
+    }),
+    getProductReviews: builder.query<ReviewI[], { id: string }>({
+      query({ id }) {
+        return {
+          url: `/review?product_id=${id}`,
+          method: "GET",
+        }
+      },
+      transformResponse: (data: { data: { product_reviews: ReviewI[] } }) =>
+        data.data.product_reviews,
+    }),
   }),
 })
 
@@ -148,4 +224,8 @@ export const {
   useHideProductMutation,
   useShowProductMutation,
   useAddProductVariantMutation,
+  useUpdateProductVariantMutation,
+  useHideProductVariantMutation,
+  useShowProductVariantMutation,
+  useGetProductReviewsQuery,
 } = productApi

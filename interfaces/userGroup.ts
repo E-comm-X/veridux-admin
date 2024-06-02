@@ -24,6 +24,7 @@ export interface userI {
   account_reference: string
   id: string
   profile_picture: string
+  enduser: string
 }
 
 export interface profileI {

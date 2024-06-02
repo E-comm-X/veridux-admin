@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { AppContainer } from "@/components/AppContainer"
-import { RestrictedPages } from "@/components/RestrictedPages"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={""}>
-        <RestrictedPages>
-          <AppContainer>{children}</AppContainer>
-        </RestrictedPages>
+        <AppContainer>{children}</AppContainer>
       </body>
     </html>
   )

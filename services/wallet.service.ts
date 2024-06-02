@@ -1,4 +1,5 @@
 import {
+  EndUserWalletI,
   WalletI,
   walletInfoResponse,
   walletsResponse,
@@ -8,13 +9,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 export const walletApi = createApi({
   reducerPath: "walletApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/wallet/cmp`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URI}/wallet`,
   }),
   endpoints: (builder) => ({
     getCompanyWallets: builder.query<WalletI[], { authToken: string }>({
       query: ({ authToken }) => {
         return {
-          url: "/",
+          url: "/cmp",
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -30,7 +31,7 @@ export const walletApi = createApi({
     >({
       query: ({ authToken, purpose }) => {
         return {
-          url: "/info",
+          url: "/cmp/info",
           params: { purpose },
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -41,7 +42,29 @@ export const walletApi = createApi({
         return response.data.company_wallet
       },
     }),
+
+    getEndUserWalletInfo: builder.query<
+      WalletI,
+      { authToken: string; enduser_id: string }
+    >({
+      query: ({ authToken, enduser_id }) => {
+        return {
+          url: "/info",
+          params: { enduser_id },
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (response: { data: { wallet: WalletI } }) => {
+        return response.data.wallet
+      },
+    }),
   }),
 })
 
-export const { useGetCompanyWalletsQuery, useGetWalletInfoQuery } = walletApi
+export const {
+  useGetCompanyWalletsQuery,
+  useGetWalletInfoQuery,
+  useGetEndUserWalletInfoQuery,
+} = walletApi

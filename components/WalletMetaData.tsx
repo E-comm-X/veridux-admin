@@ -24,7 +24,7 @@ export const WalletMetaData = ({ data }: { data: WalletI }) => {
             </div>
           </div>
           <p className="text-[#0000005c] flex justify-between px-3 mt-3">
-            <span className="text-[#36CF00]">{1.7}%</span>{" "}
+            <span className="text-[#36CF00]">-</span>{" "}
             <span>{moment(data?.updatedAt).fromNow()}</span>
           </p>
         </div>
@@ -48,7 +48,7 @@ export const WalletMetaData = ({ data }: { data: WalletI }) => {
             </div>
           </div>
           <p className="text-[#0000005c] flex justify-between px-3 mt-3">
-            <span className="text-[#36CF00]">{1.7}%</span>{" "}
+            <span className="text-[#36CF00]">-</span>{" "}
             <span>{moment(data?.updatedAt).fromNow()}</span>
           </p>
         </div>
@@ -72,7 +72,7 @@ export const WalletMetaData = ({ data }: { data: WalletI }) => {
             </div>
           </div>
           <p className="text-[#0000005c] flex justify-between px-3 mt-3">
-            <span className="text-[#36CF00]">{1.7}%</span>{" "}
+            <span className="text-[#36CF00]">-</span>{" "}
             <span>{moment(data?.updatedAt).fromNow()}</span>
           </p>
         </div>
