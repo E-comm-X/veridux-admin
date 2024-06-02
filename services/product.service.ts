@@ -17,15 +17,16 @@ export const productApi = createApi({
   endpoints: (builder) => ({
     addProduct: builder.mutation<ProductI, ProductRequestI>({
       query: (data) => {
-        const formdata = new FormData()
-        formdata.append("preview_image", data.preview_image as Blob, "test")
-        formdata.append("store_id", data.store_id)
-        formdata.append("product_name", data.product_name)
-        formdata.append("details", data.details)
-        formdata.append("price", data.price as string)
-        formdata.append("total_quantity", data.total_quantity as string)
-        formdata.append("category_ids", data.category_ids as string)
-        formdata.append("brand_name", data.brand_name)
+        const formdata = new FormData();
+        formdata.append("preview_image", data.preview_image as Blob, "test");
+        formdata.append("package_size", data.package_size as string);
+        formdata.append("store_id", data.store_id);
+        formdata.append("product_name", data.product_name);
+        formdata.append("details", data.details);
+        formdata.append("price", data.price as string);
+        formdata.append("total_quantity", data.total_quantity as string);
+        formdata.append("category_ids", data.category_ids as string);
+        formdata.append("brand_name", data.brand_name);
         return {
           url: "/new",
           method: "POST",
