@@ -161,14 +161,25 @@ export default function AddProduct() {
               <label htmlFor="" className="text-sm font-medium block mb-1">
                 Package size
               </label>
-              <Input
-                type="text"
-                placeholder="Enter Package size"
+              <Select
+                showSearch
+                placeholder="Package Size"
                 size="large"
-                onChange={(e) =>
+                className="w-full"
+                options={[
+                  "extra_small",
+                  "small",
+                  "medium",
+                  "large",
+                  "extra_large",
+                ].map((size) => ({
+                  label: size.replace("_", " ").toLocaleUpperCase(),   
+                  value: size,
+                }))}
+                onChange={(value) =>
                   setFormData((prev) => ({
                     ...prev,
-                    package_size: e.target.value,
+                    package_size: value,
                   }))
                 }
               />
