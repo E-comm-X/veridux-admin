@@ -26,6 +26,8 @@ export const productApi = createApi({
         formdata.append("total_quantity", data.total_quantity as string)
         formdata.append("category_ids", data.category_ids as string)
         formdata.append("brand_name", data.brand_name)
+        formdata.append("package_size", data.package_size)
+
         return {
           url: "/new",
           method: "POST",
