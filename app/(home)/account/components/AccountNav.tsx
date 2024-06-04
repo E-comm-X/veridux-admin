@@ -6,9 +6,10 @@ import { useLogout } from "@/hooks/useLogout"
 
 const navItems = [
   { name: "My Profile", key: "" },
-  { name: "Time Zone & Language", key: "time-zone" },
-  { name: "Notification", key: "notification" },
-  { name: "Data Export", key: "data-export" },
+  { name: "Pickup Address", key: "address" },
+  // { name: "Time Zone & Language", key: "time-zone" },
+  // { name: "Notification", key: "notification" },
+  // { name: "Data Export", key: "data-export" },
 ]
 
 export const AccountNav = ({ active }: { active: string }) => {

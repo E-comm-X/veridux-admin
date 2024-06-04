@@ -5,6 +5,8 @@ import { PurchasedProductsTable } from "../PurchasedProductsTable"
 import { useGetTransactionsQuery } from "@/services/transactions.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { TransactionI } from "@/interfaces/transactions"
+import Link from "next/link"
+import { Button } from "antd"
 
 const ArrangePickupPage = () => {
   const { token } = useAuthToken()
@@ -15,14 +17,20 @@ const ArrangePickupPage = () => {
     (product) =>
       product?.type === "product_purchase" &&
       product?.kind === "debit" &&
-      product?.payment_method === "wallet"
+      product?.payment_method === "wallet" &&
+      product?.status === "success"
   )
   return (
     <main>
       <GoBack />
       <div className="flex gap-3 md:flex-row flex-col md:items-center">
-        <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row gap-3 md:justify-between md:items-center w-full">
           <h2 className="text-2xl text-black font-bold">Arrange Pickup</h2>
+          <Link href={"/account/address"}>
+            <Button type="primary" className="bg-primary h-[40px]">
+              Manage Pickup Address
+            </Button>
+          </Link>
         </div>
       </div>
 
