@@ -12,9 +12,16 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname()
   const { role } = useRole()
   const router = useRouter()
-  
+
   useEffect(() => {
-    const vendorPaths = ["/", "/stores", "/product", "/deliveries", "/account"]
+    const vendorPaths = [
+      "/",
+      "/stores",
+      "/product",
+      "/deliveries",
+      "/account",
+      "/account/address",
+    ]
     if (role.toLowerCase() === "vendor" && !vendorPaths.includes(pathName)) {
       router.replace("/")
     }
