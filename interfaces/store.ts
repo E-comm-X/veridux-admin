@@ -50,4 +50,5 @@ export interface StoreCategory {
   is_first_level: boolean
   __v: string
   id: string
+  preview_image: string
 }

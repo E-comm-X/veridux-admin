@@ -3,6 +3,7 @@ import React from "react"
 import {
   Avatar,
   Button,
+  Checkbox,
   Divider,
   Form,
   Input,
@@ -16,20 +17,19 @@ import {
   message,
 } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import {
-  useGetStoreCategoriesQuery,
-  useToggleStoreCategoryStatusMutation,
-  useUpdateCategoryMutation,
-} from "@/services/store.service"
+
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
-import { StoreCategory } from "@/interfaces/store"
-import { VendorI } from "@/interfaces/product"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { DeleteOutlined, EditOutlined, Storefront } from "@mui/icons-material"
 import Link from "next/link"
-import { store } from "@/context/store"
+import {
+  useGetCategoriesWithHiddenQuery,
+  useToggleProductCategoryStatusMutation,
+  useUpdateProductCategoryMutation,
+} from "@/services/category.service"
+import { CategoryI } from "@/interfaces/categories"
 
-const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
+const MoreAction: React.FC<{ text: any; record: CategoryI }> = ({
   text,
   record,
 }) => {
@@ -39,19 +39,20 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
     setOpen(newOpen)
   }
   const { token } = useAuthToken()
-  const [mutate, { isLoading }] = useToggleStoreCategoryStatusMutation()
-  const [update, { isLoading: updating }] = useUpdateCategoryMutation()
+  const [mutate, { isLoading }] = useToggleProductCategoryStatusMutation()
+  const [update, { isLoading: updating }] = useUpdateProductCategoryMutation()
   const [formData, setFormData] = React.useState({
     name: record.name,
     description: record.description,
-    store_category_id: record._id,
+    featured: record?.featured,
+    position: record?.position,
+    product_category_id: record._id,
   })
 
-  const { refetch, isLoading: loadingStores } = useGetStoreCategoriesQuery({
-    authToken: token as string,
-  })
+  const { refetch, isLoading: loadingCategories } =
+    useGetCategoriesWithHiddenQuery({ authToken: token as string })
 
-  const toggleStoreStatus = async (action: "hide" | "show") => {
+  const toggleCategoryStatus = async (action: "hide" | "show") => {
     console.log(record)
     try {
       const response = await mutate({
@@ -61,9 +62,11 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
       }).unwrap()
       message.success(response.message)
       await refetch()
-      message.success("Stores table updated successfully")
+      message.success("Category updated successfully")
     } catch (error: any) {
-      message.error(error.data.message)
+      message.error(
+        error?.data?.message || error?.message || "An Error Occured"
+      )
     }
   }
 
@@ -85,9 +88,11 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
       await refetch()
       setOpen(false)
       setOpenModal(false)
-      // message.success("Stores table updated successfully")
+      // message.success("Category updated successfully")
     } catch (error: any) {
-      message.error(error.data.message)
+      message.error(
+        error?.data?.message || error?.message || "An Error Occured"
+      )
     }
   }
   return (
@@ -110,7 +115,7 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
                       type="default"
                       danger
                       className="w-full"
-                      onClick={async () => await toggleStoreStatus("hide")}
+                      onClick={async () => await toggleCategoryStatus("hide")}
                     >
                       Hide
                     </Button>
@@ -118,7 +123,7 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
                     <Button
                       type="primary"
                       className="bg-primary w-full"
-                      onClick={async () => await toggleStoreStatus("show")}
+                      onClick={async () => await toggleCategoryStatus("show")}
                     >
                       Show
                     </Button>
@@ -182,6 +187,20 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
                 }
               />
             </div>
+            <div className="flex flex-col gap-2 mt-2">
+              <label htmlFor="phone" className="font-semibold text-md">
+                Featured
+              </label>
+              <Checkbox
+                value={formData.featured}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    featured: e.target.checked,
+                  }))
+                }
+              />
+            </div>
 
             <Button
               className=" w-full bg-[#006FCF] mt-5"
@@ -200,9 +219,9 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
   )
 }
 
-const columns: ColumnsType<StoreCategory> = [
+const columns: ColumnsType<CategoryI> = [
   {
-    title: "Store Category",
+    title: "Product Category",
     dataIndex: "name",
     key: "name",
     render: (text, record) => (
@@ -242,7 +261,7 @@ const columns: ColumnsType<StoreCategory> = [
           Yes
         </Tag>
       ) : (
-        <Tag color="processing" className="px-3 py-1">
+        <Tag color="error" className="px-3 py-1">
           No
         </Tag>
       )
@@ -287,7 +306,7 @@ const columns: ColumnsType<StoreCategory> = [
 
 export const CategoriesTable: React.FC = () => {
   const { token } = useAuthToken()
-  const { data, isLoading } = useGetStoreCategoriesQuery({
+  const { data, isLoading } = useGetCategoriesWithHiddenQuery({
     authToken: token as string,
   })
 

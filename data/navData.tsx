@@ -76,9 +76,18 @@ export const navItems = [
   },
   {
     name: "Product",
-    url: "/product",
+    url: "",
     icon: <Sell color="primary" />,
-    children: [],
+    children: [
+      {
+        name: "Products",
+        url: "/product",
+      },
+      {
+        name: "Categories",
+        url: "/product/categories",
+      },
+    ],
   },
 
   {

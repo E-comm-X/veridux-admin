@@ -1,29 +1,63 @@
 "use client"
 import React, { useState } from "react"
-import { Modal, Button, Form, Input, message } from "antd"
+import {
+  Modal,
+  Button,
+  Form,
+  Input,
+  message,
+  Checkbox,
+  Select,
+  Image,
+} from "antd"
 import {
   useGetAllCategoriesQuery,
   useAddCategoryMutation,
+  useGetCategoriesWithHiddenQuery,
 } from "@/services/category.service"
-import { CategoryRequestI } from "@/interfaces/categories"
+import { CategoryI, CategoryRequestI } from "@/interfaces/categories"
 import { useAuthToken } from "@/hooks/useAuthToken"
+import { CloudinaryWidget } from "@/components/CloudinaryWidget"
 
 const reqData: CategoryRequestI = {
   name: "",
   description: "",
   is_first_level: true,
+  featured: false,
+  preview_image: "",
+}
+
+const transformToOptions: (
+  categories: CategoryI[] | undefined
+) => { value: string; label: string }[] = (categories) => {
+  if (categories) {
+    const newData = categories?.map((category) => {
+      return { value: category._id, label: category.name }
+    })
+    return newData
+  }
+  return []
 }
 
 export const AddCategory = () => {
+  const { token: authToken } = useAuthToken() as { token: string }
   const [open, setOpen] = useState(false)
-  const { refetch } = useGetAllCategoriesQuery(null)
+  const [imageUrl, setImageUrl] = useState("")
+  const {
+    refetch,
+    isLoading: gettingCategories,
+    data: categories,
+  } = useGetCategoriesWithHiddenQuery({ authToken })
+  const categoryOptions = transformToOptions(categories)
   const [addCategory, { isLoading }] = useAddCategoryMutation()
-  const { token: authToken } = useAuthToken()
   const [data, setData] = useState<CategoryRequestI>(reqData)
   const onFinish = async () => {
     try {
       if (data.name && data.description) {
-        const response = await addCategory({ data, authToken }).unwrap()
+        const response = await addCategory({
+          data: { ...data, preview_image: imageUrl },
+          authToken,
+        }).unwrap()
         message.success("Category added successfully")
         setOpen(false)
         refetch()
@@ -75,10 +109,70 @@ export const AddCategory = () => {
               }
             />
           </Form.Item>
+          <div className="grid grid-cols-2 gap-3">
+            <Form.Item>
+              <label htmlFor="" className="block mb-1">
+                Featured
+              </label>
+              <Checkbox
+                value={data.featured}
+                onChange={(e) =>
+                  setData((prev) => ({ ...prev, featured: e.target.checked }))
+                }
+              />
+            </Form.Item>
+            <Form.Item>
+              <label htmlFor="" className="block mb-1">
+                First Level Category
+              </label>
+              <Checkbox
+                value={data.is_first_level}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    is_first_level: e.target.checked,
+                  }))
+                }
+              />
+            </Form.Item>
+          </div>
+          {!data.is_first_level && (
+            <Form.Item>
+              <label htmlFor="" className="block mb-1">
+                Parent Category
+              </label>
+              <Select
+                size="large"
+                value={data.parent_category_id}
+                options={categoryOptions}
+                onChange={(value) =>
+                  setData((prev) => ({ ...prev, parent_category_id: value }))
+                }
+              />
+            </Form.Item>
+          )}
+
+          <div>
+            <div className="mb-4">
+              {imageUrl && (
+                <Image
+                  src={imageUrl}
+                  alt="Store Image"
+                  width={"100%"}
+                  height={"10rem"}
+                  style={{ objectFit: "cover", borderRadius: "8px" }}
+                />
+              )}
+            </div>
+            <CloudinaryWidget
+              btnText="Add Category Preview Image"
+              setImageUrl={setImageUrl}
+            />
+          </div>
           <Button
             htmlType="submit"
             type="primary"
-            className="bg-primary w-full"
+            className="bg-primary w-full mt-4"
             size="large"
             disabled={isLoading}
           >
