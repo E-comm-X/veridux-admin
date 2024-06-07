@@ -15,13 +15,13 @@ export const storeApi = createApi({
   endpoints: (builder) => ({
     getAllStores: builder.query<
       StoreI[],
-      { authToken: string; vendor_id?: string }
+      { authToken: string; vendor_id?: string; store_id?: string }
     >({
-      query: ({ authToken, vendor_id }) => {
+      query: ({ authToken, vendor_id, store_id }) => {
         return {
           url: "/get",
           method: "GET",
-          params: { vendor_id },
+          params: { vendor_id, store_id },
           headers: {
             authorization: `Bearer ${authToken}`,
           },

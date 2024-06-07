@@ -32,6 +32,8 @@ export interface StoreI {
   is_open: boolean
   __v: number
   id: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface StoresResponseI {

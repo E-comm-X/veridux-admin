@@ -108,6 +108,16 @@ export const productApi = createApi({
       },
       transformResponse: (data: ProductsResponseI) => data.data.products,
     }),
+    getProductsByStore: builder.query<ProductI[], { store_id: string }>({
+      query({ store_id }) {
+        return {
+          url: "/get",
+          method: "GET",
+          params: { store_id },
+        }
+      },
+      transformResponse: (data: ProductsResponseI) => data.data.products,
+    }),
     getProduct: builder.query<ProductI, { id: string }>({
       query({ id }) {
         return {
@@ -230,4 +240,5 @@ export const {
   useHideProductVariantMutation,
   useShowProductVariantMutation,
   useGetProductReviewsQuery,
+  useGetProductsByStoreQuery,
 } = productApi

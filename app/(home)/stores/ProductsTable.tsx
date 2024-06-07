@@ -11,7 +11,10 @@ import {
   message,
 } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import { useGetAllProductsQuery } from "@/services/product.service"
+import {
+  useGetAllProductsQuery,
+  useGetProductsByStoreQuery,
+} from "@/services/product.service"
 import { LoadingOutlined, MoreOutlined } from "@ant-design/icons"
 import { ProductI } from "@/interfaces/product"
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons"
@@ -19,6 +22,7 @@ import Link from "next/link"
 import { useHideProductMutation } from "@/services/product.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { Search } from "@mui/icons-material"
+import { useParams } from "next/navigation"
 
 const MoreAction: React.FC<{ text: any; record: ProductI }> = ({
   text,
@@ -104,12 +108,7 @@ const columns: ColumnsType<ProductI> = [
     dataIndex: "brand_name",
     key: "brand_name",
   },
-  {
-    title: "Purchased",
-    dataIndex: "purchased",
-    key: "purchased",
-    render: (text) => <p>-</p>,
-  },
+
   {
     title: "Vendor",
     dataIndex: "store",
@@ -118,12 +117,7 @@ const columns: ColumnsType<ProductI> = [
       <p>{record.store?.name || <p className="ml-[2rem]">-</p>}</p>
     ),
   },
-  {
-    title: "Total Sale",
-    dataIndex: "Total_Sale",
-    key: "Total_Sale",
-    render: (text) => <p>-</p>,
-  },
+
   {
     title: "Rating",
     dataIndex: "rating",
@@ -147,8 +141,11 @@ const columns: ColumnsType<ProductI> = [
   },
 ]
 
-export const ProductsTable: React.FC = () => {
-  const { data, isLoading } = useGetAllProductsQuery(null)
+export const ProductsTable = () => {
+  const { store_id } = useParams()
+  const { data, isLoading } = useGetProductsByStoreQuery({
+    store_id: store_id as string,
+  })
   const [dataState, setDataState] = useState<ProductI[]>([])
   useEffect(() => {
     if (data) {
