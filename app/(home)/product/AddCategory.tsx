@@ -157,7 +157,7 @@ export const AddCategory = () => {
               {imageUrl && (
                 <Image
                   src={imageUrl}
-                  alt="Store Image"
+                  alt="Product Category Image"
                   width={"100%"}
                   height={"10rem"}
                   style={{ objectFit: "cover", borderRadius: "8px" }}
