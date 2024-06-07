@@ -131,6 +131,7 @@ export const storeApi = createApi({
           store_category_id: string
           name: string
           description: string
+          preview_image: string
         }
       }
     >({

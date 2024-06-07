@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useState } from "react"
 import {
   Avatar,
   Button,
@@ -9,7 +9,7 @@ import {
   Modal,
   Popover,
   Select,
-  Space,
+  Image,
   Table,
   Tag,
   Tooltip,
@@ -28,6 +28,7 @@ import { useAuthToken } from "@/hooks/useAuthToken"
 import { DeleteOutlined, EditOutlined, Storefront } from "@mui/icons-material"
 import Link from "next/link"
 import { store } from "@/context/store"
+import { CloudinaryWidget } from "@/components/CloudinaryWidget"
 
 const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
   text,
@@ -35,6 +36,7 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
 }) => {
   const [open, setOpen] = React.useState<boolean>(false)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
+  const [imageUrl, setImageUrl] = useState(record.preview_image)
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen)
   }
@@ -78,7 +80,7 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
       //   return
       // }
       const response = await update({
-        data: formData,
+        data: { ...formData, preview_image: imageUrl },
         authToken: token as string,
       }).unwrap()
       message.success(response.message)
@@ -180,6 +182,24 @@ const MoreAction: React.FC<{ text: any; record: StoreCategory }> = ({
                     description: e.target.value,
                   }))
                 }
+              />
+            </div>
+
+            <div>
+              <div className="mb-4">
+                {imageUrl && (
+                  <Image
+                    src={imageUrl}
+                    alt="Store Category Image"
+                    width={"100%"}
+                    height={"10rem"}
+                    style={{ objectFit: "cover", borderRadius: "8px" }}
+                  />
+                )}
+              </div>
+              <CloudinaryWidget
+                btnText="Add Category Preview Image"
+                setImageUrl={setImageUrl}
               />
             </div>
 
