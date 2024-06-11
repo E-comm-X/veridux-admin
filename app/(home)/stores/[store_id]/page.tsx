@@ -17,7 +17,7 @@ import { StoreI } from "@/interfaces/store"
 const StorePage = () => {
   const { store_id } = useParams()
   const { token: authToken } = useAuthToken() as { token: string }
-  const { data, isLoading } = useGetAllStoresQuery({
+  const { data, isLoading, refetch } = useGetAllStoresQuery({
     authToken,
     store_id: store_id as string,
   })
@@ -51,7 +51,7 @@ const StorePage = () => {
               </div>
               <p className="font-normal text-base text-[#0000006E]">Today</p>
             </div>
-            <UpdateStore store={store as StoreI} />
+            <UpdateStore store={store as StoreI} refetch={refetch} />
           </div>
           <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
           <div>
