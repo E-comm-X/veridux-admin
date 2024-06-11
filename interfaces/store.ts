@@ -34,8 +34,23 @@ export interface StoreI {
   id: string
   createdAt: string
   updatedAt: string
+  website: string
 }
 
+export interface StoreUpdateI {
+  store_id: string
+  social_links: {
+    twitter: string
+    facebook: string
+    instagram: string
+    linkedln: string
+  }
+  name: string
+  description: string
+  website: string
+  address: string
+  logo: string
+}
 export interface StoresResponseI {
   data: { stores: StoreI[] }
 }

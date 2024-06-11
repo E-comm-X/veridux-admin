@@ -11,6 +11,8 @@ import { CgTime } from "react-icons/cg"
 import moment from "moment"
 import { ProductsTable } from "../ProductsTable"
 import { Reviews } from "./Reviews"
+import { UpdateStore } from "./UpdateStore"
+import { StoreI } from "@/interfaces/store"
 
 const StorePage = () => {
   const { store_id } = useParams()
@@ -49,6 +51,7 @@ const StorePage = () => {
               </div>
               <p className="font-normal text-base text-[#0000006E]">Today</p>
             </div>
+            <UpdateStore store={store as StoreI} />
           </div>
           <hr className="h-px mt-4 mb-4 bg-gray-200 border-0 " />
           <div>
