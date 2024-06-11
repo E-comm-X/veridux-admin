@@ -1,13 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ButtonUI from "@/components/ButtonUI";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import InsertLinkIcon from '@mui/icons-material/InsertLink';
-
-
-
-
+import Image from "next/image"
+import Link from "next/link"
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"
+import ButtonUI from "@/components/ButtonUI"
+import CloudUploadIcon from "@mui/icons-material/CloudUpload"
+import InsertLinkIcon from "@mui/icons-material/InsertLink"
 
 export default function Page() {
   return (
@@ -32,6 +28,7 @@ export default function Page() {
         <Link href="/settings/administrator" className="font-semibold text-sm">
           User Management
         </Link>
+
         <Link href="/settings/security" className="font-semibold text-sm">
           Security & Compliance
         </Link>
@@ -44,7 +41,10 @@ export default function Page() {
         <Link href="/settings/support" className="font-semibold text-sm">
           Support
         </Link>
-        <Link href="/settings/fintech-services/user-group" className="font-semibold text-sm">
+        <Link
+          href="/settings/fintech-services/user-group"
+          className="font-semibold text-sm"
+        >
           User Groups
         </Link>
       </div>
@@ -112,7 +112,7 @@ export default function Page() {
 
             <h6>Soma Admin 1/</h6>
             <p className="ml-auto">
-            <InsertLinkIcon style={{fill: "#006FCF"}} />
+              <InsertLinkIcon style={{ fill: "#006FCF" }} />
             </p>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function Page() {
           />
         </div>
         <div className=" px-8 py-4 rounded-lg gap-8 imageUploadContainer ml-auto bg-[#006FCF14] border-[#006FCF5E] border-[1px] flex flex-col items-center justify-center">
-          <CloudUploadIcon style={{fill: "#006FCF"}} />
+          <CloudUploadIcon style={{ fill: "#006FCF" }} />
           <p className="font-semibold text-[#006FCF5C] text-base">
             <span className="underline text-[#006FCF] text-base">
               Click to upload{" "}
@@ -145,5 +145,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }
