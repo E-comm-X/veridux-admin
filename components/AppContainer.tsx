@@ -12,6 +12,7 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname()
   const { role } = useRole()
   const router = useRouter()
+<<<<<<< HEAD
   
   useEffect(() => {
     const vendorPaths = ["/", "/stores", "/product", "/deliveries", "/account"]
@@ -19,6 +20,23 @@ export const AppContainer = ({ children }: { children: React.ReactNode }) => {
       router.replace("/")
     }
   }, [pathName, role, router])
+=======
+  console.log(pathName)
+
+  // useEffect(() => {
+  //   const vendorPaths = [
+  //     "/",
+  //     "/stores",
+  //     "/product",
+  //     "/deliveries",
+  //     "/account",
+  //     "/account/address",
+  //   ]
+  //   if (role.toLowerCase() === "vendor" && !vendorPaths.includes(pathName)) {
+  //     router.replace("/")
+  //   }
+  // }, [pathName, role, router])
+>>>>>>> f330aea (add update store)
 
   return (
     <Provider store={store}>

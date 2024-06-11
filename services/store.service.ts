@@ -3,6 +3,7 @@ import {
   StoreCategory,
   StoreI,
   StoresResponseI,
+  StoreUpdateI,
   VendorsResponseI,
 } from "@/interfaces/store"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
@@ -76,6 +77,25 @@ export const storeApi = createApi({
     }),
 
     createStore: builder.mutation<
+      { message: string },
+      {
+        authToken: string
+        data: StoreUpdateI
+      }
+    >({
+      query: ({ authToken, data }) => {
+        return {
+          url: `/update`,
+          method: "PATCH",
+          body: { ...data },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
+
+    updateStore: builder.mutation<
       { message: string },
       {
         authToken: string
@@ -195,6 +215,7 @@ export const {
   useGetAllStoresQuery,
   useToggleStoreStatusMutation,
   useCreateStoreMutation,
+  useUpdateStoreMutation,
   useGetStoreCategoriesQuery,
   useToggleStoreCategoryStatusMutation,
   useCreateStoreCategoryMutation,
