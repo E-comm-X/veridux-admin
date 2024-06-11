@@ -1,4 +1,5 @@
 import { VendorI } from "@/interfaces/product"
+import { ReviewI } from "@/interfaces/reviews"
 import {
   StoreCategory,
   StoreI,
@@ -189,6 +190,16 @@ export const storeApi = createApi({
         }
       },
     }),
+    getStoreReviews: builder.query<ReviewI[], { id: string }>({
+      query({ id }) {
+        return {
+          url: `/review?store_id=${id}`,
+          method: "GET",
+        }
+      },
+      transformResponse: (data: { data: { reviews: ReviewI[] } }) =>
+        data.data.reviews,
+    }),
   }),
 })
 
@@ -201,4 +212,5 @@ export const {
   useCreateStoreCategoryMutation,
   useUpdateCategoryMutation,
   useGetAllVendorsQuery,
+  useGetStoreReviewsQuery,
 } = storeApi

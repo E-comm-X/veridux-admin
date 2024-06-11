@@ -10,6 +10,7 @@ import { MdLocationOn, MdVerified } from "react-icons/md"
 import { CgTime } from "react-icons/cg"
 import moment from "moment"
 import { ProductsTable } from "../ProductsTable"
+import { Reviews } from "./Reviews"
 
 const StorePage = () => {
   const { store_id } = useParams()
@@ -77,6 +78,7 @@ const StorePage = () => {
             <ProductsTable />
           </div>
           <Divider />
+          <Reviews id={store_id as string} />
         </>
       )}
     </main>
