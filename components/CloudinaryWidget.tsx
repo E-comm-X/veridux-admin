@@ -35,6 +35,8 @@ export const CloudinaryWidget = ({
         // and ID's as an object. More information on their use can be found at
         // https://cloudinary.com/documentation/upload_widget#the_sources_parameter
         resourceType={"image"} // optionally set with 'auto', 'image', 'video' or 'raw' -> default = 'auto'
+        clientAllowedFormats={["image"]}
+        accepts=".png"
         cloudName={"osaretinfrank"} // your cloudinary account cloud name.
         // Located on https://cloudinary.com/console/
         uploadPreset={"v9xpnnhq"} // check that an upload preset exists and check mode is signed or unisgned
