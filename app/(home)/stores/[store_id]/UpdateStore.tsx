@@ -7,7 +7,10 @@ import React, { useState } from "react"
 import { CgInstagram } from "react-icons/cg"
 import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa"
 import { IoCloseCircleOutline } from "react-icons/io5"
-import { useUpdateStoreMutation } from "@/services/store.service"
+import {
+  useGetAllStoresQuery,
+  useUpdateStoreMutation,
+} from "@/services/store.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
 import { LoadingOutlined } from "@ant-design/icons"
 
@@ -39,16 +42,24 @@ export const UpdateStore = ({
   const toggleModal = () => setOpen(!open)
   const [imageUrl, setImageUrl] = useState("")
   const [mutate, { isLoading }] = useUpdateStoreMutation()
+  const { refetch: refetchStores } = useGetAllStoresQuery({
+    authToken: token as string,
+  })
 
   const updateStore = async () => {
     try {
       const response = await mutate({
-        data: { ...form.getFieldsValue(), logo: imageUrl } as any,
+        data: {
+          ...form.getFieldsValue(),
+          logo: imageUrl,
+          store_id: store._id,
+        } as any,
         authToken: token as string,
       }).unwrap()
 
       message.success(response.message)
       await refetch()
+      await refetchStores()
       setOpen(false)
       // message.success("Stores table updated successfully")
     } catch (error: any) {
