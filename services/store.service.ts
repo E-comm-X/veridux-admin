@@ -77,7 +77,7 @@ export const storeApi = createApi({
       },
     }),
 
-    createStore: builder.mutation<
+    updateStore: builder.mutation<
       { message: string },
       {
         authToken: string
@@ -96,7 +96,7 @@ export const storeApi = createApi({
       },
     }),
 
-    updateStore: builder.mutation<
+    createStore: builder.mutation<
       { message: string },
       {
         authToken: string
