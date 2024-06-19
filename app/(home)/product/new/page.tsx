@@ -46,7 +46,9 @@ export default function AddProduct() {
   })
   const { data: categories } = useGetAllCategoriesQuery(null)
   const { data: stores } = useGetAllStoresQuery({ authToken: token as string })
-
+  const [subCategories, setSubCategories] = useState<
+    { label: string; value: string }[]
+  >([])
   const categoryOptions = transformData(categories as [])
   const storesOptions = transformData(stores as [])
   const addProduct = async () => {
@@ -58,8 +60,8 @@ export default function AddProduct() {
         formData.product_name &&
         formData.total_quantity &&
         formData.category_ids &&
-        formData.package_size &&
-        formData.store_id
+        formData.package_size
+        // formData.store_id
       ) {
         await addProductMutation(formData).unwrap()
         message.success("Product Added Successfully")
@@ -210,7 +212,7 @@ export default function AddProduct() {
             <div className="mb-5">
               <label
                 htmlFor="category"
-                className="font-medium text-base mb-1 block mb-1"
+                className="font-medium text-base block mb-1"
               >
                 Select Category:
               </label>
@@ -220,12 +222,16 @@ export default function AddProduct() {
                 size="large"
                 className="w-full"
                 options={categoryOptions}
-                onChange={(value) =>
+                onChange={(value) => {
+                  const subCat_ = categories?.find(
+                    (category) => category._id === value
+                  )?.sub_categories
+                  setSubCategories(transformData(subCat_ as []))
                   setFormData((prev) => ({
                     ...prev,
                     category_ids: value,
                   }))
-                }
+                }}
               />
             </div>
 
@@ -240,7 +246,13 @@ export default function AddProduct() {
                 placeholder="Sub Category"
                 size="large"
                 className="w-full"
-                disabled
+                options={subCategories}
+                onChange={(value) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    category_ids: `${formData.category_ids},${value}`,
+                  }))
+                }}
               />
             </div>
             <div>
