@@ -67,6 +67,11 @@ const MoreAction: React.FC<{ text: any; record: StoreI }> = ({
           ) : (
             <div className="flex flex-col p-0 m-0 gap-2">
               <p className="text-center text-md mb-1">{record.name}</p>
+              <div>
+                <Link href={`/stores/${record.id}`}>
+                  <Button className="w-full">View Store</Button>
+                </Link>
+              </div>
               <div className="flex flex-col gap-2">
                 {record.is_activated ? (
                   <Button
@@ -122,7 +127,9 @@ const columns: ColumnsType<StoreI> = [
     render: (text, record) => (
       <div className="flex items-center gap-3">
         <Avatar className="rounded-[8px]" size={"large"} src={record.logo} />
-        <p>{text}</p>
+        <Link href={`/stores/${record.id}`} className="text-primary underline">
+          <p>{text}</p>
+        </Link>
       </div>
     ),
   },

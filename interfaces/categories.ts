@@ -15,6 +15,8 @@ export interface CategoryI {
   updatedAt: string
   __v: number
   id: string
+  featured: boolean
+  position: number
 }
 
 export interface CategoriesResponseI {
@@ -25,4 +27,9 @@ export interface CategoryRequestI {
   name: string
   is_first_level?: boolean
   description: string
+  featured: boolean
+  product_category_id?: string
+  position?: number
+  parent_category_id?: string
+  preview_image?: string
 }

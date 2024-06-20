@@ -1,8 +1,10 @@
 import { VendorI } from "@/interfaces/product"
+import { ReviewI } from "@/interfaces/reviews"
 import {
   StoreCategory,
   StoreI,
   StoresResponseI,
+  StoreUpdateI,
   VendorsResponseI,
 } from "@/interfaces/store"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
@@ -15,13 +17,13 @@ export const storeApi = createApi({
   endpoints: (builder) => ({
     getAllStores: builder.query<
       StoreI[],
-      { authToken: string; vendor_id?: string }
+      { authToken: string; vendor_id?: string; store_id?: string }
     >({
-      query: ({ authToken, vendor_id }) => {
+      query: ({ authToken, vendor_id, store_id }) => {
         return {
           url: "/get",
           method: "GET",
-          params: { vendor_id },
+          params: { vendor_id, store_id },
           headers: {
             authorization: `Bearer ${authToken}`,
           },
@@ -68,6 +70,25 @@ export const storeApi = createApi({
           url: `/${action}`,
           method: "POST",
           body: { store_id: id },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
+
+    updateStore: builder.mutation<
+      { message: string },
+      {
+        authToken: string
+        data: StoreUpdateI
+      }
+    >({
+      query: ({ authToken, data }) => {
+        return {
+          url: `/update`,
+          method: "PATCH",
+          body: { ...data },
           headers: {
             authorization: `Bearer ${authToken}`,
           },
@@ -131,6 +152,7 @@ export const storeApi = createApi({
           store_category_id: string
           name: string
           description: string
+          preview_image: string
         }
       }
     >({
@@ -188,6 +210,16 @@ export const storeApi = createApi({
         }
       },
     }),
+    getStoreReviews: builder.query<ReviewI[], { id: string }>({
+      query({ id }) {
+        return {
+          url: `/review?store_id=${id}`,
+          method: "GET",
+        }
+      },
+      transformResponse: (data: { data: { reviews: ReviewI[] } }) =>
+        data.data.reviews,
+    }),
   }),
 })
 
@@ -195,9 +227,11 @@ export const {
   useGetAllStoresQuery,
   useToggleStoreStatusMutation,
   useCreateStoreMutation,
+  useUpdateStoreMutation,
   useGetStoreCategoriesQuery,
   useToggleStoreCategoryStatusMutation,
   useCreateStoreCategoryMutation,
   useUpdateCategoryMutation,
   useGetAllVendorsQuery,
+  useGetStoreReviewsQuery,
 } = storeApi

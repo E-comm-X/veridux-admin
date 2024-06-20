@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import Link from "next/link"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import { useRole } from "@/hooks/useRole"
+import { motion } from "framer-motion"
 
 export const NavItems = () => {
   const pathname = usePathname()
@@ -17,7 +18,7 @@ export const NavItems = () => {
       {renderedNav.map((item, index) => {
         const active = pathname === item.url
         return (
-          <div key={index} className="">
+          <motion.div layout key={index} className="">
             {item.url ? (
               <Link
                 href={item.url}
@@ -35,7 +36,7 @@ export const NavItems = () => {
             ) : (
               <NavSelect {...item} />
             )}
-          </div>
+          </motion.div>
         )
       })}
     </div>
@@ -80,25 +81,35 @@ const NavSelect = ({ icon, name, children }: NavSelectProps) => {
           <ExpandMoreIcon />
         </span>
       </div>
-      <div className="mt-[0.5rem]">
+      <motion.div
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className="mt-[0.5rem]"
+      >
         {active &&
           children.map((item, index) => {
             return (
-              <Link
+              <motion.div
                 key={index}
-                href={item.url}
-                onClick={() => setActive(true)}
-                className={`pl-[52px] py-[12px] text-[16px] text-[#FFFFFF78] hover:bg-primary-grey transition-all block rounded-[7px] ${
-                  pathname === item.url && "bg-[#FFFFFF38] text-[#fff]"
-                }`}
+                initial={{ y: -30, overflow: "hidden" }}
+                animate={{ y: 0 }}
               >
-                <span className={`${pathname === item.url && "text-[#fff]"}`}>
-                  {item.name}
-                </span>
-              </Link>
+                <Link
+                  key={index}
+                  href={item.url}
+                  onClick={() => setActive(true)}
+                  className={`pl-[52px] py-[12px] text-[16px] text-[#FFFFFF78] hover:bg-primary-grey transition-all block rounded-[7px] ${
+                    pathname === item.url && "bg-[#FFFFFF38] text-[#fff]"
+                  }`}
+                >
+                  <span className={`${pathname === item.url && "text-[#fff]"}`}>
+                    {item.name}
+                  </span>
+                </Link>
+              </motion.div>
             )
           })}
-      </div>
+      </motion.div>
     </div>
   )
 }

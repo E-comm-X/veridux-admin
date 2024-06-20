@@ -7,9 +7,10 @@ import {
   useCreateStoreCategoryMutation,
   useGetStoreCategoriesQuery,
 } from "@/services/store.service"
-import { Button, Form, Input, Radio, Select, Space, message } from "antd"
+import { Button, Form, Image, Input, Radio, Select, Space, message } from "antd"
 import { Modal } from "antd"
 import { LoadingOutlined } from "@ant-design/icons"
+import { CloudinaryWidget } from "@/components/CloudinaryWidget"
 
 type Form = {
   name: string
@@ -40,13 +41,13 @@ const Page = () => {
     authToken: token as string,
   })
   const categoryOptions = transformData(categories as [])
+  const [imageUrl, setImageUrl] = useState("")
   const [formData, setFormData] = useState<Form>({
     name: "",
     description: "",
     is_first_level: false,
     // parent_category_id: [],
-    preview_image:
-      "https://res.cloudinary.com/dfejczpjx/image/upload/v1697980517/cld-sample-3.jpg",
+    preview_image: imageUrl,
   })
   const [mutate, { isLoading: creatingStoreCategory }] =
     useCreateStoreCategoryMutation()
@@ -66,7 +67,7 @@ const Page = () => {
       //   return
       // }
       const response = await mutate({
-        data: formData,
+        data: { ...formData, preview_image: imageUrl },
         authToken: token as string,
       }).unwrap()
       message.success(response.message)
@@ -100,11 +101,11 @@ const Page = () => {
           <Modal open={open} onCancel={() => setOpen(false)} footer={false}>
             <div className="">
               <Form onFinish={createCategory}>
-                <h2 className="text-black text-4xl mt-2 text-center">
+                <h2 className="text-black text-2xl mt-2 text-center">
                   Create Store Category
                 </h2>
                 <div className="flex flex-col gap-2 mt-2">
-                  <label htmlFor="category" className="font-semibold text-xl">
+                  <label htmlFor="category" className="font-semibold text-md">
                     Name
                   </label>
                   <Input
@@ -118,7 +119,7 @@ const Page = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2 mt-2">
-                  <label htmlFor="phone" className="font-semibold text-xl">
+                  <label htmlFor="phone" className="font-semibold text-md">
                     Description
                   </label>
                   <Input
@@ -134,7 +135,7 @@ const Page = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2 mt-2">
-                  <label htmlFor="industry" className="font-semibold text-xl">
+                  <label htmlFor="industry" className="font-semibold text-md">
                     Should be first level?
                   </label>
                   <Radio.Group
@@ -153,7 +154,7 @@ const Page = () => {
                   </Radio.Group>
                 </div>
                 <div className="flex flex-col gap-2 mt-2">
-                  <label htmlFor="services" className="font-semibold text-xl">
+                  <label htmlFor="services" className="font-semibold text-md">
                     Parent Category
                   </label>
                   <Select
@@ -169,6 +170,24 @@ const Page = () => {
                     }
                     allowClear
                     mode="multiple"
+                  />
+                </div>
+                <div className="mt-4">
+                  {imageUrl && (
+                    <Image
+                      src={imageUrl}
+                      alt="Store Image"
+                      width={"100%"}
+                      height={"10rem"}
+                      style={{ objectFit: "cover", borderRadius: "8px" }}
+                    />
+                  )}
+                </div>
+                <div className="">
+                  <CloudinaryWidget
+                    btnText="Upload Category Image"
+                    folder="store"
+                    setImageUrl={setImageUrl}
                   />
                 </div>
                 <Button

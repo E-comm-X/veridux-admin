@@ -21,6 +21,19 @@ export const categoryApi = createApi({
       transformResponse: (data: CategoriesResponseI) =>
         data.data.product_categories,
     }),
+    getCategoriesWithHidden: builder.query<CategoryI[], { authToken: string }>({
+      query: ({ authToken }) => {
+        return {
+          url: "/gethidden",
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+      transformResponse: (data: CategoriesResponseI) =>
+        data.data.product_categories,
+    }),
     addCategory: builder.mutation<
       CategoryI,
       { data: CategoryRequestI; authToken: string | null }
@@ -38,7 +51,60 @@ export const categoryApi = createApi({
         }
       },
     }),
+    updateProductCategory: builder.mutation<
+      { message: string },
+      {
+        authToken: string
+        data: {
+          product_category_id: string
+          name: string
+          description: string
+          featured: boolean
+          position?: number
+        }
+      }
+    >({
+      query: ({ authToken, data }) => {
+        return {
+          url: `/update`,
+          method: "PATCH",
+          body: data,
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
+    toggleProductCategoryStatus: builder.mutation<
+      {
+        success: boolean
+        message: string
+        data: null
+      },
+      {
+        id: string
+        authToken: string
+        action: "hide" | "show"
+      }
+    >({
+      query: ({ id, authToken, action }) => {
+        return {
+          url: `/${action}`,
+          method: "POST",
+          body: { product_category_id: id },
+          headers: {
+            authorization: `Bearer ${authToken}`,
+          },
+        }
+      },
+    }),
   }),
 })
 
-export const { useGetAllCategoriesQuery, useAddCategoryMutation } = categoryApi
+export const {
+  useGetAllCategoriesQuery,
+  useAddCategoryMutation,
+  useToggleProductCategoryStatusMutation,
+  useGetCategoriesWithHiddenQuery,
+  useUpdateProductCategoryMutation,
+} = categoryApi

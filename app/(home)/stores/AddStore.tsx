@@ -11,9 +11,13 @@ import {
   useCreateStoreMutation,
 } from "@/services/store.service"
 import { useAuthToken } from "@/hooks/useAuthToken"
-import { Button, Form, Input, Select, message } from "antd"
+import { Button, Form, Image, Input, Select, message } from "antd"
 import { Modal } from "antd"
 import { LoadingOutlined } from "@ant-design/icons"
+import CloudinaryUploadWidget from "@/components/CloudUploadImage"
+import { Cloudinary } from "@cloudinary/url-gen"
+import { cloudinary_config } from "@/constants/CloudinaryConfig"
+import { CloudinaryWidget } from "@/components/CloudinaryWidget"
 
 type SToreForm = {
   name: string
@@ -33,6 +37,17 @@ const transformData = (data: { name: string; id: string }[]) => {
 }
 
 export const AddStore = ({ refetchStores }: { refetchStores: () => void }) => {
+  const [cloudName] = useState(cloudinary_config.public_name)
+  const [publicId, setPublicId] = useState("")
+  const [imageUrl, setImageUrl] = useState("")
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName,
+    },
+  })
+  const myImage = cld.image(publicId)
+
   const [open, setOpen] = useState(false)
   const { token } = useAuthToken()
   const { data: categories, isLoading } = useGetStoreCategoriesQuery({
@@ -55,7 +70,7 @@ export const AddStore = ({ refetchStores }: { refetchStores: () => void }) => {
   const createStore = async () => {
     try {
       const response = await mutate({
-        data: formData,
+        data: { ...formData, logo: imageUrl } as any,
         authToken: token as string,
       }).unwrap()
 
@@ -107,6 +122,11 @@ export const AddStore = ({ refetchStores }: { refetchStores: () => void }) => {
                       }
                     />
                   </div>
+
+                  {/* <div className="">
+                    <CloudinaryUploadWidget />
+                    {myImage && <img src={myImage.toURL()} alt="" />}
+                  </div> */}
                   <div className="flex flex-col gap-2 mt-2">
                     <label htmlFor="phone" className="font-semibold text-xl">
                       Description
@@ -156,6 +176,24 @@ export const AddStore = ({ refetchStores }: { refetchStores: () => void }) => {
                       allowClear
                       mode="multiple"
                     />
+                    <div className="mt-4">
+                      {imageUrl && (
+                        <Image
+                          src={imageUrl}
+                          alt="Store Image"
+                          width={"100%"}
+                          height={"10rem"}
+                          style={{ objectFit: "cover", borderRadius: "8px" }}
+                        />
+                      )}
+                    </div>
+                    <div className="">
+                      <CloudinaryWidget
+                        btnText="Upload Store Image"
+                        folder="store"
+                        setImageUrl={setImageUrl}
+                      />
+                    </div>
                   </div>
                   <Button
                     className=" w-full bg-[#006FCF] mt-5"
@@ -170,6 +208,7 @@ export const AddStore = ({ refetchStores }: { refetchStores: () => void }) => {
                       "Create Vendor"
                     )}
                   </Button>
+
                   {/* <ButtonUI text="Add Vendor"></ButtonUI> */}
                 </Form>
               </div>

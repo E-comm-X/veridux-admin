@@ -1,3 +1,4 @@
+import { addressApi } from "@/services/address.service"
 import { authApi } from "@/services/auth.service"
 import { categoryApi } from "@/services/category.service"
 import { deliveryApi } from "@/services/deliveries.service"
@@ -24,6 +25,7 @@ export const store = configureStore({
     [walletApi.reducerPath]: walletApi.reducer,
     [transactionApi.reducerPath]: transactionApi.reducer,
     [deliveryApi.reducerPath]: deliveryApi.reducer,
+    [addressApi.reducerPath]: addressApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -37,7 +39,8 @@ export const store = configureStore({
       permissionsApi.middleware,
       walletApi.middleware,
       transactionApi.middleware,
-      deliveryApi.middleware
+      deliveryApi.middleware,
+      addressApi.middleware
     ),
 })
 
