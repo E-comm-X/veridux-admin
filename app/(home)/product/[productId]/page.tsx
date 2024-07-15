@@ -1,30 +1,36 @@
-"use client"
-import React, { useEffect, useState } from "react"
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Collapse,
   CollapseProps,
   Image,
   Input,
+  Modal,
   Select,
   message,
-} from "antd"
-import { UploadImage } from "@/components/UploadImage"
+} from "antd";
+import {
+  UploadImage,
+  UploadProductPreviewImage,
+} from "@/components/UploadImage";
 import {
   useGetAllProductsQuery,
   useGetProductQuery,
   useUpdateProductMutation,
-} from "@/services/product.service"
-import { useAuthToken } from "@/hooks/useAuthToken"
-import { ProductUpdateRequestI } from "@/interfaces/product"
-import { useGetAllCategoriesQuery } from "@/services/category.service"
-import { LoadingOutlined } from "@ant-design/icons"
-import { useParams } from "next/navigation"
-import { AddVariant } from "./AddVariant"
-import { GoBack } from "@/components/GoBack"
-import Link from "next/link"
-import { CgArrowTopRight } from "react-icons/cg"
-import { Reviews } from "./Reviews"
+  useUpdateProductPreviewImageMutation,
+} from "@/services/product.service";
+import { useAuthToken } from "@/hooks/useAuthToken";
+import { ProductUpdateRequestI } from "@/interfaces/product";
+import { useGetAllCategoriesQuery } from "@/services/category.service";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useParams } from "next/navigation";
+import { AddVariant } from "./AddVariant";
+import { GoBack } from "@/components/GoBack";
+import Link from "next/link";
+import { CgArrowTopRight } from "react-icons/cg";
+import { Reviews } from "./Reviews";
+import { IoPencil } from "react-icons/io5";
 
 const reqData: ProductUpdateRequestI = {
   product_name: "",
@@ -37,7 +43,7 @@ const reqData: ProductUpdateRequestI = {
   product_categories_to_add: [],
   product_categories_to_remove: [],
   product_id: "",
-}
+};
 
 const transformData = (data: { name: string; id: string }[]) => {
   const newData =
@@ -45,21 +51,25 @@ const transformData = (data: { name: string; id: string }[]) => {
     data?.map((data) => ({
       label: data.name,
       value: data.id,
-    }))
-  return newData
-}
+    }));
+  return newData;
+};
 
 export default function UpdateProduct() {
-  const { productId } = useParams()
-  const { token } = useAuthToken()
+  const { productId } = useParams();
+  const { token } = useAuthToken();
   const [formData, setFormData] = useState<ProductUpdateRequestI>({
     ...reqData,
     authToken: token as string,
     product_id: productId as string,
-  })
+  });
+  const [previewImageFormData, setPreviewImageFormData] = useState<{
+    preview_image?: string | Blob | null;
+  }>({ preview_image: null });
+
   const [toAddCat, setToAddCat] = useState<{ label: string; value: string }[]>(
-    []
-  )
+    [],
+  );
 
   const {
     data: product,
@@ -67,8 +77,8 @@ export default function UpdateProduct() {
     refetch: refechProduct,
   } = useGetProductQuery({
     id: productId as string,
-  })
-  const { data: categories } = useGetAllCategoriesQuery(null)
+  });
+  const { data: categories } = useGetAllCategoriesQuery(null);
 
   useEffect(() => {
     if (product) {
@@ -80,17 +90,21 @@ export default function UpdateProduct() {
         total_quantity: product.total_quantity as any,
         product_name: product.name as string,
         product_id: productId as string,
-      }))
-      const cat_ids = product.categories?.map((cat) => cat.id) as string[]
+      }));
+      const cat_ids = product.categories?.map((cat) => cat.id) as string[];
       const to_add = categories?.filter((cat) => {
-        return !cat_ids.includes(cat.id)
-      })
-      setToAddCat(transformData(to_add as []))
+        return !cat_ids.includes(cat.id);
+      });
+      setToAddCat(transformData(to_add as []));
     }
-  }, [product, categories, productId])
+  }, [product, categories, productId]);
 
-  const [updateProductMutation, { isLoading }] = useUpdateProductMutation()
-  const { refetch } = useGetAllProductsQuery(null)
+  const [updateProductMutation, { isLoading }] = useUpdateProductMutation();
+  const [
+    updateProductPreviewImage,
+    { isLoading: updateProductPreviewImageIsLoading },
+  ] = useUpdateProductPreviewImageMutation();
+  const { refetch } = useGetAllProductsQuery(null);
 
   const updateProduct = async () => {
     try {
@@ -100,17 +114,17 @@ export default function UpdateProduct() {
         formData.product_name &&
         formData.total_quantity
       ) {
-        await updateProductMutation(formData).unwrap()
-        message.success("Product Updated Successfully")
-        await refechProduct()
-        await refetch()
+        await updateProductMutation(formData).unwrap();
+        message.success("Product Updated Successfully");
+        await refechProduct();
+        await refetch();
       } else {
-        message.warning("Please Fill All Fields")
+        message.warning("Please Fill All Fields");
       }
     } catch (error: any) {
-      message.error(`Failed: ${error.data.message}`)
+      message.error(`Failed: ${error.data.message}`);
     }
-  }
+  };
   const items: CollapseProps["items"] = [
     {
       key: "1",
@@ -126,7 +140,7 @@ export default function UpdateProduct() {
         </p>
       ),
     },
-  ]
+  ];
   return (
     <>
       <GoBack />
@@ -150,14 +164,14 @@ export default function UpdateProduct() {
           <div className="parent bg-white rounded-lg py-10 px-8 mt-6">
             <div className="grid md:grid-cols-2 grid-cols-1 gap-10">
               <div className="right px-4 py-8   lg:basis-[489px] rounded-lg border-[1px] border-[#E0E2E7] flex flex-col ">
-                <div className="mb-4">
+                <div className="mb-4 relative">
                   <Image.PreviewGroup preview={{}}>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-3 relative">
                       <Image
                         src={product?.preview_image as string}
                         width={"100%"}
                         height={"10rem"}
-                        className="object-cover rounded-lg"
+                        className="object-cover rounded-lg relative"
                         alt=""
                       />
                       {[...(product?.sub_images as string[])].map(
@@ -170,8 +184,14 @@ export default function UpdateProduct() {
                             className="object-cover rounded-lg"
                             alt=""
                           />
-                        )
+                        ),
                       )}
+
+                      <UploadProductPreviewImage
+                        productId={product!._id}
+                        refetch={refechProduct}
+                        setProductPreviewImage={setPreviewImageFormData}
+                      />
                     </div>
                   </Image.PreviewGroup>
                 </div>
@@ -309,9 +329,9 @@ export default function UpdateProduct() {
                           return {
                             ...prev,
                             product_categories_to_add: value,
-                          }
+                          };
                         }
-                      })
+                      });
                     }}
                   />
                 </div>
@@ -333,7 +353,7 @@ export default function UpdateProduct() {
                       setFormData((prev) => ({
                         ...prev,
                         product_categories_to_remove: value,
-                      }))
+                      }));
                     }}
                   />
                 </div>
@@ -406,5 +426,5 @@ export default function UpdateProduct() {
         </main>
       )}
     </>
-  )
+  );
 }

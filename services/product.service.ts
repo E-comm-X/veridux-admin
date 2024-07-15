@@ -66,6 +66,31 @@ export const productApi = createApi({
         };
       },
     }),
+    updateProductPreviewImage: builder.mutation<
+      ProductI,
+      {
+        authToken: string;
+        productId: string;
+        preview_image: File;
+      }
+    >({
+      query: (data) => {
+        const { preview_image, productId } = data;
+
+        const formdata = new FormData();
+        formdata.append("preview_image", preview_image as Blob, "test");
+        formdata.append("product_id", productId);
+        return {
+          url: "/previewimage/update",
+          method: "PATCH",
+          body: formdata,
+          headers: {
+            authorization: `Bearer ${data.authToken}`,
+          },
+        };
+      },
+    }),
+
     updateProduct: builder.mutation<ProductI, ProductUpdateRequestI>({
       query: (data) => {
         return {
@@ -232,6 +257,7 @@ export const {
   useGetAllProductsQuery,
   useGetProductQuery,
   useUpdateProductMutation,
+  useUpdateProductPreviewImageMutation,
   useHideProductMutation,
   useShowProductMutation,
   useAddProductVariantMutation,
