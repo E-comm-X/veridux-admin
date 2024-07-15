@@ -106,24 +106,6 @@ export default function UpdateProduct() {
   ] = useUpdateProductPreviewImageMutation();
   const { refetch } = useGetAllProductsQuery(null);
 
-  const initPreviewImageUpdate = async () => {
-    try {
-      if (previewImageFormData.preview_image) {
-        await updateProductPreviewImage({
-          authToken: formData.authToken,
-          preview_image: previewImageFormData.preview_image,
-        }).unwrap();
-        message.success("Product Preview Image Updated Successfully");
-        await refechProduct();
-        await refetch();
-      } else {
-        message.warning("Please Select an Image");
-      }
-    } catch (error: any) {
-      message.error(`Failed: ${error.data.message}`);
-    }
-  };
-
   const updateProduct = async () => {
     try {
       if (
