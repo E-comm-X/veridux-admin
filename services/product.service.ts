@@ -18,7 +18,22 @@ export const productApi = createApi({
     addProduct: builder.mutation<ProductI, ProductRequestI>({
       query: (data) => {
         const formdata = new FormData()
-        formdata.append("preview_image", data.preview_image as Blob, "test")
+        for (let i = 0; i < (data.preview_image as Blob[]).length; i++) {
+          formdata.append(
+            "preview_image[]",
+            (data.preview_image as Blob[])[i],
+            `${data.product_name}_${i}`
+          )
+        }
+        // Single Image
+        // formdata.append(
+        //   "preview_image",
+        //   (data.preview_image as Blob[])[0] as Blob,
+        //   `${data.product_name}`
+        // )
+        // for (const file of data.preview_image as Blob[]) {
+        //   formdata.append("preview_image[]", file, `${data.product_name}`)
+        // }
         formdata.append("store_id", data.store_id)
         formdata.append("product_name", data.product_name)
         formdata.append("details", data.details)
@@ -73,14 +88,21 @@ export const productApi = createApi({
       {
         authToken: string
         productId: string
-        preview_image: File
+        preview_image: File[]
       }
     >({
       query: (data) => {
         const { preview_image, productId } = data
 
         const formdata = new FormData()
-        formdata.append("preview_image", preview_image as Blob, "test")
+        for (let i = 0; i < (preview_image as Blob[]).length; i++) {
+          formdata.append(
+            "preview_image",
+            (preview_image as Blob[])[i],
+            `${data.productId}_${i}`
+          )
+        }
+        // formdata.append("preview_image", preview_image as Blob, "test")
         formdata.append("product_id", productId)
         return {
           url: "/previewimage/update",

@@ -31,6 +31,7 @@ import Link from "next/link"
 import { CgArrowTopRight } from "react-icons/cg"
 import { Reviews } from "./Reviews"
 import { IoPencil } from "react-icons/io5"
+import { UpdateMultipleImage } from "./UpdateMultipleImage"
 
 const reqData: ProductUpdateRequestI = {
   product_name: "",
@@ -65,8 +66,8 @@ export default function UpdateProduct() {
     product_id: productId as string,
   })
   const [previewImageFormData, setPreviewImageFormData] = useState<{
-    preview_image?: string | Blob | null
-  }>({ preview_image: null })
+    preview_image?: string[] | Blob[]
+  }>({ preview_image: [] })
 
   const [toAddCat, setToAddCat] = useState<{ label: string; value: string }[]>(
     []
@@ -103,10 +104,6 @@ export default function UpdateProduct() {
   }, [product, categories, productId])
 
   const [updateProductMutation, { isLoading }] = useUpdateProductMutation()
-  const [
-    updateProductPreviewImage,
-    { isLoading: updateProductPreviewImageIsLoading },
-  ] = useUpdateProductPreviewImageMutation()
   const { refetch } = useGetAllProductsQuery(null)
 
   const updateProduct = async () => {
@@ -125,7 +122,7 @@ export default function UpdateProduct() {
         message.warning("Please Fill All Fields")
       }
     } catch (error: any) {
-      message.error(`Failed: ${error.data.message}`)
+      message.error(`Failed: ${error?.data?.message || error?.message}`)
     }
   }
   const items: CollapseProps["items"] = [
@@ -168,7 +165,7 @@ export default function UpdateProduct() {
             <div className="grid md:grid-cols-2 grid-cols-1 gap-10">
               <div className="right px-4 py-8   lg:basis-[489px] rounded-lg border-[1px] border-[#E0E2E7] flex flex-col ">
                 <div className="mb-4 relative">
-                  <Image.PreviewGroup preview={{}}>
+                  {/* <Image.PreviewGroup preview={{}}>
                     <div className="grid grid-cols-3 relative">
                       <Image
                         src={product?.preview_image as string}
@@ -196,7 +193,11 @@ export default function UpdateProduct() {
                         setProductPreviewImage={setPreviewImageFormData}
                       />
                     </div>
-                  </Image.PreviewGroup>
+                  </Image.PreviewGroup> */}
+                  <UpdateMultipleImage
+                    preview_image={product?.preview_image as string}
+                    sub_images={product?.sub_images as string[]}
+                  />
                 </div>
                 <div className="mb-5">
                   <label

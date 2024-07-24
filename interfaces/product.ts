@@ -78,7 +78,7 @@ export interface ProductResponseI {
 }
 
 export interface ProductRequestI {
-  preview_image: Blob | null | string
+  preview_image: Blob[] | string[]
   store_id: string
   product_name: string
   details: string

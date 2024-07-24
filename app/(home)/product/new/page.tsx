@@ -12,9 +12,10 @@ import { useGetAllCategoriesQuery } from "@/services/category.service"
 import { useGetAllStoresQuery } from "@/services/store.service"
 import { LoadingOutlined } from "@ant-design/icons"
 import { GoBack } from "@/components/GoBack"
+import { UploadMultipleImage } from "./UploadMultipleImage"
 
 const reqData: ProductRequestI = {
-  preview_image: null,
+  preview_image: [],
   store_id: "",
   product_name: "",
   details: "",
@@ -56,7 +57,7 @@ export default function AddProduct() {
     try {
       if (
         formData.brand_name &&
-        formData.preview_image &&
+        formData.preview_image![0] &&
         formData.price &&
         formData.product_name &&
         formData.total_quantity &&
@@ -68,10 +69,12 @@ export default function AddProduct() {
         message.success("Product Added Successfully")
         await refetch()
       } else {
+        console.log(formData)
         message.warning("Please Fill All Fields")
       }
     } catch (error: any) {
-      message.error(`Failed: ${error.data.message}`)
+      message.error(`Failed: ${error?.data?.message || error?.message}`)
+      console.log(formData)
     }
   }
   return (
@@ -192,7 +195,11 @@ export default function AddProduct() {
           <div>
             <div className="p-4  rounded-lg border-[1px] border-[#E0E2E7] ">
               <h3 className="font-medium text-base mb-4">Product Image</h3>
-              <UploadImage setProductPreviewImage={setFormData as any} />
+              {/* <UploadImage setProductPreviewImage={setFormData as any} /> */}
+              <UploadMultipleImage
+                setFormData={setFormData}
+                product={formData}
+              />
             </div>
 
             {/* Add Product */}
