@@ -66,6 +66,7 @@ export interface ProductI {
   is_in_cart?: boolean
   original_price?: number
   commission?: number
+  package_size: number
 }
 
 export interface ProductsResponseI {
@@ -87,6 +88,7 @@ export interface ProductRequestI {
   brand_name: string
   package_size: string
   authToken: string
+  commission: string
 }
 
 export interface ProductUpdateRequestI {
@@ -100,6 +102,7 @@ export interface ProductUpdateRequestI {
   package_size: string
   authToken: string
   product_id: string
+  commission: string
 }
 
 export interface VariantI {

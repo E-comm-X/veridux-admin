@@ -1,17 +1,17 @@
-"use client";
-import React, { useState } from "react";
-import { Button, Input, Select, message } from "antd";
-import { UploadImage } from "@/components/UploadImage";
+"use client"
+import React, { useState } from "react"
+import { Button, Input, Select, message } from "antd"
+import { UploadImage } from "@/components/UploadImage"
 import {
   useAddProductMutation,
   useGetAllProductsQuery,
-} from "@/services/product.service";
-import { useAuthToken } from "@/hooks/useAuthToken";
-import { ProductRequestI } from "@/interfaces/product";
-import { useGetAllCategoriesQuery } from "@/services/category.service";
-import { useGetAllStoresQuery } from "@/services/store.service";
-import { LoadingOutlined } from "@ant-design/icons";
-import { GoBack } from "@/components/GoBack";
+} from "@/services/product.service"
+import { useAuthToken } from "@/hooks/useAuthToken"
+import { ProductRequestI } from "@/interfaces/product"
+import { useGetAllCategoriesQuery } from "@/services/category.service"
+import { useGetAllStoresQuery } from "@/services/store.service"
+import { LoadingOutlined } from "@ant-design/icons"
+import { GoBack } from "@/components/GoBack"
 
 const reqData: ProductRequestI = {
   preview_image: null,
@@ -24,7 +24,8 @@ const reqData: ProductRequestI = {
   brand_name: "",
   package_size: "",
   authToken: "",
-};
+  commission: "",
+}
 
 const transformData = (data: { name: string; id: string }[]) => {
   const newData =
@@ -32,25 +33,25 @@ const transformData = (data: { name: string; id: string }[]) => {
     data?.map((data) => ({
       label: data.name,
       value: data.id,
-    }));
-  return newData;
-};
+    }))
+  return newData
+}
 
 export default function AddProduct() {
-  const [addProductMutation, { isLoading }] = useAddProductMutation();
-  const { refetch } = useGetAllProductsQuery(null);
-  const { token } = useAuthToken();
+  const [addProductMutation, { isLoading }] = useAddProductMutation()
+  const { refetch } = useGetAllProductsQuery(null)
+  const { token } = useAuthToken()
   const [formData, setFormData] = useState<ProductRequestI>({
     ...reqData,
     authToken: token as string,
-  });
-  const { data: categories } = useGetAllCategoriesQuery(null);
-  const { data: stores } = useGetAllStoresQuery({ authToken: token as string });
+  })
+  const { data: categories } = useGetAllCategoriesQuery(null)
+  const { data: stores } = useGetAllStoresQuery({ authToken: token as string })
   const [subCategories, setSubCategories] = useState<
     { label: string; value: string }[]
-  >([]);
-  const categoryOptions = transformData(categories as []);
-  const storesOptions = transformData(stores as []);
+  >([])
+  const categoryOptions = transformData(categories as [])
+  const storesOptions = transformData(stores as [])
   const addProduct = async () => {
     try {
       if (
@@ -63,16 +64,16 @@ export default function AddProduct() {
         formData.package_size
         // formData.store_id
       ) {
-        await addProductMutation(formData).unwrap();
-        message.success("Product Added Successfully");
-        await refetch();
+        await addProductMutation(formData).unwrap()
+        message.success("Product Added Successfully")
+        await refetch()
       } else {
-        message.warning("Please Fill All Fields");
+        message.warning("Please Fill All Fields")
       }
     } catch (error: any) {
-      message.error(`Failed: ${error.data.message}`);
+      message.error(`Failed: ${error.data.message}`)
     }
-  };
+  }
   return (
     <main>
       <GoBack />
@@ -224,13 +225,13 @@ export default function AddProduct() {
                 options={categoryOptions}
                 onChange={(value) => {
                   const subCat_ = categories?.find(
-                    (category) => category._id === value,
-                  )?.sub_categories;
-                  setSubCategories(transformData(subCat_ as []));
+                    (category) => category._id === value
+                  )?.sub_categories
+                  setSubCategories(transformData(subCat_ as []))
                   setFormData((prev) => ({
                     ...prev,
                     category_ids: value,
-                  }));
+                  }))
                 }}
               />
             </div>
@@ -251,7 +252,7 @@ export default function AddProduct() {
                   setFormData((prev) => ({
                     ...prev,
                     category_ids: `${formData.category_ids},${value}`,
-                  }));
+                  }))
                 }}
               />
             </div>
@@ -314,6 +315,12 @@ export default function AddProduct() {
                   type="number"
                   className=" w-[100%] font-medium text-xl border-0 outline-none placeholder:text-black placeholder:text-lg placeholder:font-medium"
                   placeholder=""
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      commission: e.target.value,
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -321,5 +328,5 @@ export default function AddProduct() {
         </div>
       </div>
     </main>
-  );
+  )
 }
