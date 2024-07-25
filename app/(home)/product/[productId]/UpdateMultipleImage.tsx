@@ -166,9 +166,11 @@ export const UpdateMultipleImage = ({ sub_images, preview_image }: props) => {
                 {productImages.length > 3 && (
                   <div className="relative">
                     <AntImage.PreviewGroup
-                      items={productImages.map((image) =>
-                        image ? URL.createObjectURL(image) : ""
-                      )}
+                      items={productImages
+                        .slice(3)
+                        .map((image) =>
+                          image ? URL.createObjectURL(image) : ""
+                        )}
                     >
                       <AntImage
                         width={"100%"}

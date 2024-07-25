@@ -400,7 +400,7 @@ export default function UpdateProduct() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-medium text-lg">Discount</h3>
+                  <h3 className="font-medium text-lg">Commission</h3>
                   <div className="flex items-center gap-4 border-[#C1C1C1] rounded border-[1px] mt-5  pr-10">
                     <div className="signContainer h-[50px] w-[50px] bg-[#A1A1A15E] rounded relative">
                       <span className="font-medium text-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
