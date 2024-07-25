@@ -45,7 +45,7 @@ export const UploadImage: React.FC<{
   const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     if (newFileList.length >= 1) {
-      setProductPreviewImage((prev) => ({
+      setProductPreviewImage((prev: any) => ({
         ...prev,
         preview_image: newFileList[0]?.originFileObj as Blob,
       }));
@@ -119,7 +119,7 @@ export const UploadProductPreviewImage: React.FC<{
       }
       const res = await updateProductImage({
         productId,
-        preview_image: previewImage,
+        preview_image: previewImage as any,
         authToken: token as string,
       }).unwrap();
       message.success("Image updated successfully");
