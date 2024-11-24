@@ -5,9 +5,9 @@ import {
   ProductUpdateRequestI,
   ProductsResponseI,
   VariantI,
-} from "@/interfaces/product"
-import { ReviewI } from "@/interfaces/reviews"
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+} from "@/interfaces/product";
+import { ReviewI } from "@/interfaces/reviews";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
   reducerPath: "productApi",
@@ -17,24 +17,24 @@ export const productApi = createApi({
   endpoints: (builder) => ({
     addProduct: builder.mutation<ProductI, ProductRequestI>({
       query: (data) => {
-        const formdata = new FormData()
+        const formdata = new FormData();
         for (let i = 0; i < (data.preview_image as Blob[]).length; i++) {
           formdata.append(
             "preview_image",
             (data.preview_image as Blob[])[i],
-            `${data.product_name}_${i}`
-          )
+            `${data.product_name}_${i}`,
+          );
         }
 
-        formdata.append("store_id", data.store_id)
-        formdata.append("product_name", data.product_name)
-        formdata.append("details", data.details)
-        formdata.append("price", data.price as string)
-        formdata.append("total_quantity", data.total_quantity as string)
-        formdata.append("category_ids", data.category_ids as string)
-        formdata.append("brand_name", data.brand_name)
-        formdata.append("package_size", data.package_size)
-        formdata.append("commission", data.commission)
+        // formdata.append("store_id", data.store_id)
+        formdata.append("product_name", data.product_name);
+        formdata.append("details", data.details);
+        formdata.append("price", data.price as string);
+        formdata.append("total_quantity", data.total_quantity as string);
+        formdata.append("category_ids", data.category_ids as string);
+        formdata.append("brand_name", data.brand_name);
+        formdata.append("package_size", data.package_size);
+        formdata.append("commission", data.commission);
 
         return {
           url: "/new",
@@ -44,26 +44,26 @@ export const productApi = createApi({
           headers: {
             authorization: `Bearer ${data.authToken}`,
           },
-        }
+        };
       },
     }),
 
     addProductVariant: builder.mutation<
       ProductI,
       {
-        product_id: string
-        color: string
-        preview_image: Blob | null
-        total_quantity: string
-        authToken: string
+        product_id: string;
+        color: string;
+        preview_image: Blob | null;
+        total_quantity: string;
+        authToken: string;
       }
     >({
       query: (data) => {
-        const formdata = new FormData()
-        formdata.append("product_id", data.product_id)
-        formdata.append("preview_image", data.preview_image as Blob, "test")
-        formdata.append("color", data.color as string)
-        formdata.append("total_quantity", data.total_quantity as string)
+        const formdata = new FormData();
+        formdata.append("product_id", data.product_id);
+        formdata.append("preview_image", data.preview_image as Blob, "test");
+        formdata.append("color", data.color as string);
+        formdata.append("total_quantity", data.total_quantity as string);
         return {
           url: "/variant/new",
           method: "POST",
@@ -72,29 +72,29 @@ export const productApi = createApi({
           headers: {
             authorization: `Bearer ${data.authToken}`,
           },
-        }
+        };
       },
     }),
     updateProductPreviewImage: builder.mutation<
       ProductI,
       {
-        authToken: string
-        productId: string
-        preview_image: File[]
+        authToken: string;
+        productId: string;
+        preview_image: File[];
       }
     >({
       query: (data) => {
-        const { preview_image, productId } = data
+        const { preview_image, productId } = data;
 
-        const formdata = new FormData()
+        const formdata = new FormData();
         for (let i = 0; i < (preview_image as Blob[]).length; i++) {
           formdata.append(
             "preview_image",
             (preview_image as Blob[])[i],
-            `${data.productId}_${i}`
-          )
+            `${data.productId}_${i}`,
+          );
         }
-        formdata.append("product_id", productId)
+        formdata.append("product_id", productId);
         return {
           url: "/previewimage/update",
           method: "PATCH",
@@ -102,7 +102,7 @@ export const productApi = createApi({
           headers: {
             authorization: `Bearer ${data.authToken}`,
           },
-        }
+        };
       },
     }),
 
@@ -115,16 +115,16 @@ export const productApi = createApi({
           headers: {
             authorization: `Bearer ${data.authToken}`,
           },
-        }
+        };
       },
     }),
     updateProductVariant: builder.mutation<
       VariantI,
       {
-        color: string
-        total_quantity: number
-        authToken: string
-        product_variant_id: string
+        color: string;
+        total_quantity: number;
+        authToken: string;
+        product_variant_id: string;
       }
     >({
       query: (data) => {
@@ -135,7 +135,7 @@ export const productApi = createApi({
           headers: {
             authorization: `Bearer ${data.authToken}`,
           },
-        }
+        };
       },
     }),
     getAllProducts: builder.query<ProductI[], null>({
@@ -143,7 +143,7 @@ export const productApi = createApi({
         return {
           url: "/get",
           method: "GET",
-        }
+        };
       },
       transformResponse: (data: ProductsResponseI) => data.data.products,
     }),
@@ -153,7 +153,7 @@ export const productApi = createApi({
           url: "/get",
           method: "GET",
           params: { store_id },
-        }
+        };
       },
       transformResponse: (data: ProductsResponseI) => data.data.products,
     }),
@@ -162,15 +162,15 @@ export const productApi = createApi({
         return {
           url: `/info/get?product_id=${id}`,
           method: "GET",
-        }
+        };
       },
       transformResponse: (data: ProductResponseI) => data.data.product,
     }),
     hideProduct: builder.mutation<
       {
-        success: boolean
-        message: string
-        data: null
+        success: boolean;
+        message: string;
+        data: null;
       },
       { id: string; authToken: string }
     >({
@@ -185,14 +185,14 @@ export const productApi = createApi({
             authorization: `Bearer ${authToken}`,
           },
           redirect: "follow",
-        }
+        };
       },
     }),
     hideProductVariant: builder.mutation<
       {
-        success: boolean
-        message: string
-        data: null
+        success: boolean;
+        message: string;
+        data: null;
       },
       { id: string; authToken: string }
     >({
@@ -207,14 +207,14 @@ export const productApi = createApi({
             authorization: `Bearer ${authToken}`,
           },
           redirect: "follow",
-        }
+        };
       },
     }),
     showProduct: builder.mutation<
       {
-        success: boolean
-        message: string
-        data: null
+        success: boolean;
+        message: string;
+        data: null;
       },
       { id: string; authToken: string }
     >({
@@ -229,14 +229,14 @@ export const productApi = createApi({
             authorization: `Bearer ${authToken}`,
           },
           redirect: "follow",
-        }
+        };
       },
     }),
     showProductVariant: builder.mutation<
       {
-        success: boolean
-        message: string
-        data: null
+        success: boolean;
+        message: string;
+        data: null;
       },
       { id: string; authToken: string }
     >({
@@ -251,7 +251,7 @@ export const productApi = createApi({
             authorization: `Bearer ${authToken}`,
           },
           redirect: "follow",
-        }
+        };
       },
     }),
     getProductReviews: builder.query<ReviewI[], { id: string }>({
@@ -259,13 +259,13 @@ export const productApi = createApi({
         return {
           url: `/review?product_id=${id}`,
           method: "GET",
-        }
+        };
       },
       transformResponse: (data: { data: { product_reviews: ReviewI[] } }) =>
         data.data.product_reviews,
     }),
   }),
-})
+});
 
 export const {
   useAddProductMutation,
@@ -281,4 +281,4 @@ export const {
   useShowProductVariantMutation,
   useGetProductReviewsQuery,
   useGetProductsByStoreQuery,
-} = productApi
+} = productApi;

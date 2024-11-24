@@ -1,25 +1,30 @@
-"use client"
-import { GoBack } from "@/components/GoBack"
-import React from "react"
-import { PurchasedProductsTable } from "../PurchasedProductsTable"
-import { useGetTransactionsQuery } from "@/services/transactions.service"
-import { useAuthToken } from "@/hooks/useAuthToken"
-import { TransactionI } from "@/interfaces/transactions"
-import Link from "next/link"
-import { Button } from "antd"
+"use client";
+import { GoBack } from "@/components/GoBack";
+import React from "react";
+import { PurchasedProductsTable } from "../PurchasedProductsTable";
+import { useGetTransactionsQuery } from "@/services/transactions.service";
+import { useAuthToken } from "@/hooks/useAuthToken";
+import { TransactionEventType, TransactionI } from "@/interfaces/transactions";
+import Link from "next/link";
+import { Button } from "antd";
 
 const ArrangePickupPage = () => {
-  const { token } = useAuthToken()
+  const { token } = useAuthToken();
   const { data, isLoading } = useGetTransactionsQuery({
     authToken: token as string,
-  })
+  });
   const purchases = data?.filter(
     (product) =>
       product?.type === "product_purchase" &&
       product?.kind === "debit" &&
-      product?.payment_method === "wallet" &&
-      product?.status === "success"
-  )
+      !product?.events?.find(
+        (e) =>
+          e.eventName ===
+          TransactionEventType.SHIPMENT_CONFIRMED_FOR_PRODUCT_PURCHASE,
+      ) &&
+      product?.payment_method !== "internal_transfer" &&
+      product?.status === "success",
+  );
   return (
     <main>
       <GoBack />
@@ -42,7 +47,7 @@ const ArrangePickupPage = () => {
         />
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default ArrangePickupPage
+export default ArrangePickupPage;

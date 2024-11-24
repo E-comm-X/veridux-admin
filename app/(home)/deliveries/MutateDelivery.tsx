@@ -1,71 +1,71 @@
-"use client"
-import { ShipmentI } from "@/interfaces/shipment"
+"use client";
+import { ShipmentI } from "@/interfaces/shipment";
 import {
   CheckCircle,
   DateRangeOutlined,
   LocalShipping,
   Timelapse,
-} from "@mui/icons-material"
-import { Button, DatePicker, Divider, Form, message, Modal } from "antd"
-import React, { useState } from "react"
+} from "@mui/icons-material";
+import { Button, DatePicker, Divider, Form, message, Modal } from "antd";
+import React, { useState } from "react";
 import {
   useUpdatePickupMutation,
   useConfirmArrangementMutation,
   useRescheduleDeliveryMutation,
   useGetShipmentsQuery,
-} from "@/services/deliveries.service"
-import { useAuthToken } from "@/hooks/useAuthToken"
-import { LoadingOutlined } from "@ant-design/icons"
-import { CgCloseO } from "react-icons/cg"
+} from "@/services/deliveries.service";
+import { useAuthToken } from "@/hooks/useAuthToken";
+import { LoadingOutlined } from "@ant-design/icons";
+import { CgCloseO } from "react-icons/cg";
 
 export const MutateDelivery = ({ record }: { record: ShipmentI }) => {
-  const isPickedUp = record?.status === "picked_up"
-  const isDraft = record?.status === "draft"
-  const { token: authToken } = useAuthToken() as { token: string }
-  const { refetch } = useGetShipmentsQuery({ authToken })
+  const isPickedUp = record?.status === "picked_up";
+  const isDraft = record?.status === "draft";
+  const { token: authToken } = useAuthToken() as { token: string };
+  const { refetch } = useGetShipmentsQuery({ authToken });
   const [updatePickup, { isLoading: updatingPickup }] =
-    useUpdatePickupMutation()
+    useUpdatePickupMutation();
   const [confirmPickup, { isLoading: confirmingPickup }] =
-    useConfirmArrangementMutation()
+    useConfirmArrangementMutation();
   const [reschedulePickup, { isLoading: reschedulingPickup }] =
-    useRescheduleDeliveryMutation()
-  const isLoading = updatingPickup || confirmingPickup || reschedulingPickup
+    useRescheduleDeliveryMutation();
+  const isLoading = updatingPickup || confirmingPickup || reschedulingPickup;
   const confirmUpdate = async (mutate: any, type: string) => {
     try {
       await mutate({
         authToken,
         reqData: { shipment_id: record.id },
-      }).unwrap()
-      refetch()
-      message.success(`Delivery status updated to ${type}`)
+      }).unwrap();
+      refetch();
+      message.success(`Delivery status updated to ${type}`);
     } catch (error: any) {
       message.error(
-        error?.message || error?.data?.message || "An Error Occured"
-      )
+        error?.message || error?.data?.message || "An Error Occured",
+      );
     }
-  }
+  };
 
   const initData = {
     shipment_id: "",
     pickup_date: "",
-  }
-  const [reqData, setReqData] = useState(initData)
-  const [open, setOpen] = useState(false)
+  };
+  const [reqData, setReqData] = useState(initData);
+  const [open, setOpen] = useState(false);
   const rescheduleFunc = async () => {
     try {
       await reschedulePickup({
         authToken,
         reqData: { ...reqData, shipment_id: record.id },
-      }).unwrap()
-      refetch()
-      message.success("Delivery Rescheduled")
-      setOpen(false)
+      }).unwrap();
+      refetch();
+      message.success("Delivery Rescheduled");
+      setOpen(false);
     } catch (error: any) {
       message.error(
-        error?.message || error?.data?.message || "An Error Occured"
-      )
+        error?.message || error?.data?.message || "An Error Occured",
+      );
     }
-  }
+  };
 
   return (
     <div>
@@ -82,8 +82,8 @@ export const MutateDelivery = ({ record }: { record: ShipmentI }) => {
               <>
                 <Button
                   icon={<CheckCircle className="text-[16px] " />}
-                  type="text"
-                  className="bg-success-500 hover:bg-success-500 text-white"
+                  type="default"
+                  className="bg-success-500 hover:bg-success-500 text-blue"
                   size="large"
                   onClick={() => confirmUpdate(confirmPickup, "Booked")}
                 >
@@ -153,5 +153,5 @@ export const MutateDelivery = ({ record }: { record: ShipmentI }) => {
         </Form>
       </Modal>
     </div>
-  )
-}
+  );
+};
